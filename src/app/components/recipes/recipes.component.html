@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    
+    <!--
+      <div class="col-sm-4">
+        <app-recipe></app-recipe>
+      </div>
+
+      <div class="col-sm-4">
+          <app-recipe></app-recipe>
+      </div>
+
+      <div class="col-sm-4">
+          <app-recipe></app-recipe>
+      </div>
+    -->
+
+    <div *ngIf="theSelectedRecipe">
+        <app-recipe-detail (selectedRecipe)="theSelectedRecipe"></app-recipe-detail>
+    </div>
+
+    <app-recipe *ngFor="let recipe of recipes" [recipeVal]="recipe" (theRecipeSelected)="setSelected($event)" class="col-sm-4"></app-recipe>
+
+
+
+  </div>
+</div>

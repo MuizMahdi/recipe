@@ -1,0 +1,42 @@
+
+.recipe
+{
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.recipe img
+{
+    display: block;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+}
+
+.recipe-text
+{
+    text-align: left;
+    padding-left: 10px;
+}
+
+.recipe-name
+{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.recipe-name a
+{
+    color: rgb(130, 130, 130);
+}
+
+.recipe-show-more
+{
+    text-align: center;
+    margin-bottom: 10px;
+}

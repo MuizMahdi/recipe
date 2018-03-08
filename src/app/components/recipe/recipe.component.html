@@ -1,0 +1,27 @@
+<!--
+<div *ngIf="recipeSelected">
+    <app-recipe-detail (selectedRecipe)="recipe" (selectedRecipeImgSrc)="imageSource"></app-recipe-detail>
+</div>
+-->
+
+<div class="recipe">
+
+  <div>
+
+    <div class="recipe-name">
+      <a href="#" (click)="getSelected()"> {{recipe.name}} </a>
+    </div>
+
+    <img src="{{imageSource}}" style="width:330px; height:300px" alt="Recipe Image" >
+
+  </div>
+
+  <div>
+    <p class="recipe-text"> {{recipe.description}} </p>
+  </div>
+
+  <div class="recipe-show-more">
+    <a href="#">Show more</a>
+  </div>
+
+</div>
