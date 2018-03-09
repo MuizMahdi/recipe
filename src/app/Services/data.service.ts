@@ -23,9 +23,9 @@ export class DataService
   constructor() 
   { 
     this.recipes = [
-      { name:"chicken", description:"just some chicken with rice and whatever, would be nice to have it with tuna too"},
-      { name:"another chicken", description:"more chicken, the dish is really nice though, those kind of dishes are really expensive"},
-      { name:"an even another chicken", description:"even more chicken, i don't know why too much chicken, i just googled 'meal' and i got chicken, most of the meals were chicken and i choose the most nicest of all"}
+      { name:"chicken", description:"just some chicken with rice and whatever, would be nice to have it with tuna too", imagesrc:"" },
+      { name:"another chicken", description:"more chicken, the dish is really nice though, those kind of dishes are really expensive", imagesrc:""},
+      { name:"an even another chicken", description:"even more chicken, i don't know why too much chicken, i just googled 'meal' and i got chicken, most of the meals were chicken and i choose the most nicest of all", imagesrc:""}
     ];
   }
 

@@ -1,0 +1,80 @@
+#showcase
+{
+    min-height: 610px;
+    background-image: url('../../../assets/Header02.png');
+}
+
+
+.logoAndBar
+{
+    margin-bottom: 170px;
+}
+
+
+.logoAndBar h1
+{
+    color: #ffffff;
+    font-family: Cambria;
+    font-size: 44px;
+    font-weight: normal;
+    /*text-align: center;*/
+    padding-top: 20px;
+}
+
+
+.secondContents
+{
+    text-align: center;
+}
+
+
+.midText
+{
+    color: #ffffff;
+}
+
+
+.midText h2
+{
+    margin-bottom: -21px;
+
+    font-size: 55px;
+    font-weight: normal;
+    font-family: Cambria;
+}
+
+
+.midText p
+{
+    font-size: 22px;
+}
+
+
+.midButtons
+{
+    margin-top: 30px;
+}
+
+
+.midButtons button
+{
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+
+    background-color: Transparent;
+
+    border-style: solid;
+    border-width: 1px;
+
+    padding: 13px 18px;
+    margin-right: 21px;
+}
+
+
+.midButtons button:hover
+{
+    background-color: rgb(145, 207, 14);
+    border-color: rgb(145, 207, 14);
+    cursor: pointer;
+}

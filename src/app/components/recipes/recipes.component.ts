@@ -17,8 +17,6 @@ export class RecipesComponent implements OnInit {
   recipes: ARecipe[];
   theSelectedRecipe: ARecipe;
 
-  locatorIDString2: string;
-
   constructor(public dataService: DataService) 
   { }
 
@@ -44,12 +42,6 @@ export class RecipesComponent implements OnInit {
     //this.dataService.selectedRecipe(this.theSelectedRecipe);
     //console.log("selected recipe passed to data service")
     
-  }
-
-  getLocatorID(locatorID: string)
-  {
-    this.locatorIDString2 = locatorID;
-    console.log(this.locatorIDString2);
   }
 
 }

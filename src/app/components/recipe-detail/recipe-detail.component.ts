@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../Models/ARecipe';
 import { DataService } from '../../Services/data.service';
 import { Observable } from 'rxjs/Observable';
-
+import { OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -20,9 +21,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeName: string;
   recipeImageSource: string;
   recipeDescription: string;
-  locatorIDString: string;
-  
-  @Output() locatorIDEmitter = new EventEmitter<string>();
 
   /*******************************************************************************************/
 
@@ -50,10 +48,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   /*******************************************************************************************/
 
-  constructor(public dataService: DataService) 
-  { 
-    this.locatorIDEmitter.emit(this.locatorIDString);
-  }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() { }
 
