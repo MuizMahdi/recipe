@@ -1,30 +1,60 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../Models/ARecipe';
 import { DataService } from '../../Services/data.service';
+import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit 
+
+
+export class RecipeDetailComponent implements OnInit, OnChanges
 {
 
-  @Input('selectedRecipe') Recipe: ARecipe;
-  //@Input('selectedRecipeImgSrc') selectedImgSrc: string;
+  @Input() aSelectedRecipe: ARecipe;
+  changeDetect: ARecipe;
 
   recipeName: string;
-
-  recipe: ARecipe;
+  recipeImageSource: string;
+  recipeDescription: string;
+  locatorIDString: string;
   
-  constructor(public dataService: DataService) { console.log("FUC"); }
+  @Output() locatorIDEmitter = new EventEmitter<string>();
 
-  ngOnInit() 
-  { 
-    //this.recipe = this.dataService.getRecipe();
-    //console.log(this.recipe);
+  /*******************************************************************************************/
 
+  ngOnChanges(changes: SimpleChanges) 
+  {
+    for (let propName in changes) 
+    {
+      let chng = changes[propName];
+      this.changeDetect = chng.currentValue;                 // RETURNS THE OBJECT IT SELF
+
+      //this.theRecipe  = JSON.stringify(chng.currentValue);  // RETURNS A STRING OF THE OBJECT, NOT THE OBJECT IT SELF
+      //let prev = JSON.stringify(chng.previousValue);
+    }
+      //console.log(changes);
+    
+      
+    this.recipeName = this.changeDetect.name;
+    this.recipeImageSource = this.changeDetect.imagesrc;
+    this.recipeDescription = this.changeDetect.description;
+    //console.log(this.changeDetect.name);
     
   }
+
+  /*******************************************************************************************/
+
+  /*******************************************************************************************/
+
+  constructor(public dataService: DataService) 
+  { 
+    this.locatorIDEmitter.emit(this.locatorIDString);
+  }
+
+  ngOnInit() { }
 
 }

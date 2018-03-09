@@ -10,6 +10,7 @@ import { BookmarksComponent } from './Components/bookmarks/bookmarks.component';
 
 import { DataService } from './Services/data.service';
 import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
 
 
 
@@ -20,7 +21,8 @@ import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.
     RecipesComponent,
     MyRecipesComponent,
     BookmarksComponent,
-    RecipeDetailComponent
+    RecipeDetailComponent,
+    NavbarComponent
   ],
 
   imports: [

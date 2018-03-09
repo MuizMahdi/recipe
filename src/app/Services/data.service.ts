@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
+
 import { ARecipe } from '../Models/ARecipe';
+
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import {Subject} from 'rxjs/Subject'; 
+
 
 @Injectable()
-export class DataService {
+export class DataService 
+{
+
+  /*******************************************************************************************/
 
   recipes: ARecipe[];
   selected: ARecipe;
 
-  data: Observable<ARecipe>;
+  data: Observable<ARecipe>; 
+
+  /*******************************************************************************************/
 
   constructor() 
   { 
@@ -18,6 +28,8 @@ export class DataService {
       { name:"an even another chicken", description:"even more chicken, i don't know why too much chicken, i just googled 'meal' and i got chicken, most of the meals were chicken and i choose the most nicest of all"}
     ];
   }
+
+  /*******************************************************************************************/
 
   getRecipes()
   {
@@ -30,20 +42,23 @@ export class DataService {
     this.recipes.unshift(recipe);
   }
 
+  /*******************************************************************************************/
+
   selectedRecipe(theRecipe: ARecipe)
   {
     this.selected = theRecipe;
   }
 
-  getRecipe(): ARecipe
+  getSelectedRecipe(): ARecipe
   {
     return this.selected;
   }
 
-  getData()
-  {
-    this.data = new Observable(observer => observer.next());
-    return this.data;
-  }
+  /*******************************************************************************************/
+
+  
+
+  /*******************************************************************************************/
+
 
 }

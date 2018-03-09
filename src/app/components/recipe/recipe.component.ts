@@ -14,15 +14,22 @@ export class RecipeComponent implements OnInit
 { 
 
   @Input('recipeVal') recipe: ARecipe;
+  @Input('locatorIDReceived') locatorIDString3: string;
 
   imageSource: string;
   imagesSources: string[] = [ "assets/R01.png", "assets/R02.png", "assets/R03.jpg", "assets/R04.jpg", "assets/R05.jpg", "assets/R06.jpg", "assets/R07.jpg", "assets/R08.jpg", "assets/R09.jpg" ];
 
+
+
   @Output() theRecipeSelected = new EventEmitter<ARecipe>();
 
-  constructor(public dataService: DataService) { }
+  constructor(public dataService: DataService) {  }
 
-  ngOnInit() { this.imageSource = this.imagesSources[this.getRandomImage(0,8)] }
+  ngOnInit() 
+  { 
+    this.imageSource = this.imagesSources[this.getRandomImage(0,8)] 
+    this.recipe.imagesrc = this.imageSource;
+  }
   getRandomImage(min:number, max:number){return Math.floor(Math.random() * (max-min + 1)) + min;}
 
   getSelected()
