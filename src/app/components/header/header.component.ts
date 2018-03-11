@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from '../../Services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,12 @@ export class HeaderComponent implements OnInit
 
   closeResult: string;
 
-  constructor(private modalService: NgbModal) { }
 
+  formName: string;
+  formDescription: string;
+  formImageSource: string;
+
+  constructor(private modalService: NgbModal, public dataService: DataService) { }
 
 
   open(content) 
@@ -23,7 +28,12 @@ export class HeaderComponent implements OnInit
   }
 
   
-  ngOnInit() {
+  ngOnInit() { }
+
+
+  submitRecipe()
+  {
+    this.dataService.addRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
   }
 
 }

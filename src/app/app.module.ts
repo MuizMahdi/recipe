@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ScrollEventModule } from 'ngx-scroll-event';
 
 
@@ -35,7 +36,8 @@ import {NgbModule, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     ScrollEventModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    FormsModule
   ],
 
   providers: [ DataService ],
