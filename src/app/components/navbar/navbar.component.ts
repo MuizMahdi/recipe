@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit
     if(this.atTheTop)
     {
       //transparent
-      this.navState = "navbar sticky-top navbar-expand-lg";
+      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-primary";
     } else { // if atTheTop is false
       //not transparent
       this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-primary";

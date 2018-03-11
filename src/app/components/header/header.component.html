@@ -14,7 +14,7 @@
       </div>
 
       <div class="midButtons">
-          <button type="button">Add Recipe</button>
+          <button type="button" (click)="open(content)">Add Recipe</button>
           <button type="button">Login</button>
       </div>
       </div>
@@ -22,4 +22,35 @@
     </div>
 </section>
 
+
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <div class="modal-header">
+    <h4 class="modal-title">Add Recipe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="form-group">
+
+      <label>Recipe Name:</label>
+      <input type="text" class="form-control">
+
+      <label>Recipe Description:</label>
+      <input type="text" class="form-control">
+
+      <label>Recipe Image URL</label>
+      <input type="text" class="form-control">
+
+      <div class="modal-footer">
+        <input type="submit" value="Submit Recipe" class="btn btn-primary">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+
+    </form>
+  </div>
+
+</ng-template>
 

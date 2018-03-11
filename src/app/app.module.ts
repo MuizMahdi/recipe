@@ -14,6 +14,8 @@ import { HeaderComponent } from './Components/header/header.component';
 
 import { DataService } from './Services/data.service';
 
+import {NgbModule, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -32,7 +34,8 @@ import { DataService } from './Services/data.service';
 
   imports: [
     BrowserModule,
-    ScrollEventModule
+    ScrollEventModule,
+    NgbModule.forRoot()
   ],
 
   providers: [ DataService ],
