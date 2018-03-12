@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit
   
   locationOnTop: boolean = true;
   locationNotOnTop: boolean = false;
-  navState: string ="navbar sticky-top navbar-expand-lg"; //starts being transparent
+  navState: string ="navbar sticky-top navbar-expand-lg navbar-dark bg-dark"; //starts being transparent (remove navbar-dark bg-dark so it doesn't start black)
 
   constructor() { }
   ngOnInit() { }
@@ -50,10 +50,10 @@ export class NavbarComponent implements OnInit
     if(this.atTheTop)
     {
       //transparent
-      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-primary";
+      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-dark";
     } else { // if atTheTop is false
       //not transparent
-      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-primary";
+      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-dark";
     }
 
   }

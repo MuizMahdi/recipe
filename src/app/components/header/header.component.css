@@ -1,7 +1,7 @@
 #showcase
 {
     min-height: 610px;
-    background-image: url('../../../assets/Header02.png');
+    background-image: url('../../../assets/Header03.jpg');
 }
 
 
@@ -25,15 +25,16 @@ body.modal-open /* Prevent the right padding when open */
 
 .logoAndBar
 {
-    margin-bottom: 170px;
+    margin-bottom: 180px;
+    margin-left: 10%;
 }
 
 
 .logoAndBar h1
 {
     color: #ffffff;
-    font-family: Cambria;
-    font-size: 44px;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size: 64px;
     font-weight: normal;
     /*text-align: center;*/
     padding-top: 20px;
@@ -52,25 +53,26 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
-.midText h2
+/*.midText h2
 {
     margin-bottom: -21px;
 
     font-size: 55px;
     font-weight: normal;
-    font-family: Cambria;
-}
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}*/
 
 
 .midText p
 {
-    font-size: 22px;
+    font-size: 33px;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 }
 
 
 .midButtons
 {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 
@@ -92,7 +94,7 @@ body.modal-open /* Prevent the right padding when open */
 
 .midButtons button:hover
 {
-    background-color: rgb(145, 207, 14);
-    border-color: rgb(145, 207, 14);
+    background-color: rgb(14, 207, 127);
+    border-color: rgb(14, 207, 127);
     cursor: pointer;
 }
