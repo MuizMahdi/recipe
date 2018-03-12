@@ -45,7 +45,7 @@
       <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource">
 
       <div class="modal-footer">
-        <input type="button" (click)="submitRecipe()" value="Submit Recipe" class="btn btn-primary">
+        <input type="button" (click)="submitRecipe(); c('Close click')" value="Submit Recipe" class="btn btn-primary">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
       </div>
 

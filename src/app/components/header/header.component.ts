@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit
   open(content) 
   {
     this.modalService.open(content);
+
+    this.formName = "";
+    this.formDescription = "";
+    this.formImageSource = "";
   }
 
   
@@ -34,6 +38,10 @@ export class HeaderComponent implements OnInit
   submitRecipe()
   {
     this.dataService.addRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
+
+    this.formName = "";
+    this.formDescription = "";
+    this.formImageSource = "";
   }
 
 }

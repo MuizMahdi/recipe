@@ -21,7 +21,7 @@
   </div>
 
   <div class="recipe-show-more">
-    <a href="javascript:void(0)">Show more</a>
+    <a [hidden]="shortText" href="javascript:void(0)" (click)="showMore()">Show more</a>
   </div>
 
 </div>

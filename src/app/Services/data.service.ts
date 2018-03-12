@@ -39,7 +39,6 @@ export class DataService
 
   addRecipe(recipe: ARecipe)
   {
-    console.log("ADDED");
     this.recipes.unshift(recipe);
   }
 
