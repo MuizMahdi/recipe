@@ -1,7 +1,8 @@
 #showcase
 {
     min-height: 610px;
-    background-image: url('../../../assets/Header03.jpg');
+    background-image: url('../../../assets/Header04.jpg');
+    background-size:cover;
 }
 
 
