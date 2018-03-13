@@ -1,3 +1,13 @@
-<p>
-  my-recipes works!
-</p>
+<app-navbar></app-navbar>
+<br>
+
+<div *ngIf="theSelectedRecipe" class="container">
+    <app-my-recipe-detail [aSelectedMyRecipe]="theSelectedRecipe"></app-my-recipe-detail>
+</div>
+
+<hr>
+<div class="container">
+  <div class="row">
+    <app-recipe *ngFor="let myRecipe of myRecipes" [recipeVal]="myRecipe" (theRecipeSelected)="setSelected($event)" class="col-sm-4"></app-recipe>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+
+<div class="recipe">
+
+  <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
+  
+  <div class="recipe-name">
+    <p> {{recipeName}} </p>
+  </div> 
+  
+  <div>
+    <p class="recipe-text"> {{recipeDescription}} </p>
+  </div>
+  
+</div>
+
+<div class="side-menu">
+  <p> Views: </p>
+  <p> Likes: </p>
+
+  <div class="action-buttons">
+    <button type="button" id="leftButton" class="btn btn-outline-dark btn-lg" (click)="open(content)">Edit Recipe</button>
+    <br>
+    <button type="button" id="rightButton" class="btn btn-outline-dark btn-lg">Delete Recipe</button>
+  </div>
+</div>
+
+
+<!-- MODAL -->
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Recipe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <form class="form-group">
+  
+      <label for="text">Edit Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="formName" name="formName">
+  
+      <label for="text">Edit Description:</label>
+      <input type="text" class="form-control" [(ngModel)]="formDescription" name="formDescription">
+  
+      <label for="text">Change Image URL</label>
+      <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource">
+  
+      <div class="modal-footer">
+        <input type="button" (click)="editRecipe(); c('Close click')" value="Submit Edit" class="btn btn-primary">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+  
+    </form>
+  </div>
+  
+</ng-template>
+<!--      -->

@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit
   {
     this.modalService.open(content);
 
+    // clear the forms when modal opens
     this.formName = "";
     this.formDescription = "";
     this.formImageSource = "";
@@ -38,10 +39,12 @@ export class HeaderComponent implements OnInit
   submitRecipe()
   {
     this.dataService.addRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
+    this.dataService.addMyRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
 
+    /*// clear the values after submitting
     this.formName = "";
     this.formDescription = "";
-    this.formImageSource = "";
+    this.formImageSource = "";*/
   }
 
 }
