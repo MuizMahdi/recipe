@@ -96,6 +96,8 @@ export class RecipeComponent implements OnInit
 
   showMore()
   {
+    console.log("SHOW MORE");
+    
     this.showMoreText = !this.showMoreText;
 
     if(this.showMoreText) 

@@ -34,6 +34,12 @@ export class DataService
     ];
 
     this.myRecipes = [
+
+      /*{ name:"ONE", description:"ONE", imagesrc:"" },
+      { name:"TWO", description:"TWO", imagesrc:"" },
+      { name:"THREE", description:"THREE", imagesrc:"" },
+      { name:"FOUR", description:"FOUR", imagesrc:"" },
+      { name:"FIVE", description:"FIVE", imagesrc:"" }*/
       
     ];
   }
@@ -91,37 +97,70 @@ export class DataService
 /*******************************************************************************************/
 
 
+
 /*******************************************************************************************/
 
   editRecipe(recipeToEdit: ARecipe, editingData: ARecipe)
   {
 
-    for (let myRecipe of this.recipes)
+    for(let i=0; i<this.recipes.length; i++)
     {
-      if(myRecipe.name == recipeToEdit.name)
+      if(this.recipes[i].name == recipeToEdit.name)
       {
-        myRecipe.name = editingData.name;
-        myRecipe.description = editingData.description;
-        myRecipe.imagesrc = editingData.imagesrc;
+        console.log("Changed in recipes");
+        this.recipes[i].name = editingData.name;
+        this.recipes[i].description = editingData.description;
+        this.recipes[i].imagesrc = editingData.imagesrc;
       }
     }
 
 
-    for (let myRecipe of this.myRecipes)
+    for(let i=0; i<this.myRecipes.length; i++)
     {
-      if(myRecipe.name == recipeToEdit.name)
+      if(this.myRecipes[i].name == recipeToEdit.name)
       {
-        myRecipe.name = editingData.name;
-        myRecipe.description = editingData.description;
-        myRecipe.imagesrc = editingData.imagesrc;
-
-        //that changes it in myRecipes only, changes need to be applied to recipes on front page too !
+        console.log("Changed in myRecipes");
+        this.myRecipes[i].name = editingData.name;
+        this.myRecipes[i].description = editingData.description;
+        this.myRecipes[i].imagesrc = editingData.imagesrc;  
       }
     }
-    
+
   }
 
 /*******************************************************************************************/
 
+
+
+/*******************************************************************************************/
+  
+
+  deleteRecipe(recipeToDelete: ARecipe)
+  {
+       
+    for(let i=0; i<this.recipes.length; i++)
+    {
+      if(this.recipes[i].name == recipeToDelete.name)
+      {
+        console.log("Deleted from recipes");
+        this.recipes.splice(i,1);
+        break;
+      }
+    }
+    
+
+    for(let i=0; i<this.myRecipes.length; i++)
+    {
+      if(this.myRecipes[i].name == recipeToDelete.name)
+      {
+        console.log("Deleted from myRecipes");
+        this.myRecipes.splice(i,1);
+        break;
+      }
+    }
+
+  }
+
+/*******************************************************************************************/
 
 }

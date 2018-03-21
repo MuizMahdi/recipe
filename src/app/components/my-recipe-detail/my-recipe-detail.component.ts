@@ -84,9 +84,9 @@ export class MyRecipeDetailComponent implements OnInit
 
   editRecipe()
   {
-    for (let myRecipe of this.dataService.getMyRecipes())
+    for (let myRecipe of this.dataService.getMyRecipes()) // go through the myRecipes array in data service
     {
-      if(myRecipe.name == this.recipeName) //find the name of the recipe being edited on the data service
+      if(myRecipe.name == this.recipeName) // and find the name of the recipe on data service that matches the one thats being edited
       {
         this.editingData = {name:this.formName, description:this.formDescription, imagesrc:this.formImageSource}
 
@@ -98,7 +98,7 @@ export class MyRecipeDetailComponent implements OnInit
         this.recipeDescription = this.formDescription;
         this.recipeImageSource = this.formImageSource;
       }
-    }
+    }    
 
     //this.dataService.addRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
     //this.dataService.addMyRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
@@ -107,6 +107,25 @@ export class MyRecipeDetailComponent implements OnInit
     this.formName = "";
     this.formDescription = "";
     this.formImageSource = "";*/
+  }
+
+/*******************************************************************************************/
+
+
+
+
+/*******************************************************************************************/
+
+  deleteRecipe()
+  {
+    for (let myRecipe of this.dataService.getMyRecipes()) // go through myRecipes in data service
+    {
+      if(myRecipe.name == this.recipeName) // if found :-
+      {
+        // it gets the right recipe here..
+        this.dataService.deleteRecipe(myRecipe);
+      }
+    }
   }
 
 /*******************************************************************************************/
