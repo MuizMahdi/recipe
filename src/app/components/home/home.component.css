@@ -1,0 +1,39 @@
+.quote
+{
+    padding-top: 200px;
+    background-color: rgb(245, 245, 245);
+    padding-bottom: 200px;
+
+    font-family: "Franklin Gothic Medium";
+    color: rgb(58, 58, 58);
+    text-align: center;
+}
+
+.quote h1
+{
+    font-size: 70px;
+}
+
+.secondImage
+{
+    background: url('../../../assets/Header01.jpg') no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    height: 300px;
+}
+
+.top-recipes
+{
+    text-align: center;
+}
+
+.footer
+{
+    padding-top: 70px;
+    padding-bottom: 50px;
+
+    background-color: rgb(32, 32, 32);
+    color:white;
+}
+

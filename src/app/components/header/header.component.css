@@ -1,9 +1,18 @@
-#showcase
+.showcase
 {
-    min-height: 610px;
-    background-image: url('../../../assets/Header04.jpg');
+    background-image: url('../../../assets/Header09.jpg');
+    height: 100vh;
+
     background-size:cover;
+    background-position: center; 
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../../../assets/Header09.jpg);
+    background-attachment: fixed; 
+
+    position: relative;
 }
+
+
+  
 
 
 body.modal-open /* Prevent the right padding when open */
@@ -45,6 +54,10 @@ body.modal-open /* Prevent the right padding when open */
 .secondContents
 {
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -54,33 +67,24 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
-/*.midText h2
-{
-    margin-bottom: -21px;
 
+.midText h1
+{
     font-size: 55px;
-    font-weight: normal;
-    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-}*/
-
-
-.midText p
-{
-    font-size: 33px;
-    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-family: "Century Gothic";
 }
 
 
 .midButtons
 {
-    margin-top: 25px;
+    margin-top: 35px;
 }
 
 
 .midButtons button
 {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 25px;
+    /*font-weight: bold;*/
     color: #ffffff;
 
     background-color: Transparent;
@@ -90,12 +94,13 @@ body.modal-open /* Prevent the right padding when open */
 
     padding: 13px 18px;
     margin-right: 21px;
+    border-radius: 2px;
 }
 
 
 .midButtons button:hover
 {
-    background-color: rgb(14, 207, 127);
-    border-color: rgb(14, 207, 127);
+    background-color: rgb(66, 66, 66);
+    border-color: rgb(148, 148, 148);
     cursor: pointer;
 }

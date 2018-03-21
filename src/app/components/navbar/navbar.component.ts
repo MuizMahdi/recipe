@@ -24,11 +24,11 @@ export class NavbarComponent implements OnInit
 
   public handleScroll(event: ScrollEvent) 
   {
-    if (event.isReachingBottom) 
+    /*if (event.isReachingBottom) 
     {
       console.log(`AT THE BOTTOM`);
       this.middleEventsCounter = 0;
-    }
+    }*/
 
     if (event.isReachingTop) 
     {

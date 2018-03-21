@@ -1,25 +1,24 @@
 
-<section id="showcase">
+<div class="showcase">  
+
+  <div class="logoAndBar">
+    <h1>RECIPE</h1>
+  </div>
+
     
-      <div class="logoAndBar">
-        <h1>RECIPE</h1>
-      </div>
-
-    <div class="container">
-      
-      <div class="secondContents">
-      <div class="midText">
-          <p> Start adding and sharing your own recipes now ! </p>
-      </div>
-
-      <div class="midButtons">
-          <button type="button" (click)="open(content)">Add Recipe</button>
-          <button type="button">Login</button>
-      </div>
-      </div>
-
+  <div class="secondContents">
+    <div class="midText">
+      <h1> Start adding and sharing your own recipes </h1>
     </div>
-</section>
+
+    <div class="midButtons">
+      <button type="button" (click)="open(content)">Add Recipe</button>
+    </div>
+  </div>
+   
+</div>
+
+
 
 
 <ng-template #content let-c="close" let-d="dismiss">

@@ -26,7 +26,6 @@ export class RecipeComponent implements OnInit
   miniDescription: string;
   shortText: boolean;
 
-x
   @Output() theRecipeSelected = new EventEmitter<ARecipe>();
 
 //---------------------------------------------------------------------------------------------------------------------------------//
