@@ -13,7 +13,6 @@ import { DataService } from '../../Services/data.service';
 export class RecipeComponent implements OnInit 
 { 
 
-
 //---------------------------------------------------------------------------------------------------------------------------------//
   @Input('recipeVal') recipe: ARecipe;
   @Input('locatorIDReceived') locatorIDString3: string;
@@ -27,7 +26,7 @@ export class RecipeComponent implements OnInit
   miniDescription: string;
   shortText: boolean;
 
-
+x
   @Output() theRecipeSelected = new EventEmitter<ARecipe>();
 
 //---------------------------------------------------------------------------------------------------------------------------------//
@@ -35,27 +34,35 @@ export class RecipeComponent implements OnInit
 
 //---------------------------------------------------------------------------------------------------------------------------------//
 
-  constructor(public dataService: DataService) {  }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() 
   { 
+    this.randomizeImages(); 
+  }
 
-    if(this.recipe.imagesrc.length > 5)
-    {
-      this.imageSource = this.recipe.imagesrc;
-    }
-    else
-    {
-      this.imageSource = this.imagesSources[this.getRandomImage(0,8)] 
-      this.recipe.imagesrc = this.imageSource;
-    }
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+  ngAfterContentInit()
+  {
+    // reset the 'show more', showing it, and viewing the miniDescription every time the page is left and opened again.
+    this.initShowMore();
+  }
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+  initShowMore()
+  {
     if(this.recipe.description.length > 90) 
     {
       this.miniDescription = this.recipe.description.slice(0,90) + "..."; //start sliced
       this.shortText = false; //view the "ShowMore"
-
     } 
     else 
     { 
@@ -65,7 +72,6 @@ export class RecipeComponent implements OnInit
     
     this.fullDescription = this.recipe.description;
     this.recipe.description = this.miniDescription;
-    
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//
@@ -76,6 +82,24 @@ export class RecipeComponent implements OnInit
   getRandomImage(min:number, max:number)
   {
     return Math.floor(Math.random() * (max-min + 1)) + min;
+  }
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+  randomizeImages()
+  { 
+    if(this.recipe.imagesrc.length > 5)
+    {
+      this.imageSource = this.recipe.imagesrc;
+    }
+    else
+    {
+      this.imageSource = this.imagesSources[this.getRandomImage(0,8)] 
+      this.recipe.imagesrc = this.imageSource;
+    }
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//
@@ -96,19 +120,20 @@ export class RecipeComponent implements OnInit
 
   showMore()
   {
-    console.log("SHOW MORE");
     
     this.showMoreText = !this.showMoreText;
 
     if(this.showMoreText) 
     {
       this.recipe.description = this.fullDescription;
+      this.shortText = true; // hide the 'show more' after viewing full description (until page is left)
     } 
     
-    if(!this.showMoreText) 
+    if(!this.showMoreText)
     {
       this.recipe.description = this.miniDescription;
     }
+
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//
