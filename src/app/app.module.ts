@@ -20,6 +20,8 @@ import { DataService } from './Services/data.service';
 import {NgbModule, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MyRecipeComponent } from './Components/my-recipe/my-recipe.component';
 import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe-detail.component';
+import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
+import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 
 
 
@@ -44,7 +46,9 @@ const appRoutes: Routes = [
     HeaderComponent,
     HomeComponent,
     MyRecipeComponent,
-    MyRecipeDetailComponent
+    MyRecipeDetailComponent,
+    AllRecipesComponent,
+    TopRecipesComponent
   ],
 
   imports: [

@@ -1,4 +1,13 @@
-body
+.columns
 {
-    color: black;
+    float: left;
+    width: 33.33%;
+}
+
+@media screen and (max-width: 800px) 
+{
+    .columns 
+    {
+        width: 100%;
+    }
 }

@@ -14,7 +14,16 @@
     font-size: 70px;
 }
 
-.secondImage
+.first-image
+{
+    background: url('../../../assets/Header00.jpg') no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    height: 300px;
+}
+
+.second-image
 {
     background: url('../../../assets/Header01.jpg') no-repeat center;
     background-size: cover;
