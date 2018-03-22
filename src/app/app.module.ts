@@ -29,7 +29,8 @@ import { TopRecipesComponent } from './Components/top-recipes/top-recipes.compon
 // Routes 
 const appRoutes: Routes = [
   {path:'', component:HomeComponent},
-  {path:'myrecipes', component:MyRecipesComponent}
+  {path:'myrecipes', component:MyRecipesComponent},
+  {path:'allrecipes', component:AllRecipesComponent}
 ];
 
 

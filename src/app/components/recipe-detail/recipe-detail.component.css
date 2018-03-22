@@ -24,6 +24,8 @@
 
 .recipe-text
 {
+    font-size: 23px;
+
     text-align: center;
     padding-left: 10px;
     margin-bottom: 30px;
@@ -36,6 +38,72 @@
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 35px;
 }
 
+
+/*INGREDIENTS*/
+.ingredients-list
+{
+    margin-top: 130px;
+    margin-bottom: 10px;
+    padding: 40px;
+}
+
+
+.ingredients-list-header
+{
+    margin-bottom: 20px;
+}
+
+
+#ingredient
+{
+    font-size: 20px;
+}
+
+
+/*UPVOTING*/
+.recipe-upvotes
+{
+    margin-left: 50px;
+    margin-bottom: 80px;
+}
+
+
+.upvote-text
+{
+    float: left;
+    margin-right: 10px;
+    margin-top: 20px;
+
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.upvote-number
+{
+    display: inline-block;
+    font-size: 45px;
+    font-weight: 500;
+}
+
+
+.upvote-button
+{
+  display: inline-block;
+  margin-right: 30px;
+  
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 -25px;
+}
+
+
+.upvote-button.on 
+{
+    background-position: 0 2px;
+}

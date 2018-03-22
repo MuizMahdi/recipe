@@ -1,3 +1,4 @@
+import { an_Ingredient } from './../../Models/an_Ingredient';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../Models/ARecipe';
 import { DataService } from '../../Services/data.service';
@@ -21,6 +22,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeName: string;
   recipeImageSource: string;
   recipeDescription: string;
+  recipeIngredients: string[];
+  recipeAmounts: number[];
+  recipeUpvotes: number;
+
+  Ingredients: an_Ingredient[];
 
   /*******************************************************************************************/
 
@@ -40,7 +46,20 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
     this.recipeDescription = this.changeDetect.description;
-    //console.log(this.changeDetect.name);
+
+    this.recipeUpvotes = this.changeDetect.upvotes;
+
+    this.recipeIngredients = this.changeDetect.ingredients;
+    this.recipeAmounts = this.changeDetect.amounts;
+
+    
+    /*for(let i=0; i<this.Ingredients.length; i++)
+    {
+      this.Ingredients[i] = ({name: this.recipeIngredients[i], amount: this.recipeAmounts[i]});
+      console.log();
+    }*/
+
+    console.log(this.changeDetect.amounts);
     
   }
 

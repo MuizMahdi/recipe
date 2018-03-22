@@ -33,6 +33,12 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
+#add-button
+{
+    margin-top: 10px;
+}
+
+
 .logoAndBar
 {
     margin-bottom: 180px;

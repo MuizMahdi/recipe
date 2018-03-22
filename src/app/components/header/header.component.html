@@ -42,10 +42,36 @@
       <label for="text">Recipe Image URL</label>
       <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource">
 
+      <div class="recipe-ingredients">
+
+        <div class="ingredient">
+            <label for="text">Ingredient</label>
+            <input type="text" class="form-control" [(ngModel)]="formIngredientName" name="formIngredientName">
+        </div>
+        <div class="amount">
+            <label for="text">Amount</label>
+            <input type="text" class="form-control" [(ngModel)]="formIngredientAmount" name="formIngredientAmount">
+        </div>
+
+      </div>
+      <input type="button" (click)="addIngredient()" value="Add" id="add-button" class="btn btn-primary">
+
+      
+      <div *ngIf="Ingredients">
+        <ul class="list-group">
+          <li *ngFor="let anIngredient of Ingredients" class="list-group-item">
+            {{anIngredient.name}}
+            <span class="badge badge-primary badge-pill">{{anIngredient.amount}}</span> 
+          </li>
+        </ul>
+      </div>
+
+
       <div class="modal-footer">
         <input type="button" (click)="submitRecipe(); c('Close click')" value="Submit Recipe" class="btn btn-primary">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
       </div>
+
 
     </form>
   </div>
