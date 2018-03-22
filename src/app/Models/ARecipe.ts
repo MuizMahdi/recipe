@@ -6,4 +6,5 @@ export interface ARecipe
     upvotes: number;
     ingredients: string[];
     amounts: number[];
+    upvoted: boolean;
 }

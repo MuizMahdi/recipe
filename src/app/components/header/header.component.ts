@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit
     this.dataService.addRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts});
     this.dataService.addMyRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts});
 
-
     /*// clear the values after submitting
     this.formName = "";
     this.formDescription = "";
@@ -74,9 +73,6 @@ export class HeaderComponent implements OnInit
     // add IngredientName to array for addRecipe() in dataService.
     this.ingredientsNames.push(this.formIngredientName);
     this.ingredientsAmounts.push(this.formIngredientAmount);
-
-    //console.log(this.ingredientsAmounts);
-
   }
 
 }

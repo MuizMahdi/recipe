@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 
+
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -16,22 +17,41 @@ import { SimpleChanges } from '@angular/core';
 export class RecipeDetailComponent implements OnInit, OnChanges
 {
 
+/*******************************************************************************************/
   @Input() aSelectedRecipe: ARecipe;
   changeDetect: ARecipe;
 
   recipeName: string;
   recipeImageSource: string;
   recipeDescription: string;
+
   recipeIngredients: string[];
   recipeAmounts: number[];
-  recipeUpvotes: number;
 
   theIngredients: an_Ingredient[];
 
-  /*******************************************************************************************/
+  recipeUpvotes: number;
+  recipeUpvoted: boolean;
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+constructor(public dataService: DataService)
+{ 
+  this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+}
+
+ngOnInit() {  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
 
   ngOnChanges(changes: SimpleChanges) 
   {
+
     for (let propName in changes) 
     {
       let chng = changes[propName];
@@ -40,8 +60,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       //this.theRecipe  = JSON.stringify(chng.currentValue);  // RETURNS A STRING OF THE OBJECT, NOT THE OBJECT IT SELF
       //let prev = JSON.stringify(chng.previousValue);
     }
-      //console.log(changes);
     
+    //console.log(changes);
       
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
@@ -52,27 +72,30 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeIngredients = this.changeDetect.ingredients;
     this.recipeAmounts = this.changeDetect.amounts;
 
+    this.recipeUpvoted = this.changeDetect.upvoted;
     
-    for(let i=0; i<this.recipeIngredients.length; i++)
+    
+    for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
     {
       this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
     }
-
-    
-
-    console.log(this.theIngredients);
     
   }
 
-  /*******************************************************************************************/
+/*******************************************************************************************/
 
-  /*******************************************************************************************/
 
-  constructor(public dataService: DataService)
-  { 
-    this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+/*******************************************************************************************/
+
+  upvoteRecipe()
+  {
+    this.recipeUpvotes = this.recipeUpvotes + 1;
+    this.recipeUpvoted = true;
+    this.dataService.recipeUpvoted(this.recipeName);
   }
 
-  ngOnInit() {  }
+/*******************************************************************************************/
+
+
 
 }

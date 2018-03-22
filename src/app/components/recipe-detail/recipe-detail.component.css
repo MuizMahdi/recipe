@@ -90,21 +90,30 @@
 }
 
 
-.upvote-button
+.upvotedButton
 {
-  display: inline-block;
-  margin-right: 30px;
+    display: inline-block;
+    margin-right: 30px;
   
-  overflow: hidden;
-  width: 40px;
-  height: 25px;
-  cursor: pointer;
-  background: url('http://i.stack.imgur.com/iqN2k.png');
-  background-position: 0 -25px;
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    background: url('http://i.stack.imgur.com/iqN2k.png');
+    background-position: 0 2px;
+    pointer-events: none;
 }
 
 
-.upvote-button.on 
+.unUpvotedButton
 {
-    background-position: 0 2px;
+    display: inline-block;
+    margin-right: 30px;
+  
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    cursor: pointer;
+    background: url('http://i.stack.imgur.com/iqN2k.png');
+    background-position: 0 -25px;
+    
 }

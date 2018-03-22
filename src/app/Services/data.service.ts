@@ -29,22 +29,22 @@ export class DataService
   constructor() 
   { 
    this.recipes = [
-      { name:"Meal 01", amounts:[2,3,8,9,5], upvotes:14, ingredients:["Meal 01 Ingredient 01","Meal 01 Ingredient 02","Meal 01 Ingredient 03","Meal 01 Ingredient 04","Meal 01 Ingredient 05"], description:"Meal 01 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M01.jpg" },
-      { name:"Meal 02", amounts:[2,3,8,9,5], upvotes:13, ingredients:["Meal 02 Ingredient 01","Meal 02 Ingredient 02","Meal 02 Ingredient 03","Meal 02 Ingredient 04","Meal 02 Ingredient 05"], description:"Meal 02 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M02.jpg" },
-      { name:"Meal 03", amounts:[2,3,8,9,5], upvotes:22, ingredients:["Meal 03 Ingredient 01","Meal 03 Ingredient 02","Meal 03 Ingredient 03","Meal 03 Ingredient 04","Meal 03 Ingredient 05"], description:"Meal 03 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M03.jpg" },
-      { name:"Meal 04", amounts:[2,3,8,9,5], upvotes:29, ingredients:["Meal 04 Ingredient 01","Meal 04 Ingredient 02","Meal 04 Ingredient 03","Meal 04 Ingredient 04","Meal 04 Ingredient 05"], description:"Meal 04 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M04.jpg" },
-      { name:"Meal 05", amounts:[2,3,8,9,5], upvotes:15, ingredients:["Meal 05 Ingredient 01","Meal 05 Ingredient 02","Meal 05 Ingredient 03","Meal 05 Ingredient 04","Meal 05 Ingredient 05"], description:"Meal 05 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M05.jpg" },
-      { name:"Meal 06", amounts:[2,3,8,9,5], upvotes:7, ingredients:["Meal 06 Ingredient 01","Meal 06 Ingredient 02","Meal 06 Ingredient 03","Meal 06 Ingredient 04","Meal 06 Ingredient 05"], description:"Meal 06 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M06.jpg" },
-      { name:"Meal 07", amounts:[2,3,8,9,5], upvotes:11, ingredients:["Meal 07 Ingredient 01","Meal 07 Ingredient 02","Meal 07 Ingredient 03","Meal 07 Ingredient 04","Meal 07 Ingredient 05"], description:"Meal 07 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M07.jpg" },
-      { name:"Meal 08", amounts:[2,3,8,9,5], upvotes:18, ingredients:["Meal 08 Ingredient 01","Meal 08 Ingredient 02","Meal 08 Ingredient 03","Meal 08 Ingredient 04","Meal 08 Ingredient 05"], description:"Meal 08 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M08.jpg" },
-      { name:"Meal 09", amounts:[2,3,8,9,5], upvotes:12, ingredients:["Meal 09 Ingredient 01","Meal 09 Ingredient 02","Meal 09 Ingredient 03","Meal 09 Ingredient 04","Meal 09 Ingredient 05"], description:"Meal 09 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M09.png" },
-      { name:"Meal 10", amounts:[2,3,8,9,5], upvotes:21, ingredients:["Meal 10 Ingredient 01","Meal 10 Ingredient 02","Meal 10 Ingredient 03","Meal 10 Ingredient 04","Meal 10 Ingredient 05"], description:"Meal 10 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M10.png" },
-      { name:"Meal 11", amounts:[2,3,8,9,5], upvotes:17, ingredients:["Meal 11 Ingredient 11","Meal 11 Ingredient 02","Meal 11 Ingredient 03","Meal 11 Ingredient 04","Meal 11 Ingredient 05"], description:"Meal 11 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M11.jpg" },
-      { name:"Meal 12", amounts:[2,3,8,9,5], upvotes:3, ingredients:["Meal 12 Ingredient 12","Meal 12 Ingredient 02","Meal 12 Ingredient 03","Meal 12 Ingredient 04","Meal 12 Ingredient 05"], description:"Meal 12 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M12.jpg" },
-      { name:"Meal 13", amounts:[2,3,8,9,5], upvotes:11, ingredients:["Meal 13 Ingredient 01","Meal 13 Ingredient 02","Meal 13 Ingredient 03","Meal 13 Ingredient 04","Meal 13 Ingredient 05"], description:"Meal 13 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M13.jpg" },
-      { name:"Meal 14", amounts:[2,3,8,9,5], upvotes:23, ingredients:["Meal 14 Ingredient 01","Meal 14 Ingredient 02","Meal 14 Ingredient 03","Meal 14 Ingredient 04","Meal 14 Ingredient 05"], description:"Meal 14 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M14.jpg" },
-      { name:"Meal 15", amounts:[2,3,8,9,5], upvotes:19, ingredients:["Meal 15 Ingredient 01","Meal 15 Ingredient 02","Meal 15 Ingredient 03","Meal 15 Ingredient 04","Meal 15 Ingredient 05"], description:"Meal 15 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M15.jpg" },
-      { name:"Meal 16", amounts:[2,3,8,9,5], upvotes:16, ingredients:["Meal 16 Ingredient 01","Meal 16 Ingredient 02","Meal 16 Ingredient 03","Meal 16 Ingredient 04","Meal 16 Ingredient 05"], description:"Meal 16 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M16.jpg" }
+      { name:"Meal 01", upvoted: false, amounts:[2,3,8,9,5], upvotes:14, ingredients:["Meal 01 Ingredient 01","Meal 01 Ingredient 02","Meal 01 Ingredient 03","Meal 01 Ingredient 04","Meal 01 Ingredient 05"], description:"Meal 01 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M01.jpg" },
+      { name:"Meal 02", upvoted: false, amounts:[2,3,8,9,5], upvotes:13, ingredients:["Meal 02 Ingredient 01","Meal 02 Ingredient 02","Meal 02 Ingredient 03","Meal 02 Ingredient 04","Meal 02 Ingredient 05"], description:"Meal 02 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M02.jpg" },
+      { name:"Meal 03", upvoted: false, amounts:[2,3,8,9,5], upvotes:22, ingredients:["Meal 03 Ingredient 01","Meal 03 Ingredient 02","Meal 03 Ingredient 03","Meal 03 Ingredient 04","Meal 03 Ingredient 05"], description:"Meal 03 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M03.jpg" },
+      { name:"Meal 04", upvoted: false, amounts:[2,3,8,9,5], upvotes:29, ingredients:["Meal 04 Ingredient 01","Meal 04 Ingredient 02","Meal 04 Ingredient 03","Meal 04 Ingredient 04","Meal 04 Ingredient 05"], description:"Meal 04 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M04.jpg" },
+      { name:"Meal 05", upvoted: false, amounts:[2,3,8,9,5], upvotes:15, ingredients:["Meal 05 Ingredient 01","Meal 05 Ingredient 02","Meal 05 Ingredient 03","Meal 05 Ingredient 04","Meal 05 Ingredient 05"], description:"Meal 05 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M05.jpg" },
+      { name:"Meal 06", upvoted: false, amounts:[2,3,8,9,5], upvotes:7, ingredients:["Meal 06 Ingredient 01","Meal 06 Ingredient 02","Meal 06 Ingredient 03","Meal 06 Ingredient 04","Meal 06 Ingredient 05"], description:"Meal 06 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M06.jpg" },
+      { name:"Meal 07", upvoted: false, amounts:[2,3,8,9,5], upvotes:11, ingredients:["Meal 07 Ingredient 01","Meal 07 Ingredient 02","Meal 07 Ingredient 03","Meal 07 Ingredient 04","Meal 07 Ingredient 05"], description:"Meal 07 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M07.jpg" },
+      { name:"Meal 08", upvoted: false, amounts:[2,3,8,9,5], upvotes:18, ingredients:["Meal 08 Ingredient 01","Meal 08 Ingredient 02","Meal 08 Ingredient 03","Meal 08 Ingredient 04","Meal 08 Ingredient 05"], description:"Meal 08 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M08.jpg" },
+      { name:"Meal 09", upvoted: false, amounts:[2,3,8,9,5], upvotes:12, ingredients:["Meal 09 Ingredient 01","Meal 09 Ingredient 02","Meal 09 Ingredient 03","Meal 09 Ingredient 04","Meal 09 Ingredient 05"], description:"Meal 09 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M09.png" },
+      { name:"Meal 10", upvoted: false, amounts:[2,3,8,9,5], upvotes:21, ingredients:["Meal 10 Ingredient 01","Meal 10 Ingredient 02","Meal 10 Ingredient 03","Meal 10 Ingredient 04","Meal 10 Ingredient 05"], description:"Meal 10 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M10.png" },
+      { name:"Meal 11", upvoted: false, amounts:[2,3,8,9,5], upvotes:17, ingredients:["Meal 11 Ingredient 11","Meal 11 Ingredient 02","Meal 11 Ingredient 03","Meal 11 Ingredient 04","Meal 11 Ingredient 05"], description:"Meal 11 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M11.jpg" },
+      { name:"Meal 12", upvoted: false, amounts:[2,3,8,9,5], upvotes:3, ingredients:["Meal 12 Ingredient 12","Meal 12 Ingredient 02","Meal 12 Ingredient 03","Meal 12 Ingredient 04","Meal 12 Ingredient 05"], description:"Meal 12 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M12.jpg" },
+      { name:"Meal 13", upvoted: false, amounts:[2,3,8,9,5], upvotes:11, ingredients:["Meal 13 Ingredient 01","Meal 13 Ingredient 02","Meal 13 Ingredient 03","Meal 13 Ingredient 04","Meal 13 Ingredient 05"], description:"Meal 13 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M13.jpg" },
+      { name:"Meal 14", upvoted: false, amounts:[2,3,8,9,5], upvotes:23, ingredients:["Meal 14 Ingredient 01","Meal 14 Ingredient 02","Meal 14 Ingredient 03","Meal 14 Ingredient 04","Meal 14 Ingredient 05"], description:"Meal 14 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M14.jpg" },
+      { name:"Meal 15", upvoted: false, amounts:[2,3,8,9,5], upvotes:19, ingredients:["Meal 15 Ingredient 01","Meal 15 Ingredient 02","Meal 15 Ingredient 03","Meal 15 Ingredient 04","Meal 15 Ingredient 05"], description:"Meal 15 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M15.jpg" },
+      { name:"Meal 16", upvoted: false, amounts:[2,3,8,9,5], upvotes:16, ingredients:["Meal 16 Ingredient 01","Meal 16 Ingredient 02","Meal 16 Ingredient 03","Meal 16 Ingredient 04","Meal 16 Ingredient 05"], description:"Meal 16 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M16.jpg" }
     ];
 
 
@@ -176,4 +176,32 @@ export class DataService
 
 /*******************************************************************************************/
 
+
+/*******************************************************************************************/
+
+  recipeUpvoted(recipeName: string)
+  {
+    for(let i=0; i<this.recipes.length; i++)
+    {
+      if(this.recipes[i].name == recipeName)
+      {
+        this.recipes[i].upvoted = true;
+        this.recipes[i].upvotes =  this.recipes[i].upvotes + 1;
+        break;
+      }
+    }
+    
+
+    for(let i=0; i<this.myRecipes.length; i++)
+    {
+      if(this.myRecipes[i].name == recipeName)
+      {
+        this.myRecipes.upvoted = true;
+        this.myRecipes[i].upvotes =  this.myRecipes[i].upvotes + 1;
+        break;
+      }
+    }
+  }
+
+/*******************************************************************************************/
 }
