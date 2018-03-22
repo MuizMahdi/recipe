@@ -109,7 +109,7 @@ export class RecipeComponent implements OnInit
   getSelected()
   {
     //send recipe with full description to view in details, so it wont view the sliced version.
-    this.theRecipeSelected.emit({name: this.recipe.name, description: this.fullDescription, imagesrc: this.recipe.imagesrc, upvotes: this.recipe.upvotes, ingredients: this.recipe.ingredients});
+    this.theRecipeSelected.emit({name: this.recipe.name, description: this.fullDescription, imagesrc: this.recipe.imagesrc, upvotes: this.recipe.upvotes, ingredients: this.recipe.ingredients, amounts: this.recipe.amounts});
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//

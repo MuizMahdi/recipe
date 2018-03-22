@@ -26,7 +26,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeAmounts: number[];
   recipeUpvotes: number;
 
-  Ingredients: an_Ingredient[];
+  theIngredients: an_Ingredient[];
 
   /*******************************************************************************************/
 
@@ -53,13 +53,14 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeAmounts = this.changeDetect.amounts;
 
     
-    /*for(let i=0; i<this.Ingredients.length; i++)
+    for(let i=0; i<this.recipeIngredients.length; i++)
     {
-      this.Ingredients[i] = ({name: this.recipeIngredients[i], amount: this.recipeAmounts[i]});
-      console.log();
-    }*/
+      this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
+    }
 
-    console.log(this.changeDetect.amounts);
+    
+
+    console.log(this.theIngredients);
     
   }
 
@@ -67,8 +68,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   /*******************************************************************************************/
 
-  constructor(public dataService: DataService) { }
+  constructor(public dataService: DataService)
+  { 
+    this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+  }
 
-  ngOnInit() { }
+  ngOnInit() {  }
 
 }

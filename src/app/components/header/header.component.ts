@@ -75,6 +75,8 @@ export class HeaderComponent implements OnInit
     this.ingredientsNames.push(this.formIngredientName);
     this.ingredientsAmounts.push(this.formIngredientAmount);
 
+    //console.log(this.ingredientsAmounts);
+
   }
 
 }
