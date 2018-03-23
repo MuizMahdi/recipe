@@ -4,6 +4,7 @@ import { SimpleChanges } from '@angular/core';
 import { ARecipe } from '../../Models/ARecipe';
 import { DataService } from '../../Services/data.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { an_Ingredient } from './../../Models/an_Ingredient';
 
 
 @Component({
@@ -32,6 +33,21 @@ export class MyRecipeDetailComponent implements OnInit
   formName: string;
   formDescription: string;
   formImageSource: string;
+
+  Ingredients: an_Ingredient[]; // used for editing
+  theIngredients: an_Ingredient[]; // used for viewing
+
+  formIngredientName: string;
+  formIngredientAmount: number;
+
+  ingredientsNames = [];
+  ingredientsAmounts = [];
+
+  recipeIngredient: string[];
+  recipeAmount: number[];
+
+  recipeUpvotes: number;
+  recipeUpvoted: boolean;
 /*******************************************************************************************/
 
 
@@ -40,6 +56,7 @@ export class MyRecipeDetailComponent implements OnInit
 
   ngOnChanges(changes: SimpleChanges) 
   {
+
     for (let propName in changes) 
     {
       let chng = changes[propName];
@@ -49,7 +66,19 @@ export class MyRecipeDetailComponent implements OnInit
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
     this.recipeDescription = this.changeDetect.description;
-    
+
+    this.recipeUpvotes = this.changeDetect.upvotes;
+    this.recipeUpvoted = this.changeDetect.upvoted;
+
+    this.recipeIngredients = this.changeDetect.ingredients;
+    this.recipeAmounts = this.changeDetect.amounts;
+
+
+    for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
+    {
+      this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
+    }
+
   }
 
 /*******************************************************************************************/
@@ -58,7 +87,11 @@ export class MyRecipeDetailComponent implements OnInit
 
 /*******************************************************************************************/
 
-  constructor(public dataService: DataService, private modalService: NgbModal) { }
+  constructor(public dataService: DataService, private modalService: NgbModal) 
+  { 
+    this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+    this.Ingredients = [];
+  }
 
   ngOnInit() { }
 
@@ -84,12 +117,12 @@ export class MyRecipeDetailComponent implements OnInit
 
   editRecipe()
   {
+
     for (let myRecipe of this.dataService.getMyRecipes()) // go through the myRecipes array in data service
     {
       if(myRecipe.name == this.recipeName) // and find the name of the recipe on data service that matches the one thats being edited
       {
-        this.editingData = {name:this.formName, description:this.formDescription, imagesrc:this.formImageSource}
-
+        this.editingData = {name:this.formName, description:this.formDescription, imagesrc:this.formImageSource, upvotes:this.recipeUpvotes, ingredients:this.ingredientsNames, amounts:this.ingredientsAmounts, upvoted:this.recipeUpvoted}
         // send the data to be edited to edit myRecipe in the data service :-
         this.dataService.editRecipe(myRecipe, this.editingData);
         
@@ -99,14 +132,15 @@ export class MyRecipeDetailComponent implements OnInit
         this.recipeImageSource = this.formImageSource;
       }
     }    
+  }
 
-    //this.dataService.addRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
-    //this.dataService.addMyRecipe({name:this.formName, description:this.formDescription, imagesrc:this.formImageSource});
+  addIngredient()
+  {
+    this.Ingredients.push({name: this.formIngredientName, amount: this.formIngredientAmount}); // used for viewing data on the list.
 
-    /*// clear the values after submitting
-    this.formName = "";
-    this.formDescription = "";
-    this.formImageSource = "";*/
+    this.ingredientsNames.push(this.formIngredientName);
+    this.ingredientsAmounts.push(this.formIngredientAmount);
+    // Names and Amounts are passed as editing data to data service.
   }
 
 /*******************************************************************************************/

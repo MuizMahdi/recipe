@@ -1,18 +1,46 @@
 
+<!-- RECIPE DETAIL -->
 <div class="recipe">
 
   <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
+
   
   <div class="recipe-name">
     <p> {{recipeName}} </p>
   </div> 
+
   
   <div>
     <p class="recipe-text"> {{recipeDescription}} </p>
   </div>
+
+
+  <div class="container">
+
+    <div class="ingredients-list">
+      <h2 class="ingredients-list-header"> Ingredients list: </h2>
+      <ul id="names" class="list-group">
+        <li *ngFor="let ingredient of theIngredients" id="ingredient" class="list-group-item d-flex justify-content-between align-items-center"> 
+          {{ingredient.name}}
+          <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
+        </li>
+      </ul>
+    </div>
+
+    <br>
+
+    <div class="recipe-upvotes">
+      <p class="upvote-text"> Upvote </p>
+      <span class="upvote-button" (click)="upvoteRecipe()" [class.upvotedButton]="recipeUpvoted" [class.unUpvotedButton]="!recipeUpvoted"></span>
+      <p class="upvote-number"> {{recipeUpvotes}} </p> 
+    </div>
+    
+  </div>
   
 </div>
 
+
+<!-- SIDE MENU -->
 <div class="side-menu">
   <p> Views: </p>
   <p> Likes: </p>
@@ -46,14 +74,39 @@
   
       <label for="text">Change Image URL</label>
       <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource">
+
+      <div class="recipe-ingredients">
+
+        <div class="ingredient">
+            <label for="text">Ingredient</label>
+            <input type="text" class="form-control" [(ngModel)]="formIngredientName" name="formIngredientName">
+        </div>
+        <div class="amount">
+            <label for="text">Amount</label>
+            <input type="text" class="form-control" [(ngModel)]="formIngredientAmount" name="formIngredientAmount">
+        </div>
+
+      </div>
+      <input type="button" (click)="addIngredient()" value="Add" id="add-button" class="btn btn-primary">
+
+      
+      <div *ngIf="Ingredients">
+        <ul class="list-group">
+          <li *ngFor="let anIngredient of Ingredients" class="list-group-item">
+            {{anIngredient.name}}
+            <span class="badge badge-primary badge-pill">{{anIngredient.amount}}</span> 
+          </li>
+        </ul>
+      </div>
+
   
       <div class="modal-footer">
         <input type="button" (click)="editRecipe(); c('Close click')" value="Submit Edit" class="btn btn-primary">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
       </div>
+      
   
     </form>
   </div>
   
 </ng-template>
-<!--      -->

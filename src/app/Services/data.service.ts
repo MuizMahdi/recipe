@@ -120,10 +120,13 @@ export class DataService
     {
       if(this.recipes[i].name == recipeToEdit.name)
       {
-        console.log("Changed in recipes");
         this.recipes[i].name = editingData.name;
         this.recipes[i].description = editingData.description;
         this.recipes[i].imagesrc = editingData.imagesrc;
+        this.recipes[i].upvotes = editingData.upvotes;
+        this.recipes[i].ingredients = editingData.ingredients;
+        this.recipes[i].amounts = editingData.amounts;
+        this.recipes[i].upvoted = editingData.upvoted;
       }
     }
 
@@ -132,11 +135,14 @@ export class DataService
     {
       if(this.myRecipes[i].name == recipeToEdit.name)
       {
-        console.log("Changed in myRecipes");
         this.myRecipes[i].name = editingData.name;
         this.myRecipes[i].description = editingData.description;
-        this.myRecipes[i].imagesrc = editingData.imagesrc;  
-      }
+        this.myRecipes[i].imagesrc = editingData.imagesrc;
+        this.myRecipes[i].upvotes = editingData.upvotes;
+        this.myRecipes[i].ingredients = editingData.ingredients;
+        this.myRecipes[i].amounts = editingData.amounts;
+        this.myRecipes[i].upvoted = editingData.upvoted;
+      }  
     }
 
   }
@@ -196,7 +202,7 @@ export class DataService
     {
       if(this.myRecipes[i].name == recipeName)
       {
-        this.myRecipes.upvoted = true;
+        this.myRecipes[i].upvoted = true; // wtf, hold on !
         this.myRecipes[i].upvotes =  this.myRecipes[i].upvotes + 1;
         break;
       }
