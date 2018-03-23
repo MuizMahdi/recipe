@@ -70,13 +70,13 @@ export class MyRecipeDetailComponent implements OnInit
     this.recipeUpvotes = this.changeDetect.upvotes;
     this.recipeUpvoted = this.changeDetect.upvoted;
 
-    this.recipeIngredients = this.changeDetect.ingredients;
-    this.recipeAmounts = this.changeDetect.amounts;
+    this.recipeIngredient = this.changeDetect.ingredients;
+    this.recipeAmount = this.changeDetect.amounts;
 
 
     for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
     {
-      this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
+      this.theIngredients[i] = {name: this.recipeIngredient[i], amount: this.recipeAmount[i]};
     }
 
   }
