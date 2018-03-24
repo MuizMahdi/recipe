@@ -74,7 +74,7 @@ export class MyRecipeDetailComponent implements OnInit
     this.recipeAmount = this.changeDetect.amounts;
 
 
-    for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
+    for(let i=0; i<this.recipeIngredient.length; i++) // assign ingredient names and amounts to array
     {
       this.theIngredients[i] = {name: this.recipeIngredient[i], amount: this.recipeAmount[i]};
     }
