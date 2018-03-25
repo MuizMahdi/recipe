@@ -52,6 +52,8 @@ ngOnInit() {  }
   ngOnChanges(changes: SimpleChanges) 
   {
 
+    this.theIngredients = [{name: "", amount:0}]; // Clear the old values on change so it wont mix them up with the new values.
+
     for (let propName in changes) 
     {
       let chng = changes[propName];
@@ -74,7 +76,7 @@ ngOnInit() {  }
 
     this.recipeUpvoted = this.changeDetect.upvoted;
     
-    
+
     for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
     {
       this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};

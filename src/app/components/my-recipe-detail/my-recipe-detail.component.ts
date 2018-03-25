@@ -57,6 +57,8 @@ export class MyRecipeDetailComponent implements OnInit
   ngOnChanges(changes: SimpleChanges) 
   {
 
+    this.theIngredients = [{name: "", amount:0}]; // Clear the old values on change so it wont mix them up with the new values.
+
     for (let propName in changes) 
     {
       let chng = changes[propName];
