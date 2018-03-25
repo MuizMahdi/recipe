@@ -48,6 +48,9 @@ export class MyRecipeDetailComponent implements OnInit
 
   recipeUpvotes: number;
   recipeUpvoted: boolean;
+
+  imageUrlError: boolean = false;
+  formValid: boolean = true;
 /*******************************************************************************************/
 
 
@@ -102,15 +105,18 @@ export class MyRecipeDetailComponent implements OnInit
 
 
 /*******************************************************************************************/
-  
+  private modalRef: NgbModalRef;
+
   open(content) 
   {
-    this.modalService.open(content);
+    this.modalRef = this.modalService.open(content);
 
     // clear the forms when modal opens
     this.formName = "";
     this.formDescription = "";
     this.formImageSource = "";
+    this.imageUrlError = false;
+    this.formValid = true;
   }
 
   //////////////////////////////////////////////////////////////////////
@@ -143,6 +149,33 @@ export class MyRecipeDetailComponent implements OnInit
     this.ingredientsNames.push(this.formIngredientName);
     this.ingredientsAmounts.push(this.formIngredientAmount);
     // Names and Amounts are passed as editing data to data service.
+  }
+
+
+  /* FORM VALIDATION */
+
+  updateUrl() // on Image URL Error (image not loaded using the given url source)
+  {
+    this.imageUrlError = true;
+  }
+
+  onNoImageUrlError()
+  {
+    this.imageUrlError = false;
+  }
+
+  onSubmitEdits({value, valid})
+  {
+    if(valid) // if no error in form
+    {
+      this.modalRef.close(); // close the modal    
+      this.editRecipe();
+      this.formValid = true; 
+    } 
+    else 
+    {
+      this.formValid = false; // view message if form is invalid (one or more fields incorrect)
+    }
   }
 
 /*******************************************************************************************/

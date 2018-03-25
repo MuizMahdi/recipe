@@ -64,7 +64,7 @@
   </div>
   
   <div class="modal-body">
-    <form class="form-group">
+    <form class="form-group" novalidate #f="ngForm" (ngSubmit)="onSubmitEdits(f)">
   
       <label for="text">Edit Name:</label>
       <input type="text" class="form-control" [(ngModel)]="formName" name="formName">
@@ -72,8 +72,11 @@
       <label for="text">Edit Description:</label>
       <input type="text" class="form-control" [(ngModel)]="formDescription" name="formDescription">
   
-      <label for="text">Change Image URL</label>
-      <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource">
+      <label for="text" class="form-labels">Change Image URL</label>
+      <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource" #recipeImageURL="ngModel" required>
+      <div *ngIf="recipeImageURL.errors?.required && recipeImageURL.touched" class="alert alert-danger"> A Recipe image URL is required </div>
+      <div *ngIf="imageUrlError && recipeImageURL.touched" class="alert alert-danger"> Invalid Image URL </div>
+      <img [src]="formImageSource" (error)="updateUrl()" (load)="onNoImageUrlError()" style="max-height:400px; max-width:200px;" class="recipe-image">
 
       <div class="recipe-ingredients">
 
@@ -101,7 +104,7 @@
 
   
       <div class="modal-footer">
-        <input type="button" (click)="editRecipe(); c('Close click')" value="Submit Edit" class="btn btn-primary">
+          <input type="submit" value="Submit Recipe" class="btn btn-primary">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
       </div>
       

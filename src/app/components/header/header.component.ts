@@ -1,6 +1,6 @@
 import { an_Ingredient } from './../../Models/an_Ingredient';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../Services/data.service';
 
 
@@ -27,19 +27,25 @@ export class HeaderComponent implements OnInit
 
   ingredientsNames: string[];
   ingredientsAmounts: number[];
+
+  imageUrlError: boolean = false;
+  formValid: boolean = true;
   
 
   constructor(private modalService: NgbModal, public dataService: DataService) { }
 
+  private modalRef: NgbModalRef;
 
   open(content) 
   {
-    this.modalService.open(content);
+    this.modalRef = this.modalService.open(content);
 
     // clear everything when modal opens
     this.formName = "";
     this.formDescription = "";
     this.formImageSource = "";
+    this.imageUrlError = false;
+    this.formValid = true;
 
     this.formIngredientName = "";
     this.formIngredientAmount = 0;
@@ -73,6 +79,34 @@ export class HeaderComponent implements OnInit
     // add IngredientName to array for addRecipe() in dataService.
     this.ingredientsNames.push(this.formIngredientName);
     this.ingredientsAmounts.push(this.formIngredientAmount);
+  }
+
+
+  
+  updateUrl() // on Image URL Error (image not loaded using the given url source)
+  {
+    this.imageUrlError = true;
+  }
+
+  onNoImageUrlError()
+  {
+    this.imageUrlError = false;
+  }
+
+
+
+  onSubmit({value, valid})
+  {
+    if(valid) // if no error in form
+    {
+      this.modalRef.close(); // close the modal    
+      this.submitRecipe();
+      this.formValid = true; 
+    } 
+    else 
+    {
+      this.formValid = false; // view message if form is invalid (one or more fields incorrect)
+    }
   }
 
 }

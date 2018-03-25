@@ -13,8 +13,6 @@
 
 
   
-
-
 body.modal-open /* Prevent the right padding when open */
 {
     width:100% !important;
@@ -30,6 +28,19 @@ body.modal-open /* Prevent the right padding when open */
 .modal /* Center this shit */
 {
   padding-top: 150px;
+}
+
+
+.recipe-image
+{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+.form-labels
+{
+    margin-top: 15px;
 }
 
 

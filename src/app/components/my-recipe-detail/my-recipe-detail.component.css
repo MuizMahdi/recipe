@@ -1,3 +1,19 @@
+/* MODAL */
+
+.recipe-image
+{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+.form-labels
+{
+    margin-top: 15px;
+}
+
+
+
 .recipe
 {
     border: 1px solid rgb(230, 230, 230);
@@ -68,3 +84,56 @@
     font-size: 25px;
 }
 
+/*UPVOTING*/
+.recipe-upvotes
+{
+    margin-left: 50px;
+    margin-bottom: 80px;
+}
+
+
+.upvote-text
+{
+    float: left;
+    margin-right: 10px;
+    margin-top: 20px;
+
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.upvote-number
+{
+    display: inline-block;
+    font-size: 45px;
+    font-weight: 500;
+}
+
+
+.upvotedButton
+{
+    display: inline-block;
+    margin-right: 30px;
+  
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    background: url('http://i.stack.imgur.com/iqN2k.png');
+    background-position: 0 2px;
+    pointer-events: none;
+}
+
+
+.unUpvotedButton
+{
+    display: inline-block;
+    margin-right: 30px;
+  
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    cursor: pointer;
+    background: url('http://i.stack.imgur.com/iqN2k.png');
+    background-position: 0 -25px;
+    
+}
