@@ -58,6 +58,12 @@ body.modal-open /* Prevent the right padding when open */
 #add-button
 {
     margin-top: 10px;
+    float: left;
+}
+
+.modal-footer
+{
+    float: right;
 }
 
 
