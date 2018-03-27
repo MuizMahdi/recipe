@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 
-import { ARecipe } from '../../Models/ARecipe';
+import { ARecipe } from '../../models/ARecipe';
 
 
 

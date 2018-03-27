@@ -6,23 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
-import { RecipeComponent } from './components/recipe/recipe.component';
 import { RecipesComponent } from './Components/recipes/recipes.component';
 import { MyRecipesComponent } from './Components/my-recipes/my-recipes.component';
-import { BookmarksComponent } from './Components/bookmarks/bookmarks.component';
+import { ARecipeComponent } from './Components/a-recipe/a-recipe.component';
 import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { HomeComponent } from './Components/home/home.component';
-
-import { DataService } from './Services/data.service';
-
-import {NgbModule, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MyRecipeComponent } from './Components/my-recipe/my-recipe.component';
 import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe-detail.component';
 import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 
+import { DataService } from './Services/data.service';
+
+import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -38,10 +36,9 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    RecipeComponent,
     RecipesComponent,
     MyRecipesComponent,
-    BookmarksComponent,
+    ARecipeComponent,
     RecipeDetailComponent,
     NavbarComponent,
     HeaderComponent,

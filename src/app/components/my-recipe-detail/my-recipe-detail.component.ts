@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import { ARecipe } from '../../Models/ARecipe';
+import { ARecipe } from '../../models/ARecipe';
 import { DataService } from '../../Services/data.service';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { an_Ingredient } from './../../Models/an_Ingredient';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { an_Ingredient } from './../../models/an_Ingredient';
 
 
 @Component({

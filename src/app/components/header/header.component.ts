@@ -1,6 +1,6 @@
 import { an_Ingredient } from './../../Models/an_Ingredient';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../Services/data.service';
 
 

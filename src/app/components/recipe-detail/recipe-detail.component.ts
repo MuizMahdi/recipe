@@ -1,6 +1,6 @@
-import { an_Ingredient } from './../../Models/an_Ingredient';
+import { an_Ingredient } from './../../models/an_Ingredient';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ARecipe } from '../../Models/ARecipe';
+import { ARecipe } from '../../models/ARecipe';
 import { DataService } from '../../Services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';

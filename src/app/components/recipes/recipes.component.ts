@@ -1,8 +1,10 @@
+import { ARecipeComponent } from './../a-recipe/a-recipe.component';
+//import { BookmarksComponent } from './../bookmarks/bookmarks.component';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 
-import { RecipeComponent } from '../recipe/recipe.component';
-import { ARecipe } from '../../Models/ARecipe';
+//import { RecipeComponent } from '../recipe/recipe.component';
+import { ARecipe } from '../../models/ARecipe';
 
 
 @Component({
@@ -12,7 +14,8 @@ import { ARecipe } from '../../Models/ARecipe';
 })
 
 
-export class RecipesComponent implements OnInit {
+export class RecipesComponent implements OnInit 
+{
 
   recipes: ARecipe[];
   theSelectedRecipe: ARecipe;

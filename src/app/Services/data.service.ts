@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ARecipe } from '../Models/ARecipe';
+import { ARecipe } from '../models/ARecipe';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
