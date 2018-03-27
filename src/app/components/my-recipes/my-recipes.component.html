@@ -9,8 +9,5 @@
 <div class="container">
   <div class="row">
     <app-a-recipe *ngFor="let myRecipe of myRecipes" [recipeVal]="myRecipe" (theRecipeSelected)="setSelected($event)" class="col-sm-4"></app-a-recipe>
-    <!--
-    <app-bookmarks *ngFor="let myRecipe of myRecipes" [recipeVal]="myRecipe" (theRecipeSelected)="setSelected($event)" class="col-sm-4"></app-bookmarks>
-    -->
   </div>
 </div>
