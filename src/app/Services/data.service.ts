@@ -16,6 +16,7 @@ export class DataService
   recipes: ARecipe[];
   myRecipes: ARecipe[];
   topRecipes: ARecipe[];
+  upvotesArray: number[];
   selected: ARecipe;
 
   data: Observable<ARecipe>; 
@@ -29,9 +30,9 @@ export class DataService
   constructor() 
   { 
    this.recipes = [
-      { name:"Meal 01", upvoted: false, amounts:[2,3,8,9,5], upvotes:14, ingredients:["Meal 01 Ingredient 01","Meal 01 Ingredient 02","Meal 01 Ingredient 03","Meal 01 Ingredient 04","Meal 01 Ingredient 05"], description:"Meal 01 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M01.jpg" },
-      { name:"Meal 02", upvoted: false, amounts:[2,3,8,9,5], upvotes:13, ingredients:["Meal 02 Ingredient 01","Meal 02 Ingredient 02","Meal 02 Ingredient 03","Meal 02 Ingredient 04","Meal 02 Ingredient 05", "Meal 02 Ingredient 06", "Meal 02 Ingredient 07", "Meal 02 Ingredient 08"], description:"Meal 02 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M02.jpg" },
-      { name:"Meal 03", upvoted: false, amounts:[2,3,8,9,5], upvotes:22, ingredients:["Meal 03 Ingredient 01","Meal 03 Ingredient 02","Meal 03 Ingredient 03","Meal 03 Ingredient 04","Meal 03 Ingredient 05"], description:"Meal 03 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M03.jpg" },
+      { name:"Meal 01", upvoted: false, amounts:[2,3,8,9,5], upvotes:31, ingredients:["Meal 01 Ingredient 01","Meal 01 Ingredient 02","Meal 01 Ingredient 03","Meal 01 Ingredient 04","Meal 01 Ingredient 05"], description:"Meal 01 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M01.jpg" },
+      { name:"Meal 02", upvoted: false, amounts:[2,3,8,9,5], upvotes:31, ingredients:["Meal 02 Ingredient 01","Meal 02 Ingredient 02","Meal 02 Ingredient 03","Meal 02 Ingredient 04","Meal 02 Ingredient 05", "Meal 02 Ingredient 06", "Meal 02 Ingredient 07", "Meal 02 Ingredient 08"], description:"Meal 02 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M02.jpg" },
+      { name:"Meal 03", upvoted: false, amounts:[2,3,8,9,5], upvotes:29, ingredients:["Meal 03 Ingredient 01","Meal 03 Ingredient 02","Meal 03 Ingredient 03","Meal 03 Ingredient 04","Meal 03 Ingredient 05"], description:"Meal 03 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M03.jpg" },
       { name:"Meal 04", upvoted: false, amounts:[2,3,8,9,5], upvotes:29, ingredients:["Meal 04 Ingredient 01","Meal 04 Ingredient 02","Meal 04 Ingredient 03","Meal 04 Ingredient 04","Meal 04 Ingredient 05"], description:"Meal 04 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M04.jpg" },
       { name:"Meal 05", upvoted: false, amounts:[2,3,8,9,5], upvotes:15, ingredients:["Meal 05 Ingredient 01","Meal 05 Ingredient 02","Meal 05 Ingredient 03","Meal 05 Ingredient 04","Meal 05 Ingredient 05"], description:"Meal 05 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M05.jpg" },
       { name:"Meal 06", upvoted: false, amounts:[2,3,8,9,5], upvotes:7, ingredients:["Meal 06 Ingredient 01","Meal 06 Ingredient 02","Meal 06 Ingredient 03","Meal 06 Ingredient 04","Meal 06 Ingredient 05"], description:"Meal 06 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M06.jpg" },
@@ -43,7 +44,7 @@ export class DataService
       { name:"Meal 12", upvoted: false, amounts:[2,3,8,9,5], upvotes:3, ingredients:["Meal 12 Ingredient 12","Meal 12 Ingredient 02","Meal 12 Ingredient 03","Meal 12 Ingredient 04","Meal 12 Ingredient 05"], description:"Meal 12 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M12.jpg" },
       { name:"Meal 13", upvoted: false, amounts:[2,3,8,9,5], upvotes:11, ingredients:["Meal 13 Ingredient 01","Meal 13 Ingredient 02","Meal 13 Ingredient 03","Meal 13 Ingredient 04","Meal 13 Ingredient 05"], description:"Meal 13 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M13.jpg" },
       { name:"Meal 14", upvoted: false, amounts:[2,3,8,9,5], upvotes:23, ingredients:["Meal 14 Ingredient 01","Meal 14 Ingredient 02","Meal 14 Ingredient 03","Meal 14 Ingredient 04","Meal 14 Ingredient 05"], description:"Meal 14 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M14.jpg" },
-      { name:"Meal 15", upvoted: false, amounts:[2,3,8,9,5], upvotes:19, ingredients:["Meal 15 Ingredient 01","Meal 15 Ingredient 02","Meal 15 Ingredient 03","Meal 15 Ingredient 04","Meal 15 Ingredient 05"], description:"Meal 15 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M15.jpg" },
+      { name:"Meal 15", upvoted: false, amounts:[2,3,8,9,5], upvotes:30, ingredients:["Meal 15 Ingredient 01","Meal 15 Ingredient 02","Meal 15 Ingredient 03","Meal 15 Ingredient 04","Meal 15 Ingredient 05"], description:"Meal 15 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M15.jpg" },
       { name:"Meal 16", upvoted: false, amounts:[2,3,8,9,5], upvotes:16, ingredients:["Meal 16 Ingredient 01","Meal 16 Ingredient 02","Meal 16 Ingredient 03","Meal 16 Ingredient 04","Meal 16 Ingredient 05"], description:"Meal 16 description, i don't know what to write, but these food pictures look nice.", imagesrc:"../../../assets/Meals/M16.jpg" }
     ];
 
@@ -54,7 +55,12 @@ export class DataService
 
     this.topRecipes = [
       /* Recipes with top 5 upvotes will be unshifted over here */
+
     ];
+
+    this.upvotesArray = [];
+
+    this.updateTopRecipes();
   }
 
 /*******************************************************************************************/
@@ -72,6 +78,47 @@ export class DataService
   getMyRecipes()
   {
     return this.myRecipes;
+  }
+
+
+  updateTopRecipes()
+  {
+    for(var i=0; i<this.recipes.length; i++) // get all numeric upvotes values from recipes into upvotesArray 
+    {
+      this.upvotesArray[i] = this.recipes[i].upvotes; 
+    }
+
+    this.upvotesArray = this.upvotesArray.sort((a, b) => b - a); // sort the upvotesArray, now we can get the top 5
+
+    for(var i=0; i<=4; i++)
+    {
+      for(var j=0; j<this.recipes.length; j++)
+      {
+        if(this.upvotesArray[i] == this.recipes[j].upvotes) // if an upvotesArray upvote value has a recipe with the same upvote value
+        {
+          /*console.log("THE UPVOTE VALUE:");
+          console.log(this.upvotesArray[i]);
+
+          console.log("THE RECIPE OBJECT:");
+          console.log(this.recipes[j]);*/
+
+          this.topRecipes[i] = this.recipes[j]; 
+
+          console.log("TOP RECIPES:");
+          console.log(this.topRecipes);
+
+          /* 
+
+          ~BUG~
+          if two objects have the same upvotes, 
+          the first and the second place on the 
+          array goes to only one of them 
+          (the later one)
+          
+          */
+        }
+      }
+    }
   }
 
 /*******************************************************************************************/
