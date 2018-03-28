@@ -65,6 +65,9 @@ body.modal-open /* Prevent the right padding when open */
 .ingredients-list
 {
     overflow: auto;
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 
 .modal-footer
