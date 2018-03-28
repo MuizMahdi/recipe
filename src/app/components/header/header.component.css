@@ -55,11 +55,16 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
-.the-add-button
+/*.the-add-button
 {
     margin-top: auto;
     overflow: auto;
     display: inline-block;
+}*/
+
+.ingredients-list
+{
+    overflow: auto;
 }
 
 .modal-footer

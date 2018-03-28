@@ -64,11 +64,13 @@
 
       </div>
 
+      <!--
       <div class="the-add-button">
-        <input type="button" (click)="addIngredient()" value="Add" id="add-button" class="btn btn-primary">
+        <input type="button" (click)="addIngredient()" value="Add Ingredient" id="add-button" class="btn btn-primary">
       </div>
+      -->
       
-      <div *ngIf="Ingredients">
+      <div *ngIf="Ingredients" class="ingredients-list">
         <ul class="list-group">
           <li *ngFor="let anIngredient of Ingredients" class="list-group-item">
             {{anIngredient.name}}
@@ -79,6 +81,7 @@
 
 
       <div class="modal-footer">
+        <input type="button" (click)="addIngredient()" value="Add Ingredient" id="add-button" class="btn btn-primary">
         <input type="submit" value="Submit Recipe" class="btn btn-primary">
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
       </div>
