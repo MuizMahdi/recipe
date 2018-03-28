@@ -55,10 +55,11 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
-#add-button
+.the-add-button
 {
-    margin-top: 10px;
-    float: left;
+    margin-top: auto;
+    overflow: auto;
+    display: inline-block;
 }
 
 .modal-footer

@@ -63,8 +63,10 @@
         </div>
 
       </div>
-      <input type="button" (click)="addIngredient()" value="Add" id="add-button" class="btn btn-primary">
 
+      <div class="the-add-button">
+        <input type="button" (click)="addIngredient()" value="Add" id="add-button" class="btn btn-primary">
+      </div>
       
       <div *ngIf="Ingredients">
         <ul class="list-group">
