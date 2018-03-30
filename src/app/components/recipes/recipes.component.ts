@@ -39,7 +39,7 @@ export class RecipesComponent implements OnInit
     this.dataService.selectedRecipe(selectedRecipe);
     this.theSelectedRecipe = selectedRecipe;
 
-    //console.log(this.theSelectedRecipe);
+    console.log(this.theSelectedRecipe);
     // it receices the right recipe when clicking all good !
 
     //this.dataService.selectedRecipe(this.theSelectedRecipe);

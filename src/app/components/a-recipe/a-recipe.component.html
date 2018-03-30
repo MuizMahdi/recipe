@@ -4,6 +4,8 @@
 </div>
 -->
 
+<!-- OLD RECIPE -->
+<!--
 <div class="recipe">
 
   <div>
@@ -25,4 +27,16 @@
     <a [hidden]="shortText" href="javascript:void(0)" (click)="showMore()">Show more</a>
   </div>
 
+</div>
+-->
+
+<div class="recipe">
+  <img src="{{imageSource}}" style="max-height:270px; max-width:500px;" class="image" >
+  <div class="overlay overlayBottom">
+    
+  </div>
+
+  <div class="name namebottom">
+      <a href="javascript:void(0)" (click)="getSelected()"> {{recipe.name}} </a>
+  </div>
 </div>
