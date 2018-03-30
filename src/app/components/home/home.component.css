@@ -16,33 +16,111 @@
 
 .first-image
 {
-    background: url('../../../assets/Header00.jpg') no-repeat center;
+    background: url('http://viinapuu.com/wp-content/uploads/2017/12/kremlin2-1.jpg') no-repeat center;
+    /*background: url('../../../assets/Header00.jpg') no-repeat center;*/
     background-size: cover;
     background-attachment: fixed;
-
-    height: 300px;
+    height: 200px;
 }
 
 .second-image
 {
-    background: url('../../../assets/Header01.jpg') no-repeat center;
+    background: url('https://eu-central-1.tchyn.io/unitedbloggers-production/uploads/sites/174/2017/10/Omregningstabell-for-baking.jpg?quality=90') no-repeat center;
+    /*background: url('https://i.ytimg.com/vi/M-8NB7PgFk4/maxresdefault.jpg') no-repeat center;*/
     background-size: cover;
     background-attachment: fixed;
+    height: 200px;
+}
 
-    height: 300px;
+.third-image
+{
+    background: url('https://i0.wp.com/blog.hellofresh.co.uk/wp-content/uploads/2016/03/HF160211_Global_Blog_2_Asia-Ingredient_01_low-1.jpg') no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 200px;
+}
+
+.fourth-image
+{
+    background: url('https://vista.today/wp-content/uploads/2016/03/fruits.jpg') no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 200px;
 }
 
 .top-recipes
 {
     text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px;
+}
+
+.top-recipes h3
+{
+    opacity: .7;
+}
+
+.extra-text
+{
+    background-color: rgb(245, 245, 245);
+    /*font-family: "Franklin Gothic Medium";*/
+    color: rgb(58, 58, 58);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.extra-text-box
+{
+    padding: 70px;
+}
+
+.extra-text h1
+{
+    font-size: 50px;
+}
+
+.project-info
+{
+    background-color: rgb(0, 33, 122);
+    color:white;
+    padding-top: 40px;
+    padding-bottom: 5px;
+}
+
+
+.project-info li
+{
+    display: inline-block;
+    margin-right: 10%;
+    opacity: .8;
+}
+
+.project-info hr
+{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1.4px solid #ccc;
+    padding: 0; 
+    opacity: .5;
 }
 
 .footer
 {
-    padding-top: 70px;
-    padding-bottom: 50px;
+    padding-top: 40px;
+    padding-bottom: 20px;
 
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(0, 13, 49);
     color:white;
+}
+
+.footer p
+{
+    display: inline-block;
+    margin-right: 40px;
+    font-weight: bold;
+    opacity: .8;
+    font-size: 18px;
 }
 

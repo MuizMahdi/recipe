@@ -1,11 +1,11 @@
 .showcase
 {
-    background-image: url('../../../assets/Header09.jpg');
     height: 100vh;
 
     background-size:cover;
     background-position: center; 
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../../../assets/Header09.jpg);
+    /*background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../../../assets/Header09.jpg);*/
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://i1.wp.com/res.cloudinary.com/qriyo/image/upload/v1498814320/10227e-food-on-the-table-top-hd-wallpaper_tlnepw.jpg?resize=4872%2C2656&ssl=1);
     background-attachment: fixed; 
 
     position: relative;
@@ -87,7 +87,7 @@ body.modal-open /* Prevent the right padding when open */
 {
     color: #ffffff;
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-    font-size: 64px;
+    font-size: 50px;
     font-weight: normal;
     /*text-align: center;*/
     padding-top: 20px;
@@ -113,7 +113,7 @@ body.modal-open /* Prevent the right padding when open */
 
 .midText h1
 {
-    font-size: 55px;
+    font-size: 32px;
     font-family: "Century Gothic";
 }
 
@@ -126,7 +126,7 @@ body.modal-open /* Prevent the right padding when open */
 
 .midButtons button
 {
-    font-size: 25px;
+    font-size: 20px;
     /*font-weight: bold;*/
     color: #ffffff;
 

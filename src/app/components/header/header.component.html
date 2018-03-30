@@ -35,13 +35,13 @@
       <div *ngIf="!formValid" class="alert alert-danger"> Some of the entered data are invalid or uncomplete, please correct it before submitting. </div>
       
       <label for="text" class="form-labels">Recipe Name:</label>
-      <input type="text" class="form-control" [(ngModel)]="formName" name="formName" #recipeName="ngModel" minlength="2" required>
-      <div  *ngIf="recipeName.errors?.required && recipeName.touched" class="alert alert-danger"> A Recipe name is required </div>
-      <div  *ngIf="recipeName.errors?.minlength && recipeName.touched" class="alert alert-danger"> Recipe name should be at least 2 characters </div>
+      <input type="text" class="form-control" [(ngModel)]="formName" name="formName" #recipeName="ngModel" minlength="2"  maxlength="50 "required>
+      <div *ngIf="recipeName.errors?.required && recipeName.touched" class="alert alert-danger"> A Recipe name is required </div>
+      <div *ngIf="recipeName.errors?.minlength && recipeName.touched" class="alert alert-danger"> Recipe name should be at least 2 characters </div>
 
       <label for="text" class="form-labels">Recipe Description:</label>
       <input type="text" class="form-control" [(ngModel)]="formDescription" name="formDescription" #recipeDescription="ngModel" minlength="3">
-      <div  *ngIf="recipeDescription.errors?.minlength && recipeDescription.touched" class="alert alert-danger"> Recipe description should be at least 3 characters </div>
+      <div *ngIf="recipeDescription.errors?.minlength && recipeDescription.touched" class="alert alert-danger"> Recipe description should be at least 3 characters </div>
 
       <label for="text" class="form-labels">Recipe Image URL: </label>
       <input type="text" class="form-control" [(ngModel)]="formImageSource" name="formImageSource" #recipeImageURL="ngModel" required>

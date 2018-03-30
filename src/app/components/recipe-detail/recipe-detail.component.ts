@@ -94,9 +94,8 @@ ngOnInit() {  }
     this.recipeUpvotes = this.recipeUpvotes + 1;
     this.recipeUpvoted = true;
     this.dataService.recipeUpvoted(this.recipeName);
-    this.dataService.updateTopRecipes();
 
-    //console.log(this.dataService.topRecipes);
+    this.dataService.updateSortedRecipes();
   }
 
 /*******************************************************************************************/

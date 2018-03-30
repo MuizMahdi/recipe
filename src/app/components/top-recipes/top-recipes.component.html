@@ -1,3 +1,20 @@
-<h1>
-  TOP RECIPES WILL BE HERE, THEY WILL TAKE IMAGES FROM TOP RECIPES WITH HIGHEST VOTES.
-</h1>
+<div class="top-recipes-list">
+  <ul>
+
+    <div class="row">
+      <li *ngFor="let recipe of topRecipes" class="col-sm-4" >
+
+        <div class="wrapper">
+          <img src="{{recipe.imagesrc}}" style="max-height:250px; max-width:500px;" alt="Top recipes image" class="image">    
+          <div class="overlay">
+            <div class="content">
+              <h2> {{recipe.name}} <hr> <h1>{{recipe.upvotes}} Upvotes </h1> </h2>   
+            </div>
+          </div>
+        </div> 
+           
+      </li>
+    </div>
+
+  </ul>
+</div>

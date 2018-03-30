@@ -13,7 +13,6 @@ import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { HomeComponent } from './Components/home/home.component';
-import { MyRecipeComponent } from './Components/my-recipe/my-recipe.component';
 import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe-detail.component';
 import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
@@ -43,7 +42,6 @@ const appRoutes: Routes = [
     NavbarComponent,
     HeaderComponent,
     HomeComponent,
-    MyRecipeComponent,
     MyRecipeDetailComponent,
     AllRecipesComponent,
     TopRecipesComponent
