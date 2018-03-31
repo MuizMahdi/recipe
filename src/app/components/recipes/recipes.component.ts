@@ -19,6 +19,7 @@ export class RecipesComponent implements OnInit
 
   recipes: ARecipe[];
   theSelectedRecipe: ARecipe;
+  p: number = 1;
 
   constructor(public dataService: DataService) 
   { }

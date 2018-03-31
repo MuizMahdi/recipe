@@ -80,3 +80,8 @@ hr
     border-top: 1.4px solid #ccc;
     padding: 0; 
 }
+
+.top-recipes-list
+{
+    margin-right: -50px;
+}

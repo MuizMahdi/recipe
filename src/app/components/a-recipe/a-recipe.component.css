@@ -47,6 +47,13 @@
     margin-bottom: 10px;
 }*/
 
+@media screen and (max-width: 800px) 
+{
+    .name 
+    {
+        padding-top: 22% !important;
+    }
+}
 
 .recipe
 {
@@ -77,10 +84,10 @@
     opacity: 0;
     width: 100%;
     color:white;
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
-    padding-top: 28%;
+    padding-top: 26%;
     font-family: sans-serif;
 
     /*top: 50%;
@@ -132,7 +139,3 @@
 {
     height: 100%;
 }
-
-
-
-

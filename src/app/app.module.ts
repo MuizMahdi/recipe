@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ScrollEventModule } from 'ngx-scroll-event';
 import { RouterModule, Routes } from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
     ScrollEventModule,
     NgbModule.forRoot(),
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forRoot(appRoutes)
   ],
 
