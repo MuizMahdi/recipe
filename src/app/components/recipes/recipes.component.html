@@ -4,12 +4,25 @@
 
 <br>
 
-
+<!--
 <ul class="row recipe-list">
   <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 6, currentPage: p }" class="col-sm-4 recipe-list-item">
     <app-a-recipe [recipeVal]="recipe" (theRecipeSelected)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
   </li>
 </ul>
+-->
+
+<div class="all-recipes-list">
+  <ul>
+
+    <div class="row">
+      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 6, currentPage: p }" class="col-sm-4" >
+        <app-a-recipe [recipeVal]="recipe" (theRecipeSelected)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
+      </li>
+    </div>
+    
+  </ul>
+</div>
 
 <hr>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>

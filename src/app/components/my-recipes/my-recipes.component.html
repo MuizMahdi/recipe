@@ -5,9 +5,32 @@
     <app-my-recipe-detail [aSelectedMyRecipe]="theSelectedRecipe"></app-my-recipe-detail>
 </div>
 
+
+
+<div class="all-recipes-list">
+  <ul>
+  
+     <div class="row">
+      <li *ngFor="let myRecipe of myRecipes | paginate: { itemsPerPage: 9, currentPage: p }" class="col-sm-4" >
+        <app-a-recipe [recipeVal]="myRecipe" (theRecipeSelected)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
+      </li>
+    </div>
+      
+  </ul>
+</div>
+
+  
+<!--
 <hr>
 <div class="container">
   <div class="row">
     <app-a-recipe *ngFor="let myRecipe of myRecipes" [recipeVal]="myRecipe" (theRecipeSelected)="setSelected($event)" class="col-sm-4"></app-a-recipe>
   </div>
 </div>
+-->
+
+<div *ngIf="aRecipeAdded">
+    <hr>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <hr>
+  </div>

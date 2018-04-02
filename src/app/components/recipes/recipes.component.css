@@ -1,4 +1,4 @@
-@media screen and (max-width: 800px) 
+/*@media screen and (max-width: 800px) 
 {
     .row
     {
@@ -28,6 +28,44 @@
 {
     margin-bottom: -6px;
     margin-right: -30px;
+}
+
+hr 
+{
+    display: block;
+    height: 1px;
+    border-top: 8px solid #ccc;
+    opacity: .3;
+}*/
+
+@media screen and (max-width: 991px) 
+{
+    .row li
+    {
+        width: 100%;
+    }
+
+    .row
+    {
+        margin-right: 10px;
+        margin-left: -10px;
+    }
+}
+
+.row li
+{
+    list-style-type: none;
+    margin: 0 -10px;
+}
+
+
+.all-recipes-list
+{
+    margin-right: -20px;
+    padding-top: 40px;
+    background-color: white;
+    border-top: 8px solid  rgb(240, 240, 240);
+    transition: .8s ease;
 }
 
 hr 

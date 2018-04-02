@@ -30,6 +30,10 @@
 </div>
 -->
 
+
+
+<!-- OLD RECIPE 02 -->
+<!--
 <div class="recipe">
   <img src="{{imageSource}}" style="max-height:275px; max-width:500px;" class="image" >
   <div class="overlay overlayBottom">
@@ -40,3 +44,28 @@
       <a href="javascript:void(0)" (click)="getSelected()"> {{recipe.name}} </a>
   </div>
 </div>
+-->
+
+
+
+<div class="recipe">
+  <div class="wrapper">
+    
+    <a href="javascript:void(0)" (click)="getSelected()" class="recipe-imageAndName"> 
+      <img src="{{imageSource}}" style="max-height:250px; max-width:500px;" class="image"> 
+      <h2 class="name"> {{recipe.name}} </h2> 
+      <hr>
+      <p class="recipe-text"> {{recipe.description}} </p>
+    </a>
+
+    <!--<hr> I CANNOT DECIDE! -->
+    
+    <div class="recipe-show-more">
+      <a [hidden]="shortText" href="javascript:void(0)" (click)="showMore()">Show more</a>
+    </div>
+
+  </div>
+</div>
+
+
+

@@ -125,7 +125,6 @@ export class MyRecipeDetailComponent implements OnInit
 
   editRecipe()
   {
-
     for (let myRecipe of this.dataService.getMyRecipes()) // go through the myRecipes array in data service
     {
       if(myRecipe.name == this.recipeName) // and find the name of the recipe on data service that matches the one thats being edited

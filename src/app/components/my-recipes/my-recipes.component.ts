@@ -18,6 +18,8 @@ export class MyRecipesComponent implements OnInit
   
   myRecipes: ARecipe[];
   theSelectedRecipe: ARecipe;
+  aRecipeAdded: boolean = false;
+  p: number = 1;
 
 
   constructor(public dataService: DataService) {  }
@@ -26,6 +28,11 @@ export class MyRecipesComponent implements OnInit
   ngOnInit() 
   {
     this.myRecipes = this.dataService.getMyRecipes();
+    
+    if(this.myRecipes.length > 0)
+    {
+      this.aRecipeAdded = true;
+    }
   }
 
   setSelected(selectedRecipe: ARecipe)
