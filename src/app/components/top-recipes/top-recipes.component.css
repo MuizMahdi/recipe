@@ -85,3 +85,17 @@ hr
 {
     margin-right: -50px;
 }
+
+@media screen and (max-width: 500px) 
+{
+    .row li
+    {
+        margin-left: -40px;
+    }
+}
+
+
+@media screen and (min-width: 500px) and (man-width: 900px)
+{
+    /* SOME THING IS WRONG WITH SCREENS WITH WIDTH BETWEEN 500px and 900px */ 
+}

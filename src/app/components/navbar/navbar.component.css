@@ -7,3 +7,95 @@
 {
     font-size: 17px;
 }
+
+.navbar-toggler-icon 
+{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(50,50,50, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important; 
+}
+
+.nav-searchinput
+{
+    width: 400px;
+    height: 38px;
+}
+
+.navb
+{
+    background-color: rgb(250, 250, 250) !important;
+    border-top: 1px solid rgb(199, 199, 199) !important;
+    border-bottom: 1.3px solid rgb(205, 205, 205) !important;
+    padding: 5px !important;
+    box-shadow: 0px 0px 4px 0px rgb(190, 190, 190);
+    display: block;
+}
+
+.nav-brand
+{
+    color: rgb(105, 105, 105) !important;
+    opacity: .3;
+    font-family: sans-serif !important;
+    font-variant: Small-Caps !important;
+    font-size: 40px;
+}
+
+.nav-links
+{
+    margin-left: 10px;
+}
+
+.nav-links a
+{
+    color: rgb(153, 153, 153) !important;
+    font-family: Century Gothic !important;
+    font-variant: Small-Caps;
+    font-size: 21px;
+    padding: 30px 10px 10px 10px;
+    margin-top: -28px;
+    margin-bottom: -5px;
+    margin-right: 10px;
+}
+
+.nav-links a:hover
+{
+    color: rgb(207, 207, 207) !important;
+    transition: .35s ease !important;
+}
+
+
+@media screen and (max-width: 991px) 
+{
+    .active-link
+    {
+        transition: 2s ease !important; 
+    }  
+    
+    .nav-searchinput
+    {
+        width: 90%;
+        margin-left: 13px;
+    }
+
+    .nav-searchbutton
+    {
+        margin-left: 13px;
+        margin-top: 7px;
+    }
+
+    .navb
+    {
+        margin-right: -20px;
+    }     
+}
+
+@media screen and (min-width: 991px) 
+{
+    .active-link
+    {
+        transition: 2s ease !important;    
+        background-color: rgb(247, 247, 247);
+        /*box-shadow: 0px 1px 3px 1px rgb(204, 204, 204);*/
+        -webkit-box-shadow: 0 4px 4px -1.6px rgb(173, 173, 173);
+        -moz-box-shadow: 0 4px 4px -1.6px rgb(173, 173, 173);
+        box-shadow: 0 4px 4px -1.6px rgb(173, 173, 173);
+    }
+}

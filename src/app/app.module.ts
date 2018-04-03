@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ScrollEventModule } from 'ngx-scroll-event';
 import { RouterModule, Routes } from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { RouterLinkActive } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
