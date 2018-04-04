@@ -17,6 +17,17 @@
 {
     width: 400px;
     height: 38px;
+
+    /*background-image:url(../../../assets/searcho.gif);*/
+    /*background-image:url(https://media.giphy.com/media/2xFygptOoamfzgB5PJ/giphy.gif);*/
+    background-image:url(https://media.giphy.com/media/5nsgF2dx0bcJI6GlgG/giphy.gif);
+    background-repeat:no-repeat;
+    background-position:5px;
+    padding-left:40px;
+    /*border-radius: 3px;*/
+    border-color: rgb(red, green, blue);
+    /*border: none;*/
+    opacity: .8;
 }
 
 .navb
@@ -60,6 +71,8 @@
     color: rgb(207, 207, 207) !important;
     transition: .35s ease !important;
 }
+
+
 
 
 @media screen and (max-width: 991px) 

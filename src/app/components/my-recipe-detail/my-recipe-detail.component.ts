@@ -45,6 +45,7 @@ export class MyRecipeDetailComponent implements OnInit
 
   recipeIngredient: string[];
   recipeAmount: number[];
+  recipeComments: string[];
 
   recipeUpvotes: number;
   recipeUpvoted: boolean;
@@ -77,6 +78,7 @@ export class MyRecipeDetailComponent implements OnInit
 
     this.recipeIngredient = this.changeDetect.ingredients;
     this.recipeAmount = this.changeDetect.amounts;
+    this.recipeComments = this.changeDetect.comments;
 
 
     for(let i=0; i<this.recipeIngredient.length; i++) // assign ingredient names and amounts to array
@@ -129,7 +131,7 @@ export class MyRecipeDetailComponent implements OnInit
     {
       if(myRecipe.name == this.recipeName) // and find the name of the recipe on data service that matches the one thats being edited
       {
-        this.editingData = {name:this.formName, description:this.formDescription, imagesrc:this.formImageSource, upvotes:this.recipeUpvotes, ingredients:this.ingredientsNames, amounts:this.ingredientsAmounts, upvoted:this.recipeUpvoted}
+        this.editingData = {name:this.formName, description:this.formDescription, imagesrc:this.formImageSource, upvotes:this.recipeUpvotes, ingredients:this.ingredientsNames, amounts:this.ingredientsAmounts, upvoted:this.recipeUpvoted, comments:this.recipeComments}
         // send the data to be edited to edit myRecipe in the data service :-
         this.dataService.editRecipe(myRecipe, this.editingData);
         

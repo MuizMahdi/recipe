@@ -109,7 +109,7 @@ export class ARecipeComponent implements OnInit
   getSelected()
   {
     //send recipe with full description to view in details, so it wont view the sliced version.
-    this.theRecipeSelected.emit({name: this.recipe.name, description: this.fullDescription, imagesrc: this.recipe.imagesrc, upvotes: this.recipe.upvotes, ingredients: this.recipe.ingredients, amounts: this.recipe.amounts, upvoted: this.recipe.upvoted});
+    this.theRecipeSelected.emit({name: this.recipe.name, description: this.fullDescription, imagesrc: this.recipe.imagesrc, upvotes: this.recipe.upvotes, ingredients: this.recipe.ingredients, amounts: this.recipe.amounts, upvoted: this.recipe.upvoted, comments: this.recipe.comments});
     //window.scrollTo(0, 0); // scrolls to top of page (where the recipe-detail image is) on clicking the recipe name.
     window.scroll({top: 0, left: 0, behavior: 'smooth' }); // scroll to top of page with smooth animation.
   }

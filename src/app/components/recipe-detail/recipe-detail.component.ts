@@ -26,12 +26,15 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeDescription: string;
 
   recipeIngredients: string[];
+  recipeComments: string[];
   recipeAmounts: number[];
 
   theIngredients: an_Ingredient[];
 
   recipeUpvotes: number;
   recipeUpvoted: boolean;
+
+  imageSource: string = "../../../assets/ArrowUp_Gray.jpg";
 /*******************************************************************************************/
 
 
@@ -72,6 +75,7 @@ ngOnInit() {  }
     this.recipeUpvotes = this.changeDetect.upvotes;
 
     this.recipeIngredients = this.changeDetect.ingredients;
+    this.recipeComments = this.changeDetect.comments;
     this.recipeAmounts = this.changeDetect.amounts;
 
     this.recipeUpvoted = this.changeDetect.upvoted;
@@ -93,9 +97,22 @@ ngOnInit() {  }
   {
     this.recipeUpvotes = this.recipeUpvotes + 1;
     this.recipeUpvoted = true;
+    this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
     this.dataService.recipeUpvoted(this.recipeName);
 
     this.dataService.updateSortedRecipes();
+
+    console.log(this.recipeComments);
+  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  addComment()
+  {
+    
   }
 
 /*******************************************************************************************/

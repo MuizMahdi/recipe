@@ -61,8 +61,8 @@ export class HeaderComponent implements OnInit
 
   submitRecipe()
   {
-    this.dataService.addRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false});
-    this.dataService.addMyRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false});
+    this.dataService.addRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
+    this.dataService.addMyRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
 
     /*// clear the values after submitting
     this.formName = "";

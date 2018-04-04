@@ -143,6 +143,72 @@
     height: 25px;
     cursor: pointer;
     background: url('http://i.stack.imgur.com/iqN2k.png');
-    background-position: 0 -25px;
-    
+    background-position: 0 -25px; 
 }
+
+.comments ul
+{
+    list-style-type: none;
+}
+
+.a-comment
+{
+    margin-bottom: 20px;
+}
+
+.a-comment hr
+{
+    width: 100%;
+    margin-left: -20px;
+}
+
+
+.comment-form
+{
+    display: block-inline;
+}
+
+.comment-form input
+{
+    height: 50px;
+    width: 90%;
+
+    /*border-radius: 35px;*/
+
+    padding-bottom: 30px;
+    padding-top: 30px;
+    padding-left: 15px;
+    margin-bottom: 30px;
+
+   /* border-color: rgb(84, 158, 255);*/
+}
+
+.comment-form input:focus
+{
+    outline: none;
+}
+
+
+.comment-form img
+{
+    max-height: 80px;
+    width: 60px;
+    margin-top: 1px;
+    /*border-radius: 100%;*/
+    margin-right: 10px;
+}
+
+.comment-form button
+{
+    margin-top: -40px;
+    margin-left: 74px;
+}
+
+@media screen and (max-width: 991)
+{
+    .comment-form button
+    {
+        margin-top: 0px;
+        margin-left: 100%;
+    }
+} 

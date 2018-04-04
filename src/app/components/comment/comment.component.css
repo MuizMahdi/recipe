@@ -1,0 +1,27 @@
+.comment 
+{
+    display: inline-block;
+}
+
+.comment img
+{
+    float: left;
+
+    max-height: 80px;
+    width: 60px;
+    margin-top: 1px;
+    /*border-radius: 100%;*/
+    margin-right: 10px;
+}
+
+.comment p
+{
+    margin-left: 70px;
+    margin-top: -6px;
+
+    height: 50px;
+    width: 95%;
+
+    padding: 5px;
+
+}

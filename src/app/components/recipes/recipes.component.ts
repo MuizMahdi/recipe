@@ -1,5 +1,4 @@
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
-//import { BookmarksComponent } from './../bookmarks/bookmarks.component';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 
@@ -40,7 +39,7 @@ export class RecipesComponent implements OnInit
     this.dataService.selectedRecipe(selectedRecipe);
     this.theSelectedRecipe = selectedRecipe;
 
-    console.log(this.theSelectedRecipe);
+    //console.log(this.theSelectedRecipe);
     // it receices the right recipe when clicking all good !
 
     //this.dataService.selectedRecipe(this.theSelectedRecipe);

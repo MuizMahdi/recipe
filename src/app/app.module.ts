@@ -5,6 +5,7 @@ import { ScrollEventModule } from 'ngx-scroll-event';
 import { RouterModule, Routes } from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { RouterLinkActive } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { TopRecipesComponent } from './Components/top-recipes/top-recipes.compon
 import { DataService } from './Services/data.service';
 
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { CommentComponent } from './Components/comment/comment.component';
 
 
 
@@ -46,7 +48,8 @@ const appRoutes: Routes = [
     HomeComponent,
     MyRecipeDetailComponent,
     AllRecipesComponent,
-    TopRecipesComponent
+    TopRecipesComponent,
+    CommentComponent
   ],
 
   imports: [
@@ -54,6 +57,7 @@ const appRoutes: Routes = [
     ScrollEventModule,
     NgbModule.forRoot(),
     FormsModule,
+    HttpModule,
     NgxPaginationModule,
     RouterModule.forRoot(appRoutes)
   ],
