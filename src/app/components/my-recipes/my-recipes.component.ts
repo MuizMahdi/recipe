@@ -18,7 +18,7 @@ export class MyRecipesComponent implements OnInit
   
   myRecipes: ARecipe[];
   theSelectedRecipe: ARecipe;
-  aRecipeAdded: boolean = false;
+  recipeAdded: boolean = false;
   p: number = 1;
 
 
@@ -31,7 +31,7 @@ export class MyRecipesComponent implements OnInit
     
     if(this.myRecipes.length > 0)
     {
-      this.aRecipeAdded = true;
+      this.recipeAdded = true;
     }
   }
 

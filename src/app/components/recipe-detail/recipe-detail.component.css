@@ -149,6 +149,7 @@
 .comments ul
 {
     list-style-type: none;
+
 }
 
 .a-comment
@@ -162,10 +163,11 @@
     margin-left: -20px;
 }
 
-
 .comment-form
 {
     display: block-inline;
+    margin-top: 40px;
+    margin-bottom: 10px;
 }
 
 .comment-form input
@@ -204,11 +206,24 @@
     margin-left: 74px;
 }
 
+
+.show-more
+{
+    display: block; 
+    text-align: center;
+    margin-right: 10%;
+}
+
 @media screen and (max-width: 991)
 {
     .comment-form button
     {
         margin-top: 0px;
         margin-left: 100%;
+    }
+
+    .comment-button
+    {
+        margin-left: -0.5% !important;
     }
 } 

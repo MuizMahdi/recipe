@@ -35,6 +35,13 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeUpvoted: boolean;
 
   imageSource: string = "../../../assets/ArrowUp_Gray.jpg";
+
+  commentFormInput: string;
+  latestComments: string[];
+  lotsOfComments: boolean = false;
+  numberOfComments: number;
+  recipeComments_Slice: string[];
+  SingularOrPlural: string;
 /*******************************************************************************************/
 
 
@@ -43,6 +50,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 constructor(public dataService: DataService)
 { 
   this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+  this.latestComments = [];
 }
 
 ngOnInit() {  }
@@ -85,6 +93,35 @@ ngOnInit() {  }
     {
       this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
     }
+
+
+    this.recipeComments_Slice = this.recipeComments.slice();
+    this.numberOfComments = this.recipeComments.length;
+
+    if(this.recipeComments.length > 2)
+    {
+      for(let i=0; i<3; i++)
+      {
+        this.latestComments[i] = this.recipeComments_Slice[i];
+      }
+
+      this.lotsOfComments = true;
+    }
+    else {
+      this.lotsOfComments = false;
+    }
+
+    if(this.recipeComments.length == 1)
+    {
+      this.SingularOrPlural = "Comment";
+    }
+    else
+    {
+      this.SingularOrPlural = "Comments";
+    }
+    
+
+    
     
   }
 
@@ -112,7 +149,13 @@ ngOnInit() {  }
 
   addComment()
   {
-    
+    this.recipeComments.push(this.commentFormInput);
+    this.commentFormInput = " "; // clear the form 
+  }
+
+  onShowMoreComments()
+  {
+    this.lotsOfComments = false;
   }
 
 /*******************************************************************************************/

@@ -59,7 +59,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     NgxPaginationModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
 
   providers: [ DataService ],

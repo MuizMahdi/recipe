@@ -45,10 +45,21 @@
   
 
   <div class="container">
-    <h3> 0 Comments </h3>
+    <h3> {{numberOfComments}} {{SingularOrPlural}} </h3> <!-- FOR THE SAKE OF THE ENGLISH GRAMMAR -->
     <hr>
     <div class="comments">
-      <ul>
+      
+      <ul *ngIf="lotsOfComments">
+        <li *ngFor="let comment of latestComments">
+          <div class="a-comment">
+            <app-comment [theComment]="comment"></app-comment>
+            <hr>
+          </div>
+        </li>
+        <a *ngIf="lotsOfComments" (click)="onShowMoreComments()" href="javascript:void(0)" class="show-more"> Show more </a>
+      </ul>
+
+      <ul *ngIf="!lotsOfComments">
         <li *ngFor="let comment of recipeComments">
           <div class="a-comment">
             <app-comment [theComment]="comment"></app-comment>
@@ -61,8 +72,8 @@
       <div class="add-comment">
         <form class="comment-form">
           <img src="../../../assets/Avatar.jpg" alt="Avatar Image">
-          <input type="text" placeholder="Add a comment...">
-          <button class="btn btn-success">Add Comment</button>
+          <input type="text" placeholder="Add a comment..." [(ngModel)]="commentFormInput" name="commentFormInput">
+          <button (click)="addComment()" class="btn btn-success comment-button">Add Comment</button>
         </form>
 
       </div>
