@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollEventModule } from 'ngx-scroll-event';
 import { RouterModule, Routes } from '@angular/router';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLinkActive } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
@@ -24,6 +24,13 @@ import { DataService } from './Services/data.service';
 
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './Components/comment/comment.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material';
+
 
 
 
@@ -60,6 +67,12 @@ const appRoutes: Routes = [
     HttpModule,
     NgxPaginationModule,
     RouterModule.forRoot(appRoutes),
+    MatInputModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatCheckboxModule
   ],
 
   providers: [ DataService ],

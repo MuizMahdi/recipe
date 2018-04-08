@@ -9,6 +9,43 @@
   </li>
 </ul>
 -->
+<!--
+<hr>
+
+<div class="autocomplete">
+  <label for="inputText">Name</label>
+
+  <div [formGroup]="rForm">
+    <input type="text" formControlName="name" id="inputText">
+  </div>
+
+  <div class="state-container-dropdown">
+
+  </div>
+</div>
+
+<hr>
+-->
+
+<mat-form-field style="margin-left: 40%;">
+  <div [formGroup]="fGroup">
+      <input type="text" matInput [formControl]="fCtrl" [matAutocomplete]="auto">
+  </div>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </mat-option>
+</mat-autocomplete>
+
+<br>
+
+<div style="margin-left: 40%;">
+  <p *ngIf="showFormVals"> {{ fGroup.value | json }} </p>
+  <mat-checkbox [checked]="showFormVals" (change)="showFormVals = !showFormVals"> Show FormGroup JSON Value </mat-checkbox>
+</div>
+
 
 <div class="all-recipes-list">
   <ul>
