@@ -20,10 +20,25 @@
         </li>
       </ul>
 
+      <!--
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2 nav-searchinput" type="search" placeholder="Search Recipes" aria-label="Search">
         <button class="btn btn-light nav-searchbutton" type="submit">Search</button>
       </form>
+      -->
+      
+      <form class="form-inline my-2 my-lg-0">
+        <div [formGroup]="formGroup">
+          <input type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="formCtrl" [matAutocomplete]="auto">
+        </div>
+        <button (click)="onSearch()" class="btn btn-light nav-searchbutton" type="submit">Search</button>
+      </form>
+        
+      <mat-autocomplete #auto="matAutocomplete" class="auto-complete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>    
 
     </div>
     
