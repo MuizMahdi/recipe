@@ -1,8 +1,0 @@
-@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
-
-body
-{
-    background-color: rgb(250,250,250);
-    image-rendering: -webkit-optimize-contrast; /* solves blurry images on Chrome */
-}
-
