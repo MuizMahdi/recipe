@@ -1,11 +1,10 @@
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../Services/data.service';
-import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 
 //import { RecipeComponent } from '../recipe/recipe.component';
 import { ARecipe } from '../../models/ARecipe';
-import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -22,33 +21,17 @@ export class RecipesComponent implements OnInit
   theSelectedRecipe: ARecipe;
   p: number = 1;
 
-  showFormVals: boolean = true;
-
-
-  fCtrl = new FormControl;  
-  fGroup = new FormGroup({
-    fCtrl: new FormControl()
-  });
-  public options = ['option1', 'option2', 'option3','option4','option5','option6','option7','option8','option9','option10','option11','option12','option13'];
-
-
-
-  constructor(public dataService: DataService, private formBuilder: FormBuilder) 
-  { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() 
   { 
     this.recipes = this.dataService.getRecipes();
+    window.scroll({top: 0, left: 0, behavior: 'smooth' });
   }
 
   addRecipe(recipe: ARecipe)
   {
     this.dataService.addRecipe(recipe);
-  }
-
-  boxChecked()
-  {
-    this.showFormVals = false;
   }
 
   setSelected(selectedRecipe: ARecipe)

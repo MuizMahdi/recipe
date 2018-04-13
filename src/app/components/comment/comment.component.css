@@ -1,6 +1,7 @@
 .comment 
 {
     display: inline-block;
+    width: 100%;
 }
 
 .comment img
@@ -16,12 +17,11 @@
 
 .comment p
 {
-    margin-left: 70px;
+    /*margin-left: 70px;*/
     margin-top: -6px;
 
     height: 50px;
     width: 95%;
 
     padding: 5px;
-
 }

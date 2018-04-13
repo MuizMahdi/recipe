@@ -55,7 +55,7 @@
 
 .recipe-name
 {
-    color: rgb(127, 125, 255);
+    color: rgb(73, 197, 182);
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -146,10 +146,11 @@
     background-position: 0 -25px; 
 }
 
+
+
 .comments ul
 {
     list-style-type: none;
-
 }
 
 .a-comment
@@ -203,9 +204,8 @@
 .comment-form button
 {
     margin-top: -40px;
-    margin-left: 74px;
+    margin-left: 0px;
 }
-
 
 .show-more
 {
@@ -214,16 +214,10 @@
     margin-right: 10%;
 }
 
-@media screen and (max-width: 991)
+@media screen and (min-width: 992px)
 {
     .comment-form button
     {
-        margin-top: 0px;
-        margin-left: 100%;
+        margin-left: 74px;
     }
-
-    .comment-button
-    {
-        margin-left: -0.5% !important;
-    }
-} 
+}

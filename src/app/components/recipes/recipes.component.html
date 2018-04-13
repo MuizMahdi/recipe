@@ -1,5 +1,5 @@
-<div *ngIf="theSelectedRecipe" class="container">
-    <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>
+<div *ngIf="this.dataService.getSelectedRecipe()" class="container">
+    <app-recipe-detail [aSelectedRecipe]="this.dataService.getSelectedRecipe()"></app-recipe-detail>
 </div>
 
 <!--
@@ -27,31 +27,11 @@
 <hr>
 -->
 
-<mat-form-field style="margin-left: 40%;">
-  <div [formGroup]="fGroup">
-      <input type="text" matInput [formControl]="fCtrl" [matAutocomplete]="auto">
-  </div>
-</mat-form-field>
-
-<mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of options" [value]="option">
-      {{ option }}
-    </mat-option>
-</mat-autocomplete>
-
-<br>
-
-<div style="margin-left: 40%;">
-  <p *ngIf="showFormVals"> {{ fGroup.value | json }} </p>
-  <mat-checkbox [checked]="showFormVals" (change)="showFormVals = !showFormVals"> Show FormGroup JSON Value </mat-checkbox>
-</div>
-
-
 <div class="all-recipes-list">
   <ul>
 
     <div class="row">
-      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 6, currentPage: p }" class="col-sm-4" >
+      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 9, currentPage: p }" class="col-sm-4" >
         <app-a-recipe [recipeVal]="recipe" (theRecipeSelected)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
       </li>
     </div>
