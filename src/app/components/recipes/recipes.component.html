@@ -27,6 +27,39 @@
 <hr>
 -->
 
+<!--
+<ul>
+  <li *ngFor="let client of clients">
+    {{client.firstName}}
+  </li>
+</ul>
+-->
+
+<table *ngIf="clients?.length>0 ;else noClients" class="table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Balance</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{client.firstName}} {{client.lastName}}</td>
+      <td>{{client.email}}</td>
+      <td>{{client.balance}}</td>
+      <td><a href="" class="btn btn-secondary btn-sm">Details</a></td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #noClients>
+  <hr>
+  <h5>There are no clients.</h5>
+</ng-template>
+
+
 <div class="all-recipes-list">
   <ul>
 
