@@ -169,7 +169,8 @@
 {
     margin-top: 10px;
     font-family: Century Gothic;
-    color: rgb(68, 68, 68);
+    /*color: rgb(68, 68, 68);*/
+    color: rgb(53, 163, 150) !important;
     font-variant: Small-Caps;
     text-align: center;
 }

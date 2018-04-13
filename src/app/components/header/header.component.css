@@ -137,13 +137,13 @@ body.modal-open /* Prevent the right padding when open */
 
     padding: 13px 18px;
     margin-right: 21px;
-    border-radius: 2px;
+    border-radius: 30px;
 }
 
 
 .midButtons button:hover
 {
-    background-color: rgb(66, 66, 66);
-    border-color: rgb(148, 148, 148);
+    background-color: rgb(73, 197, 182);
+    border-color: rgb(73, 197, 182);
     cursor: pointer;
 }

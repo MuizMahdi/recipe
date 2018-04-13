@@ -31,7 +31,7 @@
   <ul>
 
     <div class="row">
-      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 6, currentPage: p }" class="col-sm-4" >
+      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 9, currentPage: p }" class="col-sm-4" >
         <app-a-recipe [recipeVal]="recipe" (theRecipeSelected)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
       </li>
     </div>

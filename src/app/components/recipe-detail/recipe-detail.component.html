@@ -47,8 +47,8 @@
   <div class="container">
     <h3> {{numberOfComments}} {{SingularOrPlural}} </h3> <!-- FOR THE SAKE OF THE ENGLISH GRAMMAR -->
     <hr>
+
     <div class="comments">
-      
       <ul *ngIf="lotsOfComments">
         <li *ngFor="let comment of latestComments">
           <div class="a-comment">
