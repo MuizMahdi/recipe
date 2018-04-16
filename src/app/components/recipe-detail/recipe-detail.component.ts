@@ -131,7 +131,7 @@ ngOnInit() {  }
 
   upvoteRecipe()
   {
-    this.recipeUpvotes = this.recipeUpvotes + 1;
+    this.recipeUpvotes = this.recipeUpvotes + 1; // It doesn't update on DB until refresh, so this is just for the view.
     this.recipeUpvoted = true;
 
     //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
