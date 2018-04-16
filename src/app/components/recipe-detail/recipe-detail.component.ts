@@ -1,3 +1,5 @@
+import { Recipe } from './../../models/Recipe';
+import { RecipesDataService } from './../../Services/recipesData.service';
 import { an_Ingredient } from './../../models/an_Ingredient';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../models/ARecipe';
@@ -5,7 +7,6 @@ import { DataService } from '../../Services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,8 +19,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 {
 
 /*******************************************************************************************/
-  @Input() aSelectedRecipe: ARecipe;
-  changeDetect: ARecipe;
+  @Input() aSelectedRecipe: Recipe;
+  changeDetect: Recipe;
 
   recipeName: string;
   recipeImageSource: string;
@@ -29,7 +30,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeComments: string[];
   recipeAmounts: number[];
 
-  theIngredients: an_Ingredient[];
+  //theIngredients: an_Ingredient[];
+  theIngredients2: { ingredientsNames:string[], ingredientsAmounts:number[] };
 
   recipeUpvotes: number;
   recipeUpvoted: boolean;
@@ -47,9 +49,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-constructor(public dataService: DataService)
+constructor(public dataService: DataService, public recipesDataService: RecipesDataService)
 { 
-  this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+  //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+  this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
   this.latestComments = [];
 }
 
@@ -63,35 +66,28 @@ ngOnInit() {  }
   ngOnChanges(changes: SimpleChanges) 
   {
 
-    this.theIngredients = [{name: "", amount:0}]; // Clear the old values on change so it wont mix them up with the new values.
+    // Clear the old values on change so it wont mix them up with the new values.
+    this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
 
     for (let propName in changes) 
     {
       let chng = changes[propName];
-      this.changeDetect = chng.currentValue;                 // RETURNS THE OBJECT IT SELF
-
-      //this.theRecipe  = JSON.stringify(chng.currentValue);  // RETURNS A STRING OF THE OBJECT, NOT THE OBJECT IT SELF
-      //let prev = JSON.stringify(chng.previousValue);
+      this.changeDetect = chng.currentValue; // RETURNS THE OBJECT IT SELF
     }
-    
-    //console.log(changes);
-      
+          
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
     this.recipeDescription = this.changeDetect.description;
-
     this.recipeUpvotes = this.changeDetect.upvotes;
-
-    this.recipeIngredients = this.changeDetect.ingredients;
-    this.recipeComments = this.changeDetect.comments;
-    this.recipeAmounts = this.changeDetect.amounts;
-
     this.recipeUpvoted = this.changeDetect.upvoted;
-    
+    this.recipeIngredientsNames = this.changeDetect.ingredientsNames;
+    this.recipeIngredientsAmounts = this.changeDetect.ingredientsAmounts;
+    this.recipeComments = this.changeDetect.comments;
 
-    for(let i=0; i<this.recipeIngredients.length; i++) // assign ingredient names and amounts to array
+
+    for(let i=0; i<this.recipeIngredientsNames.length; i++) // assign ingredient names and amounts to array
     {
-      this.theIngredients[i] = {name: this.recipeIngredients[i], amount: this.recipeAmounts[i]};
+      this.theIngredients2[i] = {ingredientsName: this.recipeIngredientsNames[i], ingredientsAmount: this.recipeIngredientsAmounts[i]};
     }
 
 
@@ -134,14 +130,43 @@ ngOnInit() {  }
   {
     this.recipeUpvotes = this.recipeUpvotes + 1;
     this.recipeUpvoted = true;
-    this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
-    this.dataService.recipeUpvoted(this.recipeName);
 
-    this.dataService.updateSortedRecipes();
+    //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
+    //this.dataService.recipeUpvoted(this.recipeName);
+    //this.dataService.updateSortedRecipes();
 
-    console.log(this.recipeComments);
+    this.recipesDataService.updateRecipe(this.aSelectedRecipe);
   }
 
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+/*
+recipeUpvoted(recipeName: string)
+{
+  for(let i=0; i<this.recipes.length; i++)
+  {
+    if(this.recipes[i].name == recipeName)
+    {
+      this.recipes[i].upvoted = true;
+      this.recipes[i].upvotes =  this.recipes[i].upvotes + 1;
+      break;
+    }
+  }
+  
+
+  for(let i=0; i<this.myRecipes.length; i++)
+  {
+    if(this.myRecipes[i].name == recipeName)
+    {
+      this.myRecipes[i].upvoted = true; // wtf, hold on !
+      this.myRecipes[i].upvotes =  this.myRecipes[i].upvotes + 1;
+      break;
+    }
+  }
+}
+*/
 /*******************************************************************************************/
 
 

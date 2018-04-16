@@ -3,13 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 
-//import { RecipeComponent } from '../recipe/recipe.component';
 import { ARecipe } from '../../models/ARecipe';
+import { Recipe } from './../../models/Recipe';
+
 
 import { AngularFireDatabase } from 'angularfire2/database';
 
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Client } from './../../models/clients';
-import { ClientService } from './../../Services/client.service';
+import { RecipesDataService } from './../../Services/recipesData.service';
 
 @Component({
   selector: 'app-recipes',
@@ -17,39 +22,58 @@ import { ClientService } from './../../Services/client.service';
   styleUrls: ['./recipes.component.css']
 })
 
-
 export class RecipesComponent implements OnInit 
 {
 
+//-----------------------------------------------------------------------------------------------------------// 
+  
   recipes: ARecipe[];
   theSelectedRecipe: ARecipe;
   p: number = 1;
-  clients: Client[];
-  totalOwned: number;
 
-  constructor(public dataService: DataService, db: AngularFireDatabase, public clientService: ClientService) 
-  { 
-    /*db.list('/clients').valueChanges().subscribe( client => {
-      this.clients = client;
-    })*/
-  }
+  recipesDB: Recipe[];
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+//-----------------------------------------------------------------------------------------------------------// 
+  
+  constructor(public dataService: DataService, db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
+  { }
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+
+
+// THIS IS AS FAR AS IT GOES, I CAN ONLY USE 'recipesDB' INSIDE THE SUBSCRIBE SCOPE AND VIEW IT ON TEMPLATE.
+//-----------------------------------------------------------------------------------------------------------// 
 
   ngOnInit() 
   { 
     this.recipes = this.dataService.getRecipes();
     window.scroll({top: 0, left: 0, behavior: 'smooth' });
 
-    this.clients = this.clientService.getClients().subscribe(clients =>{
-      this.clients = clients;
+
+    this.recipeDataService.getRecipesChanges().subscribe( val => {
+      this.recipesDB = val;
+      console.log(this.recipesDB);
     });
   }
 
- 
+//-----------------------------------------------------------------------------------------------------------// 
+
+  
+//-----------------------------------------------------------------------------------------------------------//
 
   addRecipe(recipe: ARecipe)
   {
     this.dataService.addRecipe(recipe);
   }
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+
+
+//-----------------------------------------------------------------------------------------------------------// 
 
   setSelected(selectedRecipe: ARecipe)
   {
@@ -61,7 +85,13 @@ export class RecipesComponent implements OnInit
 
     //this.dataService.selectedRecipe(this.theSelectedRecipe);
     //console.log("selected recipe passed to data service")
-    
   }
+
+  setSelected2(selectedRecipe: Recipe)
+  {
+    this.theSelectedRecipe = selectedRecipe;
+  }
+
+//-----------------------------------------------------------------------------------------------------------// 
 
 }

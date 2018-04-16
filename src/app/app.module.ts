@@ -26,7 +26,7 @@ import { CommentComponent } from './Components/comment/comment.component';
 
 // Services
 import { DataService } from './Services/data.service';
-import { ClientService } from './Services/client.service';
+import { RecipesDataService } from './Services/recipesData.service';
 
 // Bootstrap
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -35,8 +35,8 @@ import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 // Angular Material 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material';
 
 // Angular Fire
@@ -44,7 +44,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-/*import { environment } from '../environments/environment';*/
 
 
 
@@ -93,9 +92,9 @@ const appRoutes: Routes = [
 
   providers: [ 
     DataService,
-    ClientService,
+    RecipesDataService,
     AngularFireDatabaseModule,
-    AngularFireAuthModule 
+    AngularFireAuthModule
   ],
 
   bootstrap: [ AppComponent ]
