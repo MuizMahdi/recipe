@@ -47,7 +47,13 @@ export class RecipesDataService
           ingredientsNames: item.ingredientsNames,
           ingredientsAmounts: item.ingredientsAmounts,
           comments:item.comments
-        });           
+        });
+        
+
+        this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name)).snapshotChanges().map(actions => {
+          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        }).subscribe().unsubscribe();
+        
       });
     });  
 

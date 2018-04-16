@@ -28,7 +28,7 @@ export class RecipesComponent implements OnInit
 //-----------------------------------------------------------------------------------------------------------// 
   
   recipes: ARecipe[];
-  theSelectedRecipe: ARecipe;
+  theSelectedRecipe: Recipe;
   p: number = 1;
 
   recipesDB: Recipe[];
@@ -75,7 +75,7 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
 
-  setSelected(selectedRecipe: ARecipe)
+  /*setSelected(selectedRecipe: ARecipe)
   {
     this.dataService.selectedRecipe(selectedRecipe);
     this.theSelectedRecipe = selectedRecipe;
@@ -85,7 +85,7 @@ export class RecipesComponent implements OnInit
 
     //this.dataService.selectedRecipe(this.theSelectedRecipe);
     //console.log("selected recipe passed to data service")
-  }
+  }*/
 
   setSelected2(selectedRecipe: Recipe)
   {

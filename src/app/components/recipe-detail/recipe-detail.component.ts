@@ -31,7 +31,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeAmounts: number[];
 
   //theIngredients: an_Ingredient[];
-  theIngredients2: { ingredientsNames:string[], ingredientsAmounts:number[] };
+  theIngredients2: [{ ingredientsName:string, ingredientsAmount:number }];
+  recipeIngredientsNames: string[];
+  recipeIngredientsAmounts: number[];
 
   recipeUpvotes: number;
   recipeUpvoted: boolean;
@@ -52,6 +54,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 constructor(public dataService: DataService, public recipesDataService: RecipesDataService)
 { 
   //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+  //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
   this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
   this.latestComments = [];
 }
