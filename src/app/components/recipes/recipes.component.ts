@@ -55,7 +55,7 @@ export class RecipesComponent implements OnInit
 
     this.recipeDataService.getRecipesChanges().subscribe( val => {
       this.recipesDB = val;
-      console.log(this.recipesDB);
+      //console.log(this.recipesDB);
     });
   }
 

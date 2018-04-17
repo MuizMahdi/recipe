@@ -1,43 +1,54 @@
 import { Recipe } from './../models/Recipe';
 import { Observable } from 'rxjs/Observable';
-import { Injectable } from '@angular/core';
+import { Injectable, AnimationKeyframe } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabase , AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { AnonymousSubject } from 'rxjs/Subject';
 import { OnDestroy } from "@angular/core";
+import 'rxjs/add/operator/takeUntil';
+import { Subject }  from 'rxjs/Subject';
 
 @Injectable()
-export class RecipesDataService 
+export class RecipesDataService implements OnDestroy
 {
-
 /*******************************************************************************************/
 
   public recipeReturned: Recipe[];
   selected: Recipe;
   valObj: Recipe[];
-  subscription: any;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
 /*******************************************************************************************/
 
-/*******************************************************************************************/
-
-  constructor(public ngFireDB: AngularFireDatabase) 
-  { }
 
 /*******************************************************************************************/
-  
+
+  constructor(public ngFireDB: AngularFireDatabase) { }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  ngOnDestroy() 
+  {
+    // Unsubscribe just in case, for safety
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+/*******************************************************************************************/
 
 /*******************************************************************************************/
 
   updateRecipe(recipe: Recipe)
   {
-    //this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name)).update({upvotes: recipe.upvotes});
     let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
     
-    recipeList.snapshotChanges().map(actions => {
+    let recipeSubscription = recipeList.snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-    }).subscribe(items => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(items => {
       return items.map(item => {
         recipeList.update(item.key, {
           name: item.name,
@@ -49,19 +60,10 @@ export class RecipesDataService
           ingredientsAmounts: item.ingredientsAmounts,
           comments:item.comments
         });
-
       });
     });  
 
-    let recipeListSubscription = recipeList.snapshotChanges().map(actions => {
-      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-    }).subscribe( items => {});
-
-    recipeListSubscription.unsubscribe();
-
-
-    
-    // MEMORY LEAK AFTER UPVOTING TWICE WHEN UPVOTED: FALSE !
+    // Memory Leak when upvoting twice, so no upvoting twice... ITS A FEATURE !
   }
 
 /*******************************************************************************************/
@@ -103,8 +105,7 @@ export class RecipesDataService
 
 
 
-/*******************************************************************************************/
-
+/****** ~ NOTE ~ *******************************************************************************/ 
   /*
     Insert in component onInit() to access DB data:
 
@@ -113,22 +114,6 @@ export class RecipesDataService
     });
 
     this.recipesDbObservable = this.recipeDataService.getRecipesDbChanges(); // async to observable when data only needed on template.
-  */
-
- /*
- getPostsPerUser() 
- {
-  return this.http.get('/users').map(res => res.json()).flatMap((result : Array<User>) => {
-    return Observable.forkJoin(
-      result.map((user : User) => user.getPosts());
-    });
-  }
-
-  this.getPostsPerUser().subscribe(result => {
-    var postsUser1 = result[0];
-    var postsUser2 = result[1];
-    (...)
-  });
   */
 /*******************************************************************************************/
 

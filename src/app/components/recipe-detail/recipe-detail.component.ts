@@ -1,12 +1,14 @@
 import { Recipe } from './../../models/Recipe';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { an_Ingredient } from './../../models/an_Ingredient';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../models/ARecipe';
 import { DataService } from '../../Services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -48,6 +50,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   SingularOrPlural: string;
 
   theRecipe: Recipe[];
+  private ngUnsubscribe: Subject<any> = new Subject();
+  
 /*******************************************************************************************/
 
 
@@ -70,7 +74,6 @@ ngOnInit() {  }
 
   ngOnChanges(changes: SimpleChanges) 
   {
-
     // Clear the old values on change so it wont mix them up with the new values.
     this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
 
@@ -120,10 +123,7 @@ ngOnInit() {  }
     {
       this.SingularOrPlural = "Comments";
     }
-    
 
-    
-    
   }
 
 /*******************************************************************************************/
@@ -134,7 +134,7 @@ ngOnInit() {  }
   upvoteRecipe()
   {
     this.recipeUpvotes = this.recipeUpvotes + 1; // It doesn't update on DB until refresh, so this is just for the view.
-    this.recipeUpvoted = true;
+    this.recipeUpvoted = true; // same here
 
 
     //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
@@ -144,26 +144,31 @@ ngOnInit() {  }
     this.recipesDataService.updateRecipe(this.aSelectedRecipe);
 
     let theRecipe: Recipe[];
-    this.recipesDataService.getRecipeObservable().subscribe(val => {
+    let recipeSubscription = this.recipesDataService.getRecipeObservable().takeUntil(this.ngUnsubscribe).subscribe(val => {
       theRecipe = val
 
       for(let i=0; i<theRecipe.length; i++)
       {
         if(theRecipe[i].name === this.aSelectedRecipe.name)
         {
-          console.log(theRecipe[i].name + "WAS FOUND BIYAATSH");
-          return theRecipe[i];
+          //console.log(theRecipe[i].name + "WAS FOUND");
         }
-        else
-        {
-          window.alert("NO SUCH RECIPE IS FOUND: findRecipe(aRecipe:Recipe)");
-        }
-      }
+      } 
     });
+
   }
 
 /*******************************************************************************************/
 
+ngOnDestroy()
+{
+  // Unsubscribe for safety
+  this.ngUnsubscribe.next();
+  this.ngUnsubscribe.complete();
+
+  let recipeSubscription = this.recipesDataService.getRecipeObservable().subscribe(val => {});
+  recipeSubscription.unsubscribe();
+}
 
 /*******************************************************************************************/
 /*
