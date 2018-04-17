@@ -46,6 +46,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   numberOfComments: number;
   recipeComments_Slice: string[];
   SingularOrPlural: string;
+
+  theRecipe: Recipe[];
 /*******************************************************************************************/
 
 
@@ -134,11 +136,30 @@ ngOnInit() {  }
     this.recipeUpvotes = this.recipeUpvotes + 1; // It doesn't update on DB until refresh, so this is just for the view.
     this.recipeUpvoted = true;
 
+
     //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
     //this.dataService.recipeUpvoted(this.recipeName);
     //this.dataService.updateSortedRecipes();
 
     this.recipesDataService.updateRecipe(this.aSelectedRecipe);
+
+    let theRecipe: Recipe[];
+    this.recipesDataService.getRecipeObservable().subscribe(val => {
+      theRecipe = val
+
+      for(let i=0; i<theRecipe.length; i++)
+      {
+        if(theRecipe[i].name === this.aSelectedRecipe.name)
+        {
+          console.log(theRecipe[i].name + "WAS FOUND BIYAATSH");
+          return theRecipe[i];
+        }
+        else
+        {
+          window.alert("NO SUCH RECIPE IS FOUND: findRecipe(aRecipe:Recipe)");
+        }
+      }
+    });
   }
 
 /*******************************************************************************************/

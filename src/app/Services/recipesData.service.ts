@@ -49,7 +49,7 @@ export class RecipesDataService
           ingredientsAmounts: item.ingredientsAmounts,
           comments:item.comments
         });
-        
+
       });
     });  
 
@@ -58,6 +58,8 @@ export class RecipesDataService
     }).subscribe( items => {});
 
     recipeListSubscription.unsubscribe();
+
+
     
     // MEMORY LEAK AFTER UPVOTING TWICE WHEN UPVOTED: FALSE !
   }
@@ -79,7 +81,7 @@ export class RecipesDataService
 
   getRecipeObservable()
   {
-    this.ngFireDB.list<Recipe>('/recipes').valueChanges();
+    return this.ngFireDB.list<Recipe>('/recipes').valueChanges();
   }
 
 /*******************************************************************************************/
