@@ -16,8 +16,11 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/myrecipes">My Recipes</a>
+          <div *ngIf="isLoggedIn">
+            <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/myrecipes">My Recipes</a>
+          </div>
         </li>
+
       </ul>
       
       <form class="form-inline my-2 my-lg-0">
@@ -26,12 +29,20 @@
         </div>
         <button (click)="onSearch()" class="btn btn-light nav-searchbutton" type="submit">Search</button>
       </form>
-        
+      
       <mat-autocomplete #auto="matAutocomplete" class="auto-complete">
         <mat-option *ngFor="let option of options" [value]="option">
           <h6 class="auto-complete-menu-text">{{ option }}</h6>
         </mat-option>
-      </mat-autocomplete>    
+      </mat-autocomplete>
+      
+      <div *ngIf="isLoggedIn">
+        <a (click)="onLogout()" routerLink="/" href="#" class="login-logout">Logout</a>
+      </div>
+      
+      <div *ngIf="!isLoggedIn">
+          <a routerLink="/login" href="#" class="login-logout">Login or Register</a>
+      </div>
 
     </div>
     

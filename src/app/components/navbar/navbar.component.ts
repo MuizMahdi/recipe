@@ -5,7 +5,7 @@ import { DataService } from '../../Services/data.service';
 import { ScrollEvent } from 'ngx-scroll-event';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { AuthService } from './../../Services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,16 +28,32 @@ export class NavbarComponent implements OnInit
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
   recipes: ARecipe[] = this.dataService.getRecipes();
+  isLoggedIn: boolean;
+  loggedInUserEmail:string;
+  loggedInUserName: string;
 
 
-  constructor(public dataService: DataService, private formBuilder: FormBuilder, private router: Router) 
+  constructor(public dataService: DataService, private formBuilder: FormBuilder, private router: Router, private authService: AuthService) 
   { 
     this.buildForm();
     this.getRecipesNames();
     this.checkFormCtrlChanges();
   }
 
-  ngOnInit(){}
+  ngOnInit()
+  {
+    this.authService.getAuth().subscribe(auth => {
+      if(auth)
+      {
+        this.isLoggedIn = true;
+        this.loggedInUserEmail = auth.email;
+      }
+      else
+      {
+        this.isLoggedIn = false;
+      }
+    });
+  }
 
   getRecipesNames()
   {
@@ -145,6 +161,12 @@ export class NavbarComponent implements OnInit
       //not transparent
       this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-dark";
     }
+  }
+
+
+  onLogout()
+  {
+    this.authService.logout();
   }
   
 

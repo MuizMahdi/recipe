@@ -11,7 +11,14 @@ export class AuthService
   constructor(public afAuth: AngularFireAuth) 
   { }
 
-  
+
+  // Check whether user is logged in or not (user state) as an observable
+  getAuth()
+  {
+    return this.afAuth.authState.map(auth => auth);
+  }
+
+
   login(email: string, password: string) 
   {
     return new Promise( (resolve, reject) => {
@@ -19,5 +26,12 @@ export class AuthService
       .then( userData => resolve(userData), err => reject(err) )
     });
   }
+
+  logout()
+  {
+    this.afAuth.auth.signOut();
+  }
+
+
 
 }

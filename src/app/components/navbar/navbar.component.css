@@ -79,6 +79,22 @@
     font-size: 17px;
 }
 
+.login-logout
+{
+    color: rgb(73, 197, 182) !important;
+    font-weight: 500;
+    font-family: Arial !important;
+    font-size: 18px;
+    margin-left: 30px;
+    text-decoration: none;
+}
+
+.login-logout:hover
+{
+    color: rgb(207, 207, 207) !important;
+    transition: .35s ease !important;
+}
+
 .auto-complete
 {
     position: relative; 
