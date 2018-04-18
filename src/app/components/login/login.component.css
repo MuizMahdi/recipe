@@ -6,14 +6,23 @@
     top:0; 
     left:0; 
     width:100%; 
-    height:100%;
+    height:130%;
 }
 
 .login-box
 {
     background-color: rgba(255, 255, 255, 0.7);
-    margin-top: 50px;
+    margin-top: 60px;
     padding: 40px;
+    overflow: hidden;
+}
+
+.register-box
+{
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-top: -50px;
+    padding: 30px;
+    overflow: hidden;
 }
 
 .login-formgroup
@@ -39,4 +48,15 @@
 {
     color: rgb(104, 104, 104);
     text-decoration: none;
+}
+
+.recipe-brand
+{
+    color: rgba(230, 230, 230, 0.7);
+    font-family: sans-serif;
+    font-variant: Small-Caps;
+    font-size: 60px;
+    text-decoration: none;
+    margin-left: 2%;
+    margin-top: 2%;
 }

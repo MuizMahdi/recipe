@@ -48,10 +48,7 @@ export class LoginComponent implements OnInit
       emailCtrl: new FormControl(null, [Validators.required]),
       passwordCtrl: new FormControl(null, [Validators.required]),
       confirmPasswordCtrl: new FormControl(null, [Validators.required, matchOtherValidator('passwordCtrl')])
-    });
-
-    
-    
+    }); 
   }
 
   onLogin()
@@ -86,4 +83,5 @@ export class LoginComponent implements OnInit
       
     }
   }
+
 }
