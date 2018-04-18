@@ -1,0 +1,120 @@
+<div class="background-image">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+
+        <div *ngIf="!swapFormBoolean" class="login-box">
+          <div class="login-formgroup">
+
+            <h1 class="text-center">Login</h1>
+            <div *ngIf="!loginFormGroup.valid && loginClick" class="alert alert-danger">Some of the information entered are wrong or missing, please enter them in the correct form</div>
+            <form [formGroup]="loginFormGroup" (submit)="onLogin()" novalidate>
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--EMAIL-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="emailCtrl" type="email" class="form-control" placeholder="User Email..." required>
+                
+                <div class="Errors">
+                  <div *ngIf="loginFormGroup.controls['emailCtrl'].errors?.required && loginFormGroup.controls['emailCtrl'].touched" class="alert alert-danger">Email is required</div>
+                </div>
+              </div>
+
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--PASSWORD-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label for="email">Password</label>
+                <input formControlName="passwordCtrl" type="password" class="form-control" placeholder="Password..." required/>
+  
+                <div class="Errors">
+                  <div *ngIf="loginFormGroup.controls['passwordCtrl'].errors?.required && loginFormGroup.controls['passwordCtrl'].touched" class="alert alert-danger">Password is required</div>
+                </div>
+              </div>
+
+              <input type="submit" class="btn btn-primary btn-block submit-button" value="Login">
+            </form>
+
+            <a (click)="swapFormBoolean = !swapFormBoolean" href="javascript:void(0)" class="register-link"> Don't have an account ? Click Here to register </a>
+
+          </div>
+        </div>
+
+
+
+        <div *ngIf="swapFormBoolean" class="login-box">
+          <div class="login-formgroup">
+
+            <h1 class="text-center">Not yet registered?</h1>
+            <div *ngIf="!registerationFormGroup.valid && registerClick" class="alert alert-danger">Some of the information entered are wrong or missing, please enter them in the correct form</div>
+            <form [formGroup]="registerationFormGroup" (submit)="onRegister()" novalidate>
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--NAME-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label>Name</label>
+                <input formControlName="nameCtrl" type="text" class="form-control" placeholder="User Name..." minlength="4" required>
+                
+                <div class="Errors">
+                  <div *ngIf="registerationFormGroup.controls['nameCtrl'].errors?.required && registerationFormGroup.controls['nameCtrl'].touched" class="alert alert-danger">A username is required</div>
+                  <div *ngIf="registerationFormGroup.controls['nameCtrl'].errors?.minlength && registerationFormGroup.controls['nameCtrl'].touched" class="alert alert-danger">Username should be more than 4 characters long</div>
+                </div>
+              </div>
+
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--EMAIL-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="emailCtrl" type="email" class="form-control" placeholder="Email..." required>
+                
+                <div class="Errors">
+                  <div *ngIf="registerationFormGroup.controls['emailCtrl'].errors?.required && registerationFormGroup.controls['emailCtrl'].touched" class="alert alert-danger">An E-mail is required</div>
+                </div>
+              </div>
+
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--PASSWORD-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label for="email">Password</label>
+                <input formControlName="passwordCtrl" type="password" class="form-control" placeholder="Password..." required/>
+
+                <div class="Errors">
+                  <div *ngIf="registerationFormGroup.controls['passwordCtrl'].errors?.required && registerationFormGroup.controls['passwordCtrl'].touched" class="alert alert-danger">Password is required</div>
+                </div>
+              </div>
+
+
+
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <!--CONFRIM PASSWORD-->
+              <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+              <div class="form-group">
+                <label for="email">Confirm Password</label>
+                <input formControlName="confirmPasswordCtrl" type="password" class="form-control" placeholder="Confirm Password..." required/>
+                
+                <div class="Errors">
+                  <div *ngIf="registerationFormGroup.controls['confirmPasswordCtrl'].errors?.required && registerationFormGroup.controls['confirmPasswordCtrl'].touched" class="alert alert-danger">Confirmation Password is required</div>
+                  <div *ngIf="registerationFormGroup.controls['confirmPasswordCtrl'].errors?.matchOther" class="alert alert-danger">Confirmation Password doesn't match password</div>
+                </div>
+              </div>
+
+              <input type="submit" class="btn btn-primary btn-block submit-button" value="Register">
+            </form>
+
+            <a (click)="swapFormBoolean = !swapFormBoolean" href="javascript:void(0)" class="register-link"> Already have an account ? Click Here to Login </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

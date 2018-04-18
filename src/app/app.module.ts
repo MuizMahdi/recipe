@@ -2,13 +2,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ScrollEventModule } from 'ngx-scroll-event';
 import { RouterModule, Routes } from '@angular/router';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterLinkActive } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
+// External Modules
+import { FlashMessagesModule } from 'angular2-flash-messages';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ScrollEventModule } from 'ngx-scroll-event';
 
 // Components
 import { AppComponent } from './app.component';
@@ -27,10 +29,10 @@ import { CommentComponent } from './Components/comment/comment.component';
 // Services
 import { DataService } from './Services/data.service';
 import { RecipesDataService } from './Services/recipesData.service';
+import { AuthService } from './Services/auth.service';
 
 // Bootstrap
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
 
 // Angular Material 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +46,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
+import { LoginComponent } from './Components/login/login.component';
 
 
 
@@ -51,7 +54,8 @@ import { environment } from '../environments/environment';
 const appRoutes: Routes = [
   {path:'', component:HomeComponent},
   {path:'myrecipes', component:MyRecipesComponent},
-  {path:'allrecipes', component:AllRecipesComponent}
+  {path:'allrecipes', component:AllRecipesComponent},
+  {path:'login', component:LoginComponent}
 ];
 
 
@@ -68,7 +72,8 @@ const appRoutes: Routes = [
     MyRecipeDetailComponent,
     AllRecipesComponent,
     TopRecipesComponent,
-    CommentComponent
+    CommentComponent,
+    LoginComponent
   ],
 
   imports: [
@@ -79,6 +84,7 @@ const appRoutes: Routes = [
     HttpModule,
     HttpClientModule,
     NgxPaginationModule,
+    FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     MatInputModule,
     ReactiveFormsModule,
@@ -87,14 +93,15 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatCheckboxModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
 
   providers: [ 
     DataService,
     RecipesDataService,
+    AuthService,
     AngularFireDatabaseModule,
-    AngularFireAuthModule
   ],
 
   bootstrap: [ AppComponent ]

@@ -1,0 +1,42 @@
+.background-image
+{
+    background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://i.pinimg.com/originals/f0/d6/c0/f0d6c029cfa6e6b34aeb8d1b6a42768e.jpg');
+    background-size: cover;
+    position:absolute; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100%;
+}
+
+.login-box
+{
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-top: 50px;
+    padding: 40px;
+}
+
+.login-formgroup
+{
+    color: rgb(71, 71, 71);
+}
+
+.submit-button
+{
+    background-color: rgb(73, 197, 182) !important;
+    border-color: rgb(73, 197, 182) !important;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.submit-button:hover
+{
+    background-color: rgb(44, 167, 152) !important;
+    border-color: rgb(44, 167, 152) !important;
+}
+
+.register-link
+{
+    color: rgb(104, 104, 104);
+    text-decoration: none;
+}
