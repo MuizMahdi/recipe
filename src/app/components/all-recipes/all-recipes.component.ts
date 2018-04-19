@@ -1,3 +1,4 @@
+import { AuthService } from './../../Services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,11 +6,17 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './all-recipes.component.html',
   styleUrls: ['./all-recipes.component.css']
 })
-export class AllRecipesComponent implements OnInit {
+export class AllRecipesComponent implements OnInit 
+{
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.authService.getAuth().subscribe(authState => {
+      console.log(authState.displayName);
+      console.log(authState.emailVerified);
+    });
   }
 
 }

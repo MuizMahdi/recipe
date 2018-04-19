@@ -18,12 +18,43 @@ export class AuthService
     return this.afAuth.authState.map(auth => auth);
   }
 
+  register(name: string, email:string, password:string)
+  {
+    return new Promise( (resolve, reject) => {
+      this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        .then( userData => resolve(userData), err => reject(err) )
+        .then( userData => {
+          this.afAuth.authState.subscribe(userData => {
+            userData.updateProfile({ displayName:name, photoURL:null }); 
+            userData.sendEmailVerification().then( (success) => {
+              window.alert("Please verify your email");
+              this.logout();
+            }).catch( (err) => {
+              window.alert(err.message);
+            })
+          })
+        })
+    });
+  }
+  // Create a user then update the user profile, giving then a displayName of name and an empty photoURL (for now).
 
   login(email: string, password: string) 
   {
     return new Promise( (resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)  
-      .then( userData => resolve(userData), err => reject(err) )
+      //.then( userData => resolve(userData), err => reject(err) )
+      .then( userData => {
+        this.afAuth.authState.subscribe(userData => {
+          if(userData.emailVerified)
+          {
+            resolve(userData), err => reject(err)
+          }
+          else
+          {
+            window.alert("Please verify your email before logging in");
+          }
+        })
+      })
     });
   }
 

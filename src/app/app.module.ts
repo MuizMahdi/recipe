@@ -30,6 +30,7 @@ import { CommentComponent } from './Components/comment/comment.component';
 import { DataService } from './Services/data.service';
 import { RecipesDataService } from './Services/recipesData.service';
 import { AuthService } from './Services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 // Bootstrap
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -53,7 +54,7 @@ import { LoginComponent } from './Components/login/login.component';
 // Routes 
 const appRoutes: Routes = [
   {path:'', component:HomeComponent},
-  {path:'myrecipes', component:MyRecipesComponent},
+  {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
   {path:'login', component:LoginComponent}
 ];
@@ -101,6 +102,7 @@ const appRoutes: Routes = [
     DataService,
     RecipesDataService,
     AuthService,
+    AuthGuard,
     AngularFireDatabaseModule,
   ],
 

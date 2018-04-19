@@ -34,7 +34,10 @@ export class LoginComponent implements OnInit
     this.buildForms();
   }
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+
+  }
 
   buildForms()
   {
@@ -60,7 +63,6 @@ export class LoginComponent implements OnInit
 
     if(this.loginFormGroup.valid)
     {
-
       this.authService.login(this.loginEmail, this.loginPassword)
       .then( res => {
         //this.flashMessage.show('You are logged in', {cssClass: 'alert-success', timeout: 4000});
@@ -78,9 +80,20 @@ export class LoginComponent implements OnInit
   {
     this.registerClick = true;
 
+    this.registerationUsername = this.registerationFormGroup.get('nameCtrl').value;
+    this.registerationEmail = this.registerationFormGroup.get('emailCtrl').value;
+    this.registerationPassword = this.registerationFormGroup.get('passwordCtrl').value;
+
     if(this.registerationFormGroup.valid)
     {
-      
+      this.authService.register(this.registerationUsername, this.registerationEmail, this.registerationPassword)
+        .then( res => {
+          window.alert("You are now registered");
+          this.router.navigate(['/login']);
+        })
+        .catch( err => {
+          window.alert(err.message);
+        });
     }
   }
 
