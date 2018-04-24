@@ -15,7 +15,7 @@ export class AllRecipesComponent implements OnInit
   {
     this.authService.getAuth().subscribe(authState => {
       console.log(authState.displayName);
-      console.log(authState.emailVerified);
+      console.log(authState.uid);
     });
   }
 

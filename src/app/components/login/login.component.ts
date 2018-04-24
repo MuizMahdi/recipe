@@ -66,6 +66,21 @@ export class LoginComponent implements OnInit
       this.authService.login(this.loginEmail, this.loginPassword)
       .then( res => {
         //this.flashMessage.show('You are logged in', {cssClass: 'alert-success', timeout: 4000});
+
+        this.authService.getAuth().subscribe(authState => {
+
+          let logedInUserUID:any = authState.uid;
+
+          for(let i=0; i<this.ngFireDB.list<any>('/users').length; i++)
+          {
+            if(logedInUserUID =  this.ngFireDB.list<any>('/users')[i].uid) // if logged in user is found on db
+            {
+              // Just check if this code works and then continue.
+            }
+          }
+
+        });
+
         this.router.navigate(['/allrecipes']);
       })
       .catch( err => {

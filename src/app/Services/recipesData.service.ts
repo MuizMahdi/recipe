@@ -71,6 +71,18 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
+
+  addUser(user: any)
+  {
+    let userList = this.ngFireDB.list<any>('/users').push(user);
+  }
+
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
   getRecipesChanges()
   {
     return this.ngFireDB.list<Recipe>('/recipes').valueChanges();
