@@ -71,6 +71,33 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
+  // find user in database and return an object so then it can be updates using 'usersList.update(user.key, {other parameters/keys})' used on login component
+  getDbUserByName(name: string)
+  { 
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(name));
+    
+    return usersList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).takeUntil(this.ngUnsubscribe)
+  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  getDbListObject(dbList: any)
+  {
+    return dbList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).takeUntil(this.ngUnsubscribe)
+  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
 
   addUser(user: any)
   {

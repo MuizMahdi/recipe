@@ -25,9 +25,20 @@ export class AuthService
         .then( userData => resolve(userData), err => reject(err) )
         .then( userData => {
           this.afAuth.authState.subscribe(userData => {
-            userData.updateProfile({ displayName:name, photoURL:null }); 
+
+            try 
+            {
+              userData.updateProfile({ displayName:name, photoURL:null }); 
+            } 
+            catch(e) 
+            {
+              // Everything works fine but theres still an error, saying the userData is null.
+              // If its null then how does the updateProfile work and the verification gets sent !?
+              console.log("Da fuk ??"); // yeah.. ADDED ON THE BUGS LIST
+            }
+           
             userData.sendEmailVerification().then( (success) => {
-              window.alert("Please verify your email");
+              window.alert("Verify your email before logging in");
               this.logout();
             }).catch( (err) => {
               window.alert(err.message);
@@ -47,6 +58,7 @@ export class AuthService
         this.afAuth.authState.subscribe(userData => {
           if(userData.emailVerified)
           {
+            console.log("User email is verified.. proceeding to profile completion check.")
             resolve(userData), err => reject(err)
           }
           else
