@@ -36,10 +36,7 @@ export class LoginComponent implements OnInit
     this.buildForms();
   }
 
-  ngOnInit()
-  {
-
-  }
+  ngOnInit() {}
 
   buildForms()
   {
@@ -68,7 +65,6 @@ export class LoginComponent implements OnInit
       this.authService.login(this.loginEmail, this.loginPassword)
       .then( res => { // after logging in
 
-        
         this.authService.getAuth().subscribe(authState => { // get authentication state to get current logged in user
         
           // find the user object in DB that matches with the name of the current logged in user 
@@ -87,14 +83,11 @@ export class LoginComponent implements OnInit
             })
           });
 
-
         }) // getAuth END
-
       }) // .then END
       .catch( err => {
         console.log(err.message);
       });
-
     }
   }
 
@@ -110,41 +103,27 @@ export class LoginComponent implements OnInit
     if(this.registerationFormGroup.valid)
     {
       this.authService.register(this.registerationUsername, this.registerationEmail, this.registerationPassword)
-        .then( res => { // after registering
+      .then( res => { // after registering
 
-          // Create a mock user object using registeration form data
+        // Create a mock user object using registeration form data
 
-          let userObject = {
-            uid: "", 
-            userName: this.registerationUsername, 
-            email: this.registerationEmail, 
-            photoUrl: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
-            aboutUser: "",
-            completedProfile: false,
-            recipesIDs: [""]
-          }
+        let userObject = {
+          uid: "", 
+          userName: this.registerationUsername, 
+          email: this.registerationEmail, 
+          photoUrl: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
+          aboutUser: "",
+          completedProfile: false,
+          recipesIDs: [""]
+        }
 
-          this.recipesDataService.addUser(userObject); // Add the user object to the Database users list
-          this.swapFormBoolean = false; // show the login form (false->login, true->registeration)
-        })
-        .catch( err => {
-          window.alert(err.message);
-        });
-    }
-
-    
-    /* // Not needed here but will be used to update the completedProfile to true after the submission of completeProfile form, keep it until then.
-      this.recipesDataService.findUserWithName(authState.displayName).map(user => {
-        userObject.update(user.key, {
-        uid: user.uid,
-        userName: user.userName,
-        email: user.email,
-        photoUrl: user.photoUrl,
-        completedProfile: true, 
-        recipesIDs: user.recipesIDs
-        });
+        this.recipesDataService.addUser(userObject); // Add the user object to the Database users list
+        this.swapFormBoolean = false; // show the login form (false->login, true->registeration)
+      })
+      .catch( err => {
+        window.alert(err.message);
       });
-    */ 
+    }
   }
 
 }

@@ -25,6 +25,7 @@ import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe
 import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
+import { LoginComponent } from './Components/login/login.component';
 import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Services
@@ -48,8 +49,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './Components/login/login.component';
-import { ProfileCompletionComponent } from './Components/profile-completion/profile-completion.component';
+
 
 
 
