@@ -25,6 +25,7 @@ import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe
 import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
+import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Services
 import { DataService } from './Services/data.service';
@@ -48,6 +49,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './Components/login/login.component';
+import { ProfileCompletionComponent } from './Components/profile-completion/profile-completion.component';
 
 
 
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
   {path:'', component:HomeComponent},
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
+  {path:'completeProfile', component:ProfileCompletionComponent},
   {path:'login', component:LoginComponent}
 ];
 
@@ -74,7 +77,8 @@ const appRoutes: Routes = [
     AllRecipesComponent,
     TopRecipesComponent,
     CommentComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileCompletionComponent
   ],
 
   imports: [

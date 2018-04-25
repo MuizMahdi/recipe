@@ -78,10 +78,10 @@ export class LoginComponent implements OnInit
               if(!user.completedProfile) // and if they still haven't completed their profile
               {
                 console.log("User doesn't have a complete profile.");
-                //this.router.navigate(['/completeProfile']); // take them to the profile completion page
+                this.router.navigate(['/completeProfile']); 
               } else {
                 console.log("User has a complete profile.");
-                this.router.navigate(['/allrecipes']); // and if they did, then take them to the recipes page
+                this.router.navigate(['/allrecipes']); 
               }
               
             })
