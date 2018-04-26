@@ -11,9 +11,13 @@
         <!--photoUrl-->
         <div class="form-group photourl">
           <label for="photourl"> Your Photo URL </label>
-          <input formControlName="photoUrlCtrl" type="text" class="form-control" id="photourl" placeholder="(optional) Photo Url...">
+          <input formControlName="photoUrlCtrl" type="text" [(ngModel)]="photoUrl" name="photoUrl" class="form-control" id="photourl" placeholder="(optional) Photo Url...">
+
+          <div *ngIf="invalidImageUrl && profileCompletionFormGroup.controls['photoUrlCtrl'].touched" class="alert alert-danger"> Invalid Image URL </div>
+          <img [src]="photoUrl" (error)="onInvalidProfileImageUrl()" (load)="onValidProfileImageUrl()" style="max-height:400px; max-width:200px;" class="profile-image">
         </div>
 
+        <h5>The URL: {{photoUrl}}</h5>
         <!--aboutUser-->
         <div class="form-group">
           <label for="aboutuser"> Your Profile Header </label>

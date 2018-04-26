@@ -60,7 +60,7 @@ const appRoutes: Routes = [
   {path:'', component:HomeComponent},
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
-  {path:'completeProfile', component:ProfileCompletionComponent, canActivate:[ProfileCompletionGuard]},
+  {path:'completeProfile', component:ProfileCompletionComponent},
   {path:'login', component:LoginComponent}
 ];
 

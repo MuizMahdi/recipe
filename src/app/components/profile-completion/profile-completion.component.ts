@@ -16,11 +16,13 @@ export class ProfileCompletionComponent implements OnInit
 {
 
   profileCompletionFormGroup: FormGroup;
-  photoUrl: string; // Change it to uploading image later.
+  photoUrl: string = ""; // Change it to uploading image later.
   aboutUser: string;
+  invalidImageUrl: boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder) 
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, 
+    private recipesDataService: RecipesDataService, private ngFireDB: AngularFireDatabase, private router: Router) 
   { 
     this.buildForm();
   }
@@ -38,9 +40,38 @@ export class ProfileCompletionComponent implements OnInit
 
   onSubmit()
   {
-    /* 
-    // Will be used to update the completedProfile to true after the submission of completeProfile form.
+    //this.photoUrl = this.profileCompletionFormGroup.get('photoUrlCtrl').value; // Used ngModel instead for real-time image validation check
+    this.aboutUser = this.profileCompletionFormGroup.get('aboutUserCtrl').value;
     
+    this.authService.getAuth().subscribe(authState => {
+      let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(authState.displayName));
+
+      this.recipesDataService.getDbListObject(usersList).subscribe(users => {
+        return users.map(user => {
+
+          if(this.invalidImageUrl) // gotta also check if its a valid image, damn people may type random text and submit.
+          {
+            this.photoUrl = user.photoUrl;
+          }
+
+          console.log(user.photoUrl);
+          
+          usersList.update(user.key, {
+          uid: authState.uid, 
+          userName: user.userName, 
+          email: user.email, 
+          photoUrl: this.photoUrl,
+          aboutUser: this.aboutUser,
+          completedProfile: true,
+          recipesIDs: [""]
+          })
+
+          this.router.navigate(['/myrecipes']);
+        });
+      });
+    });
+    
+    /*
     this.recipesDataService.findUserWithName(authState.displayName).map(user => {
       userObject.update(user.key, {
       uid: user.uid,
@@ -54,5 +85,17 @@ export class ProfileCompletionComponent implements OnInit
 
     */ 
   }
+
+  onValidProfileImageUrl()
+  {
+    this.invalidImageUrl = false;
+  }
+
+  onInvalidProfileImageUrl()
+  {
+    this.invalidImageUrl = true;
+  }
+
+
 
 }
