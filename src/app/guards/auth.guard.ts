@@ -18,10 +18,12 @@ export class AuthGuard implements CanActivate
                 this.router.navigate(['/login']); // then navigate to the login page
                 return false;
             }
-            else
+            else 
             {
-                return true;
+                return true;         
             }
         });
     }
 }
+
+

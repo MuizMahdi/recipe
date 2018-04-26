@@ -1,3 +1,4 @@
+import { ProfileCompletionGuard } from './guards/profileCompletion.guard';
 // Angular Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -26,13 +27,14 @@ import { AllRecipesComponent } from './Components/all-recipes/all-recipes.compon
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
 import { LoginComponent } from './Components/login/login.component';
-import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
+
 
 // Services
 import { DataService } from './Services/data.service';
 import { RecipesDataService } from './Services/recipesData.service';
 import { AuthService } from './Services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Bootstrap
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -58,7 +60,7 @@ const appRoutes: Routes = [
   {path:'', component:HomeComponent},
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
-  {path:'completeProfile', component:ProfileCompletionComponent},
+  {path:'completeProfile', component:ProfileCompletionComponent, canActivate:[ProfileCompletionGuard]},
   {path:'login', component:LoginComponent}
 ];
 
@@ -107,7 +109,8 @@ const appRoutes: Routes = [
     RecipesDataService,
     AuthService,
     AuthGuard,
-    AngularFireDatabaseModule,
+    ProfileCompletionGuard,
+    AngularFireDatabaseModule
   ],
 
   bootstrap: [ AppComponent ]

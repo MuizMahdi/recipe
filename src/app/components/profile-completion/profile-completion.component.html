@@ -9,18 +9,19 @@
       <form [formGroup]="profileCompletionFormGroup" (submit)="onSubmit()" novalidate>
         
         <!--photoUrl-->
-        <div class="form-group">
+        <div class="form-group photourl">
           <label for="photourl"> Your Photo URL </label>
-          <input formControlName="photoUrlCtrl" type="text" class="form-control" id="photourl" placeholder="Photo Url...">
+          <input formControlName="photoUrlCtrl" type="text" class="form-control" id="photourl" placeholder="(optional) Photo Url...">
         </div>
 
         <!--aboutUser-->
         <div class="form-group">
           <label for="aboutuser"> Your Profile Header </label>
-          <input formControlName="aboutUserCtrl" type="text" class="form-control" id="aboutuser" placeholder="About you..." required>
+          <!--<input formControlName="aboutUserCtrl" type="text" class="form-control" id="aboutuser" placeholder="About you..." required>-->
+          <textarea formControlName="aboutUserCtrl" rows="5" class="form-control" id="aboutuser" placeholder="About you..." required></textarea>
 
           <div class="Errors">
-            <div *ngIf="loginFormGroup.controls['aboutUserCtrl'].errors?.required && loginFormGroup.controls['aboutUserCtrl'].touched" class="alert alert-danger">Email is required</div>
+            <div *ngIf="profileCompletionFormGroup.controls['aboutUserCtrl'].errors?.required && profileCompletionFormGroup.controls['aboutUserCtrl'].touched" class="alert alert-danger">This field is required</div>
           </div>
         </div>
 

@@ -16,8 +16,8 @@ export class ProfileCompletionComponent implements OnInit
 {
 
   profileCompletionFormGroup: FormGroup;
-  photoUrlCtrl: string; // Change it to uploading image later.
-  aboutUserCtrl: string;
+  photoUrl: string; // Change it to uploading image later.
+  aboutUser: string;
 
 
   constructor(private formBuilder: FormBuilder) 
