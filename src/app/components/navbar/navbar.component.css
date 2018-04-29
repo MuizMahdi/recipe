@@ -107,6 +107,33 @@
     font-size: 18px;
 }
 
+.floating-button
+{
+    float: right;
+    top: 10%;
+    right: 1%;
+    opacity: 0.8;
+}
+
+ngc-float-button /deep/ .content 
+{
+    background: rgb(109, 167, 255);
+}
+
+ngc-float-button /deep/ .content 
+{
+    margin-right: 50px;
+    font-size: 15px;
+    padding-bottom: 30px;
+    text-transform: capitalize;
+}
+  
+
+ngc-float-button /deep/  
+{
+    color: rgb(91, 189, 206);
+}
+
 
 @media screen and (max-width: 991px) 
 {

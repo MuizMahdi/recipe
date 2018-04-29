@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ScrollEventModule } from 'ngx-scroll-event';
+import { NgcFloatButtonModule } from 'ngc-float-button';
 
 // Components
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { DataService } from './Services/data.service';
 import { RecipesDataService } from './Services/recipesData.service';
 import { AuthService } from './Services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { nAuthGuard } from './guards/nAuth.guard';
 import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Bootstrap
@@ -57,7 +59,7 @@ import { environment } from '../environments/environment';
 
 // Routes 
 const appRoutes: Routes = [
-  {path:'', component:HomeComponent},
+  {path:'', component:HomeComponent, canActivate:[nAuthGuard]},
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
   {path:'completeProfile', component:ProfileCompletionComponent},
@@ -99,6 +101,7 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
+    NgcFloatButtonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
@@ -109,6 +112,7 @@ const appRoutes: Routes = [
     RecipesDataService,
     AuthService,
     AuthGuard,
+    nAuthGuard,
     ProfileCompletionGuard,
     AngularFireDatabaseModule
   ],

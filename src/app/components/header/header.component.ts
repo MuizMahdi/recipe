@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { an_Ingredient } from './../../Models/an_Ingredient';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +33,7 @@ export class HeaderComponent implements OnInit
   formValid: boolean = true;
   
 
-  constructor(private modalService: NgbModal, public dataService: DataService) { }
+  constructor(private modalService: NgbModal, public dataService: DataService, private router: Router) { }
 
   private modalRef: NgbModalRef;
 
@@ -107,6 +108,11 @@ export class HeaderComponent implements OnInit
     {
       this.formValid = false; // view message if form is invalid (one or more fields incorrect)
     }
+  }
+
+  onHeaderButtonClick()
+  {
+    this.router.navigate(['/login']);
   }
 
 }

@@ -44,6 +44,14 @@
           <a routerLink="/login" href="#" class="login-logout">Login or Register</a>
       </div>
 
+      <div *ngIf="isLoggedIn">
+        <ngc-float-button class="floating-button" icon="face" direction="bottom" [open]="closed" color="white">
+          <ngc-float-item-button icon="control_point" content="Add Recipe"></ngc-float-item-button>
+          <ngc-float-item-button icon="note_add" content="Request Recipe"></ngc-float-item-button>
+          <ngc-float-item-button icon="settings" content="Settings"></ngc-float-item-button>
+        </ngc-float-button>
+      </div>
+
     </div>
     
   </div>

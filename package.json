@@ -29,6 +29,7 @@
     "angularfire2": "^5.0.0-rc.6.0",
     "core-js": "^2.4.1",
     "firebase": "^4.12.1",
+    "ngc-float-button": "^1.2.1",
     "ngui-angular2-auto-complete": "^0.1.1",
     "ngx-pagination": "^3.1.0",
     "ngx-scroll-event": "^1.0.8",

@@ -8,7 +8,6 @@
   <app-recipe-detail [aSelectedRecipe]="this.dataService.getSelectedRecipe()"></app-recipe-detail>
 </div>  
 -->
-<button (click)="addUser01()" class="btn btn-success"> Add User </button>
 
 <div class="all-recipes-list">
   <ul>
@@ -29,6 +28,8 @@
     
   </ul>
 </div>
+
+
 
 <hr>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
