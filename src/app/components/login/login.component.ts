@@ -114,7 +114,8 @@ export class LoginComponent implements OnInit
           photoUrl: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
           aboutUser: "",
           completedProfile: false,
-          recipesIDs: [""]
+          recipesIDs: [""],
+          recipesCount: 0
         }
 
         this.recipesDataService.addUser(userObject); // Add the user object to the Database users list

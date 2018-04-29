@@ -25,18 +25,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   changeDetect: Recipe;
 
   recipeName: string;
+  recipeMaker: string;
   recipeImageSource: string;
   recipeDescription: string;
-
   recipeIngredients: string[];
   recipeComments: string[];
-  recipeAmounts: number[];
-
-  //theIngredients: an_Ingredient[];
-  theIngredients2: [{ ingredientsName:string, ingredientsAmount:number }];
-  recipeIngredientsNames: string[];
-  recipeIngredientsAmounts: number[];
-
   recipeUpvotes: number;
   recipeUpvoted: boolean;
 
@@ -61,7 +54,7 @@ constructor(public dataService: DataService, public recipesDataService: RecipesD
 { 
   //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
   //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
-  this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
+  this.theIngredients2 = [{ name:"", amount:0 }];
   this.latestComments = [];
 }
 
@@ -74,8 +67,6 @@ ngOnInit() {  }
 
   ngOnChanges(changes: SimpleChanges) 
   {
-    // Clear the old values on change so it wont mix them up with the new values.
-    this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
 
     for (let propName in changes) 
     {
@@ -88,15 +79,8 @@ ngOnInit() {  }
     this.recipeDescription = this.changeDetect.description;
     this.recipeUpvotes = this.changeDetect.upvotes;
     this.recipeUpvoted = this.changeDetect.upvoted;
-    this.recipeIngredientsNames = this.changeDetect.ingredientsNames;
-    this.recipeIngredientsAmounts = this.changeDetect.ingredientsAmounts;
+    this.recipeIngredients = this.changeDetect.recipeIngredients;
     this.recipeComments = this.changeDetect.comments;
-
-
-    for(let i=0; i<this.recipeIngredientsNames.length; i++) // assign ingredient names and amounts to array
-    {
-      this.theIngredients2[i] = {ingredientsName: this.recipeIngredientsNames[i], ingredientsAmount: this.recipeIngredientsAmounts[i]};
-    }
 
 
     this.recipeComments_Slice = this.recipeComments.slice();
@@ -136,12 +120,11 @@ ngOnInit() {  }
     this.recipeUpvotes = this.recipeUpvotes + 1; // It doesn't update on DB until refresh, so this is just for the view.
     this.recipeUpvoted = true; // same here
 
-
     //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
     //this.dataService.recipeUpvoted(this.recipeName);
     //this.dataService.updateSortedRecipes();
 
-    this.recipesDataService.updateRecipe(this.aSelectedRecipe);
+    this.recipesDataService.upvoteRecipe(this.aSelectedRecipe);
 
     let theRecipe: Recipe[];
     let recipeSubscription = this.recipesDataService.getRecipeObservable().takeUntil(this.ngUnsubscribe).subscribe(val => {

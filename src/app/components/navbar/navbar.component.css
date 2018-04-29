@@ -110,7 +110,7 @@
 .floating-button
 {
     float: right;
-    top: 10%;
+    top: 42%;
     right: 1%;
     opacity: 0.8;
 }
@@ -126,6 +126,12 @@ ngc-float-button /deep/ .content
     font-size: 15px;
     padding-bottom: 30px;
     text-transform: capitalize;
+}
+
+
+ngc-float-button /deep/ .fab-toggle
+{
+    margin-bottom: 50px;
 }
   
 
@@ -170,4 +176,67 @@ ngc-float-button /deep/
         -moz-box-shadow: 0 4px 4px -1.6px rgb(173, 173, 173);
         box-shadow: 0 4px 4px -1.6px rgb(173, 173, 173);
     }
+}
+
+
+body.modal-open /* Prevent the right padding when open */
+{
+    width:100% !important;
+    padding-right:0 !important;
+    overflow-y:scroll !important;
+    /*position:fixed !important;
+    overflow: visible !important;*/
+    overflow: auto !important;
+    
+}
+
+
+.modal /* Center that shit */
+{
+  padding-top: 90px;
+}
+
+
+.ingredient
+{
+    float: left;
+}
+
+.amount
+{
+    float: right;
+}
+
+
+.recipe-image
+{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+.form-labels
+{
+    margin-top: 15px;
+}
+
+
+/*.the-add-button
+{
+    margin-top: auto;
+    overflow: auto;
+    display: inline-block;
+}*/
+
+.ingredients-list
+{
+    overflow: auto;
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.modal-footer
+{
+    float: right;
 }

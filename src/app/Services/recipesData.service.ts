@@ -42,24 +42,27 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-  updateRecipe(recipe: Recipe)
+  upvoteRecipe(recipe: Recipe)
   {
     let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
     
     let recipeSubscription = recipeList.snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-    }).takeUntil(this.ngUnsubscribe).subscribe(items => {
-      return items.map(item => {
-        recipeList.update(item.key, {
-          name: item.name,
-          description: item.description,
-          imagesrc: item.imagesrc,
-          upvotes: item.upvotes+1,
+    }).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
+      return recipes.map(recipe => {
+
+        recipeList.update(recipe.key, {
+          RID: recipe.RID,
+          name: recipe.name,
+          makerName: recipe.makerName,
+          description: recipe.description,
+          imagesrc: recipe.imagesrc,
+          upvotes: recipe.upvotes+1,
           upvoted: true, // Each account should be able to apvote separatedly, so basicly it should be false by default for each account.
-          ingredientsNames: item.ingredientsNames,
-          ingredientsAmounts: item.ingredientsAmounts,
-          comments:item.comments
+          recipeIngredients: recipe.recipeIngredients,
+          comments: recipe.comments
         });
+
       });
     });  
 
@@ -98,12 +101,20 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-
   addUser(user: any)
   {
     let userList = this.ngFireDB.list<any>('/users').push(user);
   }
 
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  addRecipe(recipe: any)
+  {
+    this.ngFireDB.list<any>('/recipes').push(recipe);
+  }
 
 /*******************************************************************************************/
 

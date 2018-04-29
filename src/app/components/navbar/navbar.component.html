@@ -1,5 +1,6 @@
+<!--detect-scroll (onScroll)="handleScroll($event) add to element(tag) to detect its scroll status-->
 
-<nav class="{{navState}} navb" role="navigation" detect-scroll (onScroll)="handleScroll($event)">
+<nav class="{{navState}} navb" role="navigation">
   <div class="container">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +47,7 @@
 
       <div *ngIf="isLoggedIn">
         <ngc-float-button class="floating-button" icon="face" direction="bottom" [open]="closed" color="white">
-          <ngc-float-item-button icon="control_point" content="Add Recipe"></ngc-float-item-button>
+          <ngc-float-item-button (click)="open(content)" icon="control_point" content="Add Recipe"></ngc-float-item-button>
           <ngc-float-item-button icon="note_add" content="Request Recipe"></ngc-float-item-button>
           <ngc-float-item-button icon="settings" content="Settings"></ngc-float-item-button>
         </ngc-float-button>
@@ -56,3 +57,95 @@
     
   </div>
 </nav>
+
+
+
+
+
+
+<!-- Modal -->
+<ng-template #content let-c="close" let-d="dismiss">
+
+  <div class="modal-header">
+    <h4 class="modal-title">Add Recipe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="recipeAddFormGroup" (ngSubmit)="onRecipeSubmit()" class="form-group" novalidate>
+      <div *ngIf="!recipeAddFormGroup.valid && submitClicked" class="alert alert-danger"> Some of the entered data are invalid or uncomplete, please correct it before submitting. </div>
+      
+
+      <label for="text" class="form-labels">Recipe Name:</label>
+      <input formControlName="recipeNameCtrl" type="text" class="form-control" minlength="2" maxlength="50" required>
+
+      <div class="Errors">
+        <div *ngIf="recipeAddFormGroup.controls['recipeNameCtrl'].errors?.required  && recipeAddFormGroup.controls['recipeNameCtrl'].touched" class="alert alert-danger"> A Recipe name is required </div>
+        <div *ngIf="recipeAddFormGroup.controls['recipeNameCtrl'].errors?.minlength && recipeAddFormGroup.controls['recipeNameCtrl'].touched" class="alert alert-danger"> Recipe name should be at least 2 characters </div>
+      </div>
+      
+      
+
+      <label for="text" class="form-labels">Recipe Description:</label>
+      <input formControlName="recipeDescriptionCtrl" type="text" class="form-control"  minlength="3">
+
+      <div class="Errors">
+        <div *ngIf="recipeAddFormGroup.controls['recipeDescriptionCtrl'].errors?.minlength && recipeAddFormGroup.controls['recipeDescriptionCtrl'].touched" class="alert alert-danger"> Recipe description should be at least 3 characters </div>
+      </div>
+
+
+
+      <label for="text" class="form-labels">Recipe Image URL: </label>
+      <input formControlName="recipeImageUrlCtrl" [(ngModel)]="formImageSource" name="formImageSource" type="text" class="form-control" required>
+
+      <div class="Errors">
+        <div *ngIf="recipeAddFormGroup.controls['recipeImageUrlCtrl'].errors?.required  && recipeAddFormGroup.controls['recipeImageUrlCtrl'].touched" class="alert alert-danger"> A Recipe image URL is required </div>
+        <div *ngIf="imageUrlError && recipeAddFormGroup.controls['recipeImageUrlCtrl'].touched" class="alert alert-danger"> Invalid Image URL </div>
+      </div>
+      
+      <img *ngIf="formImageSource" [src]="formImageSource" (error)="onImageUrlError()" (load)="onNoImageUrlError()" style="max-height:400px; max-width:200px;" class="recipe-image">
+
+      
+
+      <div class="recipe-ingredients">
+
+        <div class="ingredient">
+            <label for="text">Ingredient</label>
+            <input formControlName="anIngredientCtrl" type="text" class="form-control">
+        </div>
+        <div class="amount">
+            <label for="text">Amount</label>
+            <input formControlName="anIngredientAmountCtrl" type="text" class="form-control">
+        </div>
+
+      </div>
+
+      <!--
+      <div class="the-add-button">
+        <input type="button" (click)="addIngredient()" value="Add Ingredient" id="add-button" class="btn btn-primary">
+      </div>
+      -->
+      
+      <div *ngIf="recipeIngredientsArr.length > 0" class="ingredients-list">
+        <ul class="list-group">
+          <li *ngFor="let ingredient of recipeIngredientsArr" class="list-group-item">
+            {{ingredient.name}}
+            <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="modal-footer">
+        <input type="button" (click)="addIngredient()" value="Add Ingredient" id="add-button" class="btn btn-primary">
+        <input type="submit" value="Submit Recipe" class="btn btn-primary">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+
+
+    </form>
+  </div>
+
+</ng-template>
