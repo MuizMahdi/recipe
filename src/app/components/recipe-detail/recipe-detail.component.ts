@@ -1,3 +1,4 @@
+import { AuthService } from './../../Services/auth.service';
 import { Recipe } from './../../models/Recipe';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { an_Ingredient } from './../../models/an_Ingredient';
@@ -50,15 +51,16 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-constructor(public dataService: DataService, public recipesDataService: RecipesDataService)
-{ 
-  //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
-  //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
-  //this.theIngredients2 = [{ name:"", amount:0 }];
-  this.latestComments = [];
-}
+  constructor(public dataService: DataService, public recipesDataService: RecipesDataService, private authService: AuthService)
+  { 
+    //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
+    //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
+    //this.theIngredients2 = [{ name:"", amount:0 }];
+    this.latestComments = [];
+  }
 
-ngOnInit() {  }
+  ngOnInit()
+  {  }
 
 /*******************************************************************************************/
 
@@ -108,11 +110,26 @@ ngOnInit() {  }
       this.SingularOrPlural = "Comments";
     }
 
+    checkUserUpvoteState();
+
   }
 
 /*******************************************************************************************/
 
 
+/*******************************************************************************************/
+  checkUserUpvoteState()
+  {
+    this.authService.getAuth().subscribe(authState => {
+      this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).subscribe(recipes => {
+        return recipes.map(recipe => {
+          
+        })
+      })
+    });
+  }
+
+/*******************************************************************************************/
 /*******************************************************************************************/
 
   upvoteRecipe()
@@ -143,42 +160,19 @@ ngOnInit() {  }
 
 /*******************************************************************************************/
 
-ngOnDestroy()
-{
-  // Unsubscribe for safety
-  this.ngUnsubscribe.next();
-  this.ngUnsubscribe.complete();
-
-  let recipeSubscription = this.recipesDataService.getRecipeObservable().subscribe(val => {});
-  recipeSubscription.unsubscribe();
-}
 
 /*******************************************************************************************/
-/*
-recipeUpvoted(recipeName: string)
-{
-  for(let i=0; i<this.recipes.length; i++)
-  {
-    if(this.recipes[i].name == recipeName)
-    {
-      this.recipes[i].upvoted = true;
-      this.recipes[i].upvotes =  this.recipes[i].upvotes + 1;
-      break;
-    }
-  }
-  
 
-  for(let i=0; i<this.myRecipes.length; i++)
+  ngOnDestroy()
   {
-    if(this.myRecipes[i].name == recipeName)
-    {
-      this.myRecipes[i].upvoted = true; // wtf, hold on !
-      this.myRecipes[i].upvotes =  this.myRecipes[i].upvotes + 1;
-      break;
-    }
+    // Unsubscribe for safety
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+
+    let recipeSubscription = this.recipesDataService.getRecipeObservable().subscribe(val => {});
+    recipeSubscription.unsubscribe();
   }
-}
-*/
+
 /*******************************************************************************************/
 
 

@@ -74,7 +74,7 @@
   </div>
 
   <div class="modal-body">
-    <form [formGroup]="recipeAddFormGroup" (ngSubmit)="onRecipeSubmit()" class="form-group" novalidate>
+    <form [formGroup]="recipeAddFormGroup" (submit)="onRecipeSubmit()" class="form-group" novalidate>
       <div *ngIf="!recipeAddFormGroup.valid && submitClicked" class="alert alert-danger"> Some of the entered data are invalid or uncomplete, please correct it before submitting. </div>
       
 

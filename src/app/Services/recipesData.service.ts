@@ -8,6 +8,7 @@ import { AnonymousSubject } from 'rxjs/Subject';
 import { OnDestroy } from "@angular/core";
 import 'rxjs/add/operator/takeUntil';
 import { Subject }  from 'rxjs/Subject';
+import { Action } from 'rxjs/scheduler/Action';
 
 @Injectable()
 export class RecipesDataService implements OnDestroy
@@ -79,6 +80,20 @@ export class RecipesDataService implements OnDestroy
   { 
     let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(name));
     
+    return usersList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).takeUntil(this.ngUnsubscribe)
+  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  getDbRecipeByName(name: string)
+  { 
+    let recipesList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('userName').equalTo(name));
+ 
     return usersList.snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
     }).takeUntil(this.ngUnsubscribe)

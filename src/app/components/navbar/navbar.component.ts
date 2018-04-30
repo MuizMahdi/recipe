@@ -183,6 +183,21 @@ export class NavbarComponent implements OnInit
   }
 
 
+  resetFormFields()
+  {
+    this.submitClicked = false;
+    this.recipeAddFormGroup.get('recipeNameCtrl').reset(null);
+    this.recipeAddFormGroup.get('recipeDescriptionCtrl').reset(null);
+    this.recipeAddFormGroup.get('recipeImageUrlCtrl').reset(null);
+    this.recipeAddFormGroup.get('anIngredientCtrl').reset(null);
+    this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
+
+    this.recipeIngredientsArr = [];
+    this.recipeComments = [""];
+    this.formImageSource = null;
+  }
+
+
   addIngredient()
   {
     this.recipeIngredient = this.recipeAddFormGroup.get('anIngredientCtrl').value;
@@ -196,34 +211,39 @@ export class NavbarComponent implements OnInit
   {
     this.submitClicked = true;
 
-    if(this.recipeAddFormGroup.valid) // if no error in form
-    {
-      this.recipeName = this.recipeAddFormGroup.get('recipeNameCtrl').value;
-      this.recipeDescription = this.recipeAddFormGroup.get('recipeDescriptionCtrl').value;
-      this.recipeImageUrl = this.recipeAddFormGroup.get('recipeImageUrlCtrl').value;
-
-      this.authService.getAuth().subscribe(authState => {
-        
-        let mockRecipe = {
-          RID: authState.uid,
-          name: this.recipeName,
-          makerName: authState.displayName,
-          description: this.recipeDescription,
-          imagesrc: this.recipeImageUrl,
-          comments: this.recipeComments,
-          recipeIngredients: this.recipeIngredientsArr,
-          upvotes: 0,
-          upvoted: false
-        }
     
-        this.recipesDataService.addRecipe(mockRecipe);
+    this.recipeName = this.recipeAddFormGroup.get('recipeNameCtrl').value;
+    this.recipeDescription = this.recipeAddFormGroup.get('recipeDescriptionCtrl').value;
+    this.recipeImageUrl = this.recipeAddFormGroup.get('recipeImageUrlCtrl').value;
 
-      });
-    }
+    let auth = this.authService.getAuth().subscribe(authState => {
+      
+      let mockRecipe = {
+        RID: authState.uid,
+        name: this.recipeName,
+        makerName: authState.displayName,
+        description: this.recipeDescription,
+        imagesrc: this.recipeImageUrl,
+        comments: this.recipeComments,
+        recipeIngredients: this.recipeIngredientsArr,
+        upvotes: 0,
+        upvoted: false
+      }
+
+      if(this.recipeAddFormGroup.valid)
+      {
+        this.recipesDataService.addRecipe(mockRecipe);
+      }
+    
+      this.resetFormFields();
+
+    });
+    
 
     if(this.recipeAddFormGroup.valid) // if no error in form
     {
-      this.modalRef.close(); // close the modal    
+      this.modalRef.close(); // close the modal
+          
     } 
     
   }
