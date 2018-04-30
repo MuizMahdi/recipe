@@ -54,7 +54,7 @@ constructor(public dataService: DataService, public recipesDataService: RecipesD
 { 
   //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
   //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
-  this.theIngredients2 = [{ name:"", amount:0 }];
+  //this.theIngredients2 = [{ name:"", amount:0 }];
   this.latestComments = [];
 }
 

@@ -3,12 +3,10 @@ import { RecipesComponent } from './../recipes/recipes.component';
 import { ARecipe } from './../../models/ARecipe';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../../Services/data.service';
-import { ScrollEvent } from 'ngx-scroll-event';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../../Services/auth.service';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 
 
 @Component({
@@ -173,16 +171,11 @@ export class NavbarComponent implements OnInit
 
     // reset & clear everything when modal opens
     this.submitClicked = false;
-    this.recipeAddFormGroup.get('recipeNameCtrl').value = null;
-    this.recipeAddFormGroup.get('recipeNameCtrl').touched = false;
-    this.recipeAddFormGroup.get('recipeDescriptionCtrl').value = null;
-    this.recipeAddFormGroup.get('recipeDescriptionCtrl').touched = false;
-    this.recipeAddFormGroup.get('recipeImageUrlCtrl').value = null;
-    this.recipeAddFormGroup.get('recipeImageUrlCtrl').touched = false;
-    this.recipeAddFormGroup.get('anIngredientCtrl').value = null;
-    this.recipeAddFormGroup.get('anIngredientCtrl').touched = false;
-    this.recipeAddFormGroup.get('anIngredientAmountCtrl').value = null;
-    this.recipeAddFormGroup.get('anIngredientAmountCtrl').touched = false;
+    this.recipeAddFormGroup.get('recipeNameCtrl').reset(null);
+    this.recipeAddFormGroup.get('recipeDescriptionCtrl').reset(null);
+    this.recipeAddFormGroup.get('recipeImageUrlCtrl').reset(null);
+    this.recipeAddFormGroup.get('anIngredientCtrl').reset(null);
+    this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
 
     this.recipeIngredientsArr = [];
     this.recipeComments = [""];
