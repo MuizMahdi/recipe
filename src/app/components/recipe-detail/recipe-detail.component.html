@@ -48,7 +48,7 @@
 
     <div class="recipe-upvotes">
       <p class="upvote-text"> Upvote </p>
-      <span class="upvote-button" (click)="upvoteRecipe()" [class.upvotedButton]="recipeUpvoted" [class.unUpvotedButton]="!recipeUpvoted"></span>
+      <span class="upvote-button" (click)="upvoteRecipe()" [class.upvotedButton]="!canUpvote" [class.unUpvotedButton]="canUpvote"></span>
       <p class="upvote-number"> {{recipeUpvotes}} </p> 
     </div>
     

@@ -1,3 +1,4 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from './../../Services/auth.service';
 import { Recipe } from './../../models/Recipe';
 import { RecipesDataService } from './../../Services/recipesData.service';
@@ -10,6 +11,8 @@ import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
+
+import { ISubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -24,6 +27,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 /*******************************************************************************************/
   @Input() aSelectedRecipe: Recipe;
   changeDetect: Recipe;
+
+  private authSubscription: ISubscription;
+  private recipeSubscription: ISubscription;
+  private unsubscribe = new Subject<void>();
 
   recipeName: string;
   recipeMaker: string;
@@ -43,6 +50,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeComments_Slice: string[];
   SingularOrPlural: string;
 
+  canUpvote: boolean = true;
+
   theRecipe: Recipe[];
   private ngUnsubscribe: Subject<any> = new Subject();
   
@@ -51,7 +60,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-  constructor(public dataService: DataService, public recipesDataService: RecipesDataService, private authService: AuthService)
+  constructor(public dataService: DataService, public recipesDataService: RecipesDataService, private authService: AuthService, private ngFireDB: AngularFireDatabase)
   { 
     //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
     //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
@@ -75,7 +84,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       let chng = changes[propName];
       this.changeDetect = chng.currentValue; // RETURNS THE OBJECT IT SELF
     }
-          
+
+
+    
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
     this.recipeDescription = this.changeDetect.description;
@@ -83,7 +94,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeUpvoted = this.changeDetect.upvoted;
     this.recipeIngredients = this.changeDetect.recipeIngredients;
     this.recipeComments = this.changeDetect.comments;
-
 
     this.recipeComments_Slice = this.recipeComments.slice();
     this.numberOfComments = this.recipeComments.length;
@@ -110,7 +120,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.SingularOrPlural = "Comments";
     }
 
-    checkUserUpvoteState();
+    
+    this.checkUserUpvoteState();
+    console.log(this.canUpvote);
 
   }
 
@@ -120,10 +132,46 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 /*******************************************************************************************/
   checkUserUpvoteState()
   {
-    this.authService.getAuth().subscribe(authState => {
-      this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).subscribe(recipes => {
+    console.log(this.aSelectedRecipe.name);
+
+    this.authService.getAuth().takeUntil(this.unsubscribe).subscribe(authState => {
+
+      this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).takeUntil(this.unsubscribe).subscribe(recipes => {
         return recipes.map(recipe => {
+
+          console.log(recipe.upvoters);
+          console.log(authState.displayName);
+
+          this.canUpvote = true;
+
+          for(let i=0; i<recipe.upvoters.length; i++)
+          {
+            if(recipe.upvoters[i] === authState.displayName)
+            {
+              this.canUpvote = false;
+            }
+          }
           
+
+
+          /*
+          for(let i=0; i<this.aSelectedRecipe.upvoters.length; i++)
+          {
+            if(recipe.upvoters[i] === authState.displayName)
+            {
+              this.canUpvote = false;
+              this.recipeUpvoted = true;
+              console.log("CANNOT BE UPVOTED");
+            }
+            else
+            {
+              this.canUpvote = true;
+              this.recipeUpvoted = false;
+              console.log("CAN BE UPVOTED");
+            }
+          }
+          */
+
         })
       })
     });
@@ -134,30 +182,55 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   upvoteRecipe()
   {
-    this.recipeUpvotes = this.recipeUpvotes + 1; // It doesn't update on DB until refresh, so this is just for the view.
-    this.recipeUpvoted = true; // same here
+    if(this.canUpvote)
+    {
+      //this.upvoteRecapy(this.aSelectedRecipe);
 
-    //this.imageSource = "../../../assets/ArrowUp_Blue.jpg";
-    //this.dataService.recipeUpvoted(this.recipeName);
-    //this.dataService.updateSortedRecipes();
+      this.recipeUpvotes = this.recipeUpvotes + 1; 
+      this.canUpvote = false; 
 
-    this.recipesDataService.upvoteRecipe(this.aSelectedRecipe);
-
-    let theRecipe: Recipe[];
-    let recipeSubscription = this.recipesDataService.getRecipeObservable().takeUntil(this.ngUnsubscribe).subscribe(val => {
-      theRecipe = val
-
-      for(let i=0; i<theRecipe.length; i++)
-      {
-        if(theRecipe[i].name === this.aSelectedRecipe.name)
-        {
-          //console.log(theRecipe[i].name + "WAS FOUND");
-        }
-      } 
-    });
-
+      this.recipesDataService.upvoteRecipe(this.aSelectedRecipe);
+    }
+    else
+    {
+      console.log("wtf..");
+    }
+    
   }
 
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  upvoteRecapy(recipe: Recipe)
+  {
+    console.log(this.canUpvote);
+
+    this.authSubscription = this.authService.getAuth().takeUntil(this.unsubscribe).subscribe(authState => {
+      this.recipeSubscription = this.recipesDataService.getDbRecipeByName(recipe.name).takeUntil(this.unsubscribe).subscribe(recipes => {
+        return recipes.map(recipe => {
+          
+          let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
+
+          recipeList.update(recipe.key, {
+            RID: recipe.RID,
+            name: recipe.name,
+            makerName: recipe.makerName,
+            description: recipe.description,
+            imagesrc: recipe.imagesrc,
+            upvotes: recipe.upvotes+1,
+            upvoted: recipe.upvoted, 
+            recipeIngredients: recipe.recipeIngredients,
+            comments: recipe.comments,
+            upvoters: recipe.upvoters
+          });
+
+        })
+      })
+    }); 
+  }
+  
 /*******************************************************************************************/
 
 
@@ -169,8 +242,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
 
-    let recipeSubscription = this.recipesDataService.getRecipeObservable().subscribe(val => {});
-    recipeSubscription.unsubscribe();
+    //this.authSubscription.unsubscribe();
+    //this.recipeSubscription.unsubscribe();
   }
 
 /*******************************************************************************************/

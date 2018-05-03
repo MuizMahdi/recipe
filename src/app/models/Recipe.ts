@@ -9,4 +9,5 @@ export interface Recipe
     upvoted: boolean;
     recipeIngredients: any[];
     comments: string[];
+    upvoters: string[];
 }

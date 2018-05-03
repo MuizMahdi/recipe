@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { Recipe } from './../models/Recipe';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, AnimationKeyframe } from '@angular/core';
@@ -25,7 +26,7 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-  constructor(public ngFireDB: AngularFireDatabase) { }
+  constructor(public ngFireDB: AngularFireDatabase, public authService: AuthService) { }
 
 /*******************************************************************************************/
 
@@ -42,30 +43,40 @@ export class RecipesDataService implements OnDestroy
 /*******************************************************************************************/
 
 /*******************************************************************************************/
+  mockUpvoters: string[] = [""];
 
   upvoteRecipe(recipe: Recipe)
   {
     let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
-    
-    let recipeSubscription = recipeList.snapshotChanges().map(actions => {
-      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-    }).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
-      return recipes.map(recipe => {
 
-        recipeList.update(recipe.key, {
-          RID: recipe.RID,
-          name: recipe.name,
-          makerName: recipe.makerName,
-          description: recipe.description,
-          imagesrc: recipe.imagesrc,
-          upvotes: recipe.upvotes+1,
-          upvoted: true, // Each account should be able to apvote separatedly, so basicly it should be false by default for each account.
-          recipeIngredients: recipe.recipeIngredients,
-          comments: recipe.comments
+    this.authService.getAuth().subscribe(authState => {
+
+      let recipeSubscription = recipeList.snapshotChanges().map(actions => {
+        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      }).subscribe(recipes => {
+        return recipes.map(recipe => {
+
+          this.mockUpvoters = recipe.upvoters.slice();
+          this.mockUpvoters.push(authState.displayName);
+
+          recipeList.update(recipe.key, {
+            RID: recipe.RID,
+            name: recipe.name,
+            makerName: recipe.makerName,
+            description: recipe.description,
+            imagesrc: recipe.imagesrc,
+            upvotes: recipe.upvotes+1,
+            upvoted: recipe.upvoted, 
+            recipeIngredients: recipe.recipeIngredients,
+            comments: recipe.comments,
+            upvoters: this.mockUpvoters
+          });
+  
         });
+      });  
 
-      });
-    });  
+    })
+    
 
     // Memory Leak when upvoting twice, so no upvoting twice... ITS A FEATURE !
   }
@@ -92,9 +103,9 @@ export class RecipesDataService implements OnDestroy
 
   getDbRecipeByName(name: string)
   { 
-    let recipesList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('userName').equalTo(name));
+    let recipesList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(name));
  
-    return usersList.snapshotChanges().map(actions => {
+    return recipesList.snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
     }).takeUntil(this.ngUnsubscribe)
   }

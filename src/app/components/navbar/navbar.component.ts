@@ -46,7 +46,8 @@ export class NavbarComponent implements OnInit
   recipeIngredient: string;
   recipeIngredientAmount: string;
   recipeIngredientsArr: any[] = [];
-  recipeComments: string[] = [];
+  recipeComments: string[] = [""];
+  recipeUpvoters: string[] = ["FUCK","THIS"];
   submitClicked: boolean = false;
   imageUrlError: boolean = false;
   formImageSource: string = null;
@@ -178,7 +179,6 @@ export class NavbarComponent implements OnInit
     this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
 
     this.recipeIngredientsArr = [];
-    this.recipeComments = [""];
     this.formImageSource = null;
   }
 
@@ -193,7 +193,6 @@ export class NavbarComponent implements OnInit
     this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
 
     this.recipeIngredientsArr = [];
-    this.recipeComments = [""];
     this.formImageSource = null;
   }
 
@@ -226,6 +225,7 @@ export class NavbarComponent implements OnInit
         imagesrc: this.recipeImageUrl,
         comments: this.recipeComments,
         recipeIngredients: this.recipeIngredientsArr,
+        upvoters: this.recipeUpvoters,
         upvotes: 0,
         upvoted: false
       }
