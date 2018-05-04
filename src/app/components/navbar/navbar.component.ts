@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit
   recipeIngredientAmount: string;
   recipeIngredientsArr: any[] = [];
   recipeComments: string[] = [""];
-  recipeUpvoters: string[] = ["FUCK","THIS"];
+  recipeUpvoters: string[] = [""];
   submitClicked: boolean = false;
   imageUrlError: boolean = false;
   formImageSource: string = null;

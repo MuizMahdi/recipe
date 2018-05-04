@@ -53,6 +53,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
+import { UserProfileComponent } from './Components/user-profile/user-profile.component';
 
 
 
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},
   {path:'completeProfile', component:ProfileCompletionComponent},
-  {path:'login', component:LoginComponent}
+  {path:'login', component:LoginComponent},
+  {path:'profile/:userName', component:UserProfileComponent}
 ];
 
 
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
     TopRecipesComponent,
     CommentComponent,
     LoginComponent,
-    ProfileCompletionComponent
+    ProfileCompletionComponent,
+    UserProfileComponent
   ],
 
   imports: [

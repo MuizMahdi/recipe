@@ -57,7 +57,7 @@
   
 
   <div class="container">
-    <h3> {{numberOfComments}} {{SingularOrPlural}} </h3> <!-- FOR THE SAKE OF THE ENGLISH GRAMMAR -->
+    <h3> Comments: {{numberOfComments}}</h3> <!-- FOR THE SAKE OF THE ENGLISH GRAMMAR -->
     <hr>
 
     <div class="comments">
@@ -82,10 +82,16 @@
     
       
       <div class="add-comment">
-        <form class="comment-form">
-          <img src="../../../assets/Avatar.jpg" alt="Avatar Image">
-          <input type="text" placeholder="Add a comment..." [(ngModel)]="commentFormInput" name="commentFormInput">
-          <button (click)="addComment()" class="btn btn-success comment-button">Add Comment</button>
+        <form #f="ngForm" (ngSubmit)="addComment(f)" class="comment-form" novalidate>
+          
+          <div class="errors">
+            <div *ngIf="!formValid && comment.touched" class="alert alert-danger"> You need to write a comment before posting it </div>
+          </div>
+
+          <img src="{{commentingProfileImage}}" alt="Avatar Image">
+          <input type="text" #comment="ngModel" [(ngModel)]="commentFormInput" name="commentFormInput" placeholder="Add a comment..." minlength="2" required>
+          <input type="submit" value="Add Comment" class="btn btn-primary">
+            
         </form>
 
       </div>

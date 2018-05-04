@@ -48,12 +48,14 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   lotsOfComments: boolean = false;
   numberOfComments: number;
   recipeComments_Slice: string[];
-  SingularOrPlural: string;
 
   canUpvote: boolean = true;
+  formValid: boolean = true;
 
   theRecipe: Recipe[];
   private ngUnsubscribe: Subject<any> = new Subject();
+
+  commentingProfileImage: string;
   
 /*******************************************************************************************/
 
@@ -62,9 +64,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   constructor(public dataService: DataService, public recipesDataService: RecipesDataService, private authService: AuthService, private ngFireDB: AngularFireDatabase)
   { 
-    //this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
-    //this.theIngredients2 = [{ ingredientsName:"", ingredientsAmount:0 }];
-    //this.theIngredients2 = [{ name:"", amount:0 }];
     this.latestComments = [];
   }
 
@@ -73,7 +72,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-
+  mockRecipeComments: string[] = [];
 /*******************************************************************************************/
 
   ngOnChanges(changes: SimpleChanges) 
@@ -84,8 +83,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       let chng = changes[propName];
       this.changeDetect = chng.currentValue; // RETURNS THE OBJECT IT SELF
     }
-
-
     
     this.recipeName = this.changeDetect.name;
     this.recipeImageSource = this.changeDetect.imagesrc;
@@ -96,7 +93,17 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeComments = this.changeDetect.comments;
 
     this.recipeComments_Slice = this.recipeComments.slice();
-    this.numberOfComments = this.recipeComments.length;
+
+    if(this.recipeComments[0] === "")
+    {
+      this.numberOfComments = (this.recipeComments.length - 1);
+    }
+    else
+    {
+      this.numberOfComments = (this.recipeComments.length);
+    }
+
+    this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
 
     if(this.recipeComments.length > 2)
     {
@@ -107,23 +114,35 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
       this.lotsOfComments = true;
     }
-    else {
+    else 
+    {
       this.lotsOfComments = false;
     }
 
-    if(this.recipeComments.length == 1)
-    {
-      this.SingularOrPlural = "Comment";
-    }
-    else
-    {
-      this.SingularOrPlural = "Comments";
-    }
-
-    
     this.checkUserUpvoteState();
-    console.log(this.canUpvote);
+    this.checkUserProfilePhoto();
 
+  }
+
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  checkUserProfilePhoto()
+  {
+    this.authService.getAuth().subscribe(authState => {
+
+      if(authState.photoURL != null && authState.photoURL != "")
+      {
+        this.commentingProfileImage = authState.photoURL;
+      }
+      else
+      {
+        this.commentingProfileImage = "../../../assets/Avatar.jpg";
+      }
+      
+    });
   }
 
 /*******************************************************************************************/
@@ -151,8 +170,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
               this.canUpvote = false;
             }
           }
-          
-
 
           /*
           for(let i=0; i<this.aSelectedRecipe.upvoters.length; i++)
@@ -178,6 +195,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   }
 
 /*******************************************************************************************/
+
+
 /*******************************************************************************************/
 
   upvoteRecipe()
@@ -203,15 +222,31 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-  upvoteRecapy(recipe: Recipe)
+  ngOnDestroy()
   {
-    console.log(this.canUpvote);
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
-    this.authSubscription = this.authService.getAuth().takeUntil(this.unsubscribe).subscribe(authState => {
-      this.recipeSubscription = this.recipesDataService.getDbRecipeByName(recipe.name).takeUntil(this.unsubscribe).subscribe(recipes => {
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+  mockComments: string[] = [""];
+
+  addComment({value, valid})
+  {
+
+    if(valid)
+    {
+      this.formValid = true;
+      this.numberOfComments++;
+      this.recipeComments.unshift(this.commentFormInput);
+    
+      let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
+
+      this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
         return recipes.map(recipe => {
-          
-          let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
           recipeList.update(recipe.key, {
             RID: recipe.RID,
@@ -219,42 +254,41 @@ export class RecipeDetailComponent implements OnInit, OnChanges
             makerName: recipe.makerName,
             description: recipe.description,
             imagesrc: recipe.imagesrc,
-            upvotes: recipe.upvotes+1,
-            upvoted: recipe.upvoted, 
+            comments: this.recipeComments,
             recipeIngredients: recipe.recipeIngredients,
-            comments: recipe.comments,
-            upvoters: recipe.upvoters
+            upvoters: recipe.upvoters,
+            upvotes: recipe.upvotes,
+            upvoted: recipe.upvoted
           });
 
         })
-      })
-    }); 
-  }
-  
-/*******************************************************************************************/
+      });
 
+      this.commentFormInput = null; // clear the form
 
-/*******************************************************************************************/
+      // add the added comment to the latest 3 comments
+      if(this.recipeComments.length > 2)
+      {
+        this.recipeComments_Slice = this.recipeComments.slice();
 
-  ngOnDestroy()
-  {
-    // Unsubscribe for safety
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+        for(let i=0; i<3; i++)
+        {
+          this.latestComments[i] = this.recipeComments_Slice[i];
+        }
 
-    //this.authSubscription.unsubscribe();
-    //this.recipeSubscription.unsubscribe();
-  }
+        this.lotsOfComments = true;
+      }
+      else 
+      {
+        this.lotsOfComments = false;
+      }
 
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
-
-  addComment()
-  {
-    this.recipeComments.push(this.commentFormInput);
-    this.commentFormInput = " "; // clear the form 
+    }
+    else
+    {
+      this.formValid = false;
+    }
+    
   }
 
   onShowMoreComments()
@@ -263,7 +297,5 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   }
 
 /*******************************************************************************************/
-
-
 
 }
