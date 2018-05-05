@@ -20,6 +20,35 @@
 
 }
 
+#recipe-info-text
+{
+    font-weight: bold; 
+    color:rgb(77, 77, 77);
+}
+
+.maker-info
+{
+    margin: 15px 0px 0px 15px;
+}
+
+.maker-photo
+{
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.maker-name
+{
+    color: rgb(150, 150, 150);
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 23px;
+    margin-left: 5px;
+}
+
 .recipe
 {
     border: 8px solid rgb(240, 240, 240);

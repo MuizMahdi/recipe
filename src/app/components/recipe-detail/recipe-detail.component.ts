@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/takeUntil';
 
 import { ISubscription } from "rxjs/Subscription";
@@ -56,13 +57,15 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   private ngUnsubscribe: Subject<any> = new Subject();
 
   commentingProfileImage: string;
-  
 /*******************************************************************************************/
 
 
 /*******************************************************************************************/
 
-  constructor(public dataService: DataService, public recipesDataService: RecipesDataService, private authService: AuthService, private ngFireDB: AngularFireDatabase)
+  constructor(public dataService: DataService, 
+    public recipesDataService: RecipesDataService, 
+    private authService: AuthService, 
+    private ngFireDB: AngularFireDatabase)
   { 
     this.latestComments = [];
   }
@@ -91,6 +94,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeUpvoted = this.changeDetect.upvoted;
     this.recipeIngredients = this.changeDetect.recipeIngredients;
     this.recipeComments = this.changeDetect.comments;
+    this.recipeMaker = this.changeDetect.makerName;
 
     this.recipeComments_Slice = this.recipeComments.slice();
 

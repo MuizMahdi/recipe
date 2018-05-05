@@ -1,6 +1,17 @@
 
 <div class="recipe">
 
+  <div class="maker-info">
+    <span id="recipe-info-text"> Recipe added by: </span> <br>
+    
+    <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-name">
+      {{recipeMaker}} 
+      <img src="../../../assets/Avatar.jpg" class="maker-photo" alt="Recipe Maker Photo">
+    </a>
+  </div>
+
+  <hr>
+
   <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
 
 
@@ -16,12 +27,6 @@
 
   <div class="container">
 
-    <!--
-    <div class="ingredients-list">
-      comment => I don't know why is this supposed to be here, but removing it ruins the ingredients list below.. 
-    </div>
-    -->
-
     <div class="list">
       <h2 class="ingredients-list-header"> Ingredients list: </h2>
       <ul class="list-group ggg">
@@ -31,18 +36,6 @@
         </li>
       </ul>
     </div>
-
-    <!--
-    <div class="list">
-      <h2 class="ingredients-list-header"> Ingredients list: </h2>
-      <ul class="list-group ggg">
-        <li *ngFor="let ingredient of theIngredients" id="ingredient" class="list-group-item d-flex justify-content-between align-items-center"> 
-          {{ingredient.name}}
-          <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
-        </li>
-      </ul>
-    </div>
-    -->
 
     <br>
 
@@ -57,7 +50,7 @@
   
 
   <div class="container">
-    <h3> Comments: {{numberOfComments}}</h3> <!-- FOR THE SAKE OF THE ENGLISH GRAMMAR -->
+    <h3> Comments: {{numberOfComments}}</h3>
     <hr>
 
     <div class="comments">
