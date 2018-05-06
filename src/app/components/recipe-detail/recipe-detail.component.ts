@@ -96,8 +96,12 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeComments = this.changeDetect.comments;
     this.recipeMaker = this.changeDetect.makerName;
 
-    this.recipeComments_Slice = this.recipeComments.slice();
+    console.log(this.changeDetect.comments);
 
+    this.recipeComments_Slice = this.recipeComments.slice();
+    this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
+
+    
     if(this.recipeComments[0] === "")
     {
       this.numberOfComments = (this.recipeComments.length - 1);
@@ -107,7 +111,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.numberOfComments = (this.recipeComments.length);
     }
 
-    this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
 
     if(this.recipeComments.length > 2)
     {
@@ -123,9 +126,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.lotsOfComments = false;
     }
 
+    console.log("Comments: " + this.recipeComments + "   Latest: " + this.latestComments + "   SLICE: " + this.recipeComments_Slice);
+
     this.checkUserUpvoteState();
     this.checkUserProfilePhoto();
-
   }
 
 /*******************************************************************************************/
@@ -135,7 +139,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   checkUserProfilePhoto()
   {
-    this.authService.getAuth().subscribe(authState => {
+    this.authService.getAuth().takeUntil(this.ngUnsubscribe).subscribe(authState => {
 
       if(authState.photoURL != null && authState.photoURL != "")
       {
@@ -143,7 +147,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       }
       else
       {
-        this.commentingProfileImage = "../../../assets/Avatar.jpg";
+        this.commentingProfileImage = "https://i.imgur.com/g2Ju9YJ.png";
       }
       
     });
@@ -157,13 +161,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     console.log(this.aSelectedRecipe.name);
 
-    this.authService.getAuth().takeUntil(this.unsubscribe).subscribe(authState => {
+    this.authService.getAuth().takeUntil(this.ngUnsubscribe).subscribe(authState => {
 
-      this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).takeUntil(this.unsubscribe).subscribe(recipes => {
+      this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
         return recipes.map(recipe => {
-
-          console.log(recipe.upvoters);
-          console.log(authState.displayName);
 
           this.canUpvote = true;
 
@@ -174,24 +175,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
               this.canUpvote = false;
             }
           }
-
-          /*
-          for(let i=0; i<this.aSelectedRecipe.upvoters.length; i++)
-          {
-            if(recipe.upvoters[i] === authState.displayName)
-            {
-              this.canUpvote = false;
-              this.recipeUpvoted = true;
-              console.log("CANNOT BE UPVOTED");
-            }
-            else
-            {
-              this.canUpvote = true;
-              this.recipeUpvoted = false;
-              console.log("CAN BE UPVOTED");
-            }
-          }
-          */
 
         })
       })
@@ -207,8 +190,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     if(this.canUpvote)
     {
-      //this.upvoteRecapy(this.aSelectedRecipe);
-
       this.recipeUpvotes = this.recipeUpvotes + 1; 
       this.canUpvote = false; 
 
@@ -249,7 +230,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     
       let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
 
-      this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
+      this.recipesDataService.getDbListObject(recipeList).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
         return recipes.map(recipe => {
 
           recipeList.update(recipe.key, {
@@ -269,7 +250,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       });
 
       this.commentFormInput = null; // clear the form
-
+      
       // add the added comment to the latest 3 comments
       if(this.recipeComments.length > 2)
       {

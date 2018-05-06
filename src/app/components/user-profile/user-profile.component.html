@@ -1,3 +1,43 @@
-<h1> USER PROFILE </h1>
-<h6> Username:   {{ userName }}</h6>
-<h6> About User:   {{ userDetails }}</h6>
+<app-navbar></app-navbar>
+
+<div class="box">
+    <div class="profile-header">
+        <div class="container">
+            <img src="{{userProfileImageSource}}" alt="User Profile Image">
+    
+            <div id="user-info">
+                <span id="name">{{userName}}</span><br>
+                <span id="details">{{userDetails}}</span>
+            </div>
+        </div>
+    </div>
+        
+        
+    <div class="profile-recipes">
+        <div class="container">
+            <div class="user-recipes">
+                <br><br><br><br><br><br><br>
+                
+                <div *ngIf="theSelectedDaRecipe" class="container">
+                    <app-recipe-detail [aSelectedRecipe]="theSelectedDaRecipe"></app-recipe-detail>
+                </div>
+
+                <div class="all-recipes-list">
+                    <ul>
+                        <div class="row">
+                            <li *ngFor="let recipe of userRecipes" class="col-sm-4" >
+                                <app-a-recipe [recipeVal2]="recipe" (theRecipeSelected2)="setSelected2($event)" class="col-12 col-md-4"></app-a-recipe>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

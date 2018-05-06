@@ -49,11 +49,11 @@ export class RecipesDataService implements OnDestroy
   {
     let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
-    this.authService.getAuth().subscribe(authState => {
+    this.authService.getAuth().takeUntil(this.ngUnsubscribe).subscribe(authState => {
 
       let recipeSubscription = recipeList.snapshotChanges().map(actions => {
         return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-      }).subscribe(recipes => {
+      }).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
         return recipes.map(recipe => {
 
           this.mockUpvoters = recipe.upvoters.slice();

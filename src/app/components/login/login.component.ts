@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit
           uid: "", 
           userName: this.registerationUsername, 
           email: this.registerationEmail, 
-          photoUrl: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
+          photoUrl: "https://i.imgur.com/g2Ju9YJ.png",
           aboutUser: "",
           completedProfile: false,
           recipesIDs: [""],

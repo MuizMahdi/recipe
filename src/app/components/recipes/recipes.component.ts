@@ -1,14 +1,13 @@
+import { Subject } from 'rxjs/Subject';
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 
 import { ARecipe } from '../../models/ARecipe';
 import { Recipe } from './../../models/Recipe';
 
-
 import { AngularFireDatabase } from 'angularfire2/database';
-
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -33,6 +32,8 @@ export class RecipesComponent implements OnInit
 
   recipesDB: Recipe[];
 
+  private ngUnsubscribe: Subject<any> = new Subject();
+
 //-----------------------------------------------------------------------------------------------------------// 
 
 //-----------------------------------------------------------------------------------------------------------// 
@@ -43,8 +44,6 @@ export class RecipesComponent implements OnInit
 //-----------------------------------------------------------------------------------------------------------// 
 
 
-
-// THIS IS AS FAR AS IT GOES, I CAN ONLY USE 'recipesDB' INSIDE THE SUBSCRIBE SCOPE AND VIEW IT ON TEMPLATE.
 //-----------------------------------------------------------------------------------------------------------// 
 
   ngOnInit() 
@@ -53,12 +52,9 @@ export class RecipesComponent implements OnInit
     window.scroll({top: 0, left: 0, behavior: 'smooth' });
 
 
-    this.recipeDataService.getRecipesChanges().subscribe( val => {
+    this.recipeDataService.getRecipesChanges().takeUntil(this.ngUnsubscribe).subscribe( val => {
       this.recipesDB = val;
-      //console.log(this.recipesDB);
     });
-
-    //this.addUser01();
   }
 
 //-----------------------------------------------------------------------------------------------------------// 
@@ -76,33 +72,10 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
 
-  addUser01()
-  {
-    this.recipeDataService.addUser({
-    uid: "", 
-    userName: "FruitSalad", 
-    email: "FruitSalad22@gmail.com", 
-    photoUrl: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
-    aboutUser: "Fruit Salad 22 User information",
-    recipesIDs: [""]
-    });
-  }
-
-//-----------------------------------------------------------------------------------------------------------// 
-
-
-//-----------------------------------------------------------------------------------------------------------// 
-
   /*setSelected(selectedRecipe: ARecipe)
   {
     this.dataService.selectedRecipe(selectedRecipe);
     this.theSelectedRecipe = selectedRecipe;
-
-    //console.log(this.theSelectedRecipe);
-    // it receices the right recipe when clicking all good !
-
-    //this.dataService.selectedRecipe(this.theSelectedRecipe);
-    //console.log("selected recipe passed to data service")
   }*/
 
   setSelected2(selectedRecipe: Recipe)
@@ -111,5 +84,13 @@ export class RecipesComponent implements OnInit
   }
 
 //-----------------------------------------------------------------------------------------------------------// 
+
+
+
+  ngOnDestroy() 
+  {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
 }

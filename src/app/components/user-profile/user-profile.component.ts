@@ -1,5 +1,8 @@
+import { Subject } from 'rxjs/Subject';
+import { Recipe } from './../../models/Recipe';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { RecipesDataService } from './../../Services/recipesData.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -14,8 +17,14 @@ export class UserProfileComponent implements OnInit
   userName: string;
   userDetails: string;
   userProfileImageSource: string;
+  userID: string;
+  userRecipes: any[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private recipeDataService: RecipesDataService) 
+  theSelectedDaRecipe: Recipe;
+
+  ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private route: ActivatedRoute, private router: Router, private recipeDataService: RecipesDataService, private ngFireDB: AngularFireDatabase) 
   { 
     this.getRoutingParameters();
   }
@@ -31,18 +40,45 @@ export class UserProfileComponent implements OnInit
 
   getUser()
   {
-    this.recipeDataService.getDbUserByName(this.profileUsername).subscribe(users => {
+    this.recipeDataService.getDbUserByName(this.profileUsername).takeUntil(this.ngUnsubscribe).subscribe(users => {
       return users.map(user => {
 
         this.userName = user.userName;
         this.userDetails = user.aboutUser;
-        // use async pipe to view these data
+        this.userProfileImageSource = user.photoUrl;
+        this.userID = user.uid;
 
+        this.getUserRecipes(this.userID);
       })
     });
   }
 
+  
+  getUserRecipes(uid: any)
+  {
+    let recipesList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('RID').equalTo(uid));
+
+    return recipesList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
+      this.userRecipes = recipes;
+    });
+  }
+
+
+  setSelected2(selectedDaRecipe: Recipe)
+  {
+    this.theSelectedDaRecipe = selectedDaRecipe;
+  }
+
+
   ngOnInit() 
   { }
+
+  ngOnDestroy() 
+  {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
 }
