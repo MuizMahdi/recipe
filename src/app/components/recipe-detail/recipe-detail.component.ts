@@ -98,10 +98,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeComments = this.changeDetect.comments;
     this.recipeMaker = this.changeDetect.makerName;
 
-    //this.recipeComments_Slice = this.recipeComments.slice();
-    //this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
+    this.recipeComments_Slice = this.recipeComments.slice();
+    this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
 
-    /*
+    
     if(this.recipeComments[0] === "")
     {
       this.numberOfComments = (this.recipeComments.length - 1);
@@ -110,8 +110,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     {
       this.numberOfComments = (this.recipeComments.length);
     }
-*/
-/*
+
+
     if(this.recipeComments.length > 2)
     {
       for(let i=0; i<3; i++)
@@ -125,11 +125,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     {
       this.lotsOfComments = false;
     }
-*/
+
     //console.log("Comments: " + this.recipeComments + "   Latest: " + this.latestComments + "   SLICE: " + this.recipeComments_Slice);
 
     this.checkUserUpvoteState();
-    //this.checkUserProfilePhoto();
+    this.checkUserProfilePhoto();
   }
 
 /*******************************************************************************************/
@@ -153,7 +153,7 @@ ngOnDestroy()
 
 
 /*******************************************************************************************/
-/*
+
   checkUserProfilePhoto()
   {
     this.authService.getAuth().subscribe(authState => {
@@ -169,7 +169,7 @@ ngOnDestroy()
       
     });
   }
-*/
+
 /*******************************************************************************************/
 
 
@@ -206,21 +206,28 @@ ngOnDestroy()
 
 /*******************************************************************************************/
 
-  upvoteRecipe()
+  onShowMoreComments()
+  {
+    this.lotsOfComments = false;
+  }
+  
+/*******************************************************************************************/
+
+
+/*******************************************************************************************/
+
+  onUpvote()
   {
     if(this.canUpvote)
     {
       this.recipeUpvotes = this.recipeUpvotes + 1; 
       this.canUpvote = false; 
-
-      //this.recipesDataService.upvoteRecipe(this.aSelectedRecipe);
-      this.upvoteeRecipe2(this.aSelectedRecipe);
+      this.upvoteRecipe(this.aSelectedRecipe);
     }
     else
     {
       console.log("wtf..");
     }
-    
   }
 
 /*******************************************************************************************/
@@ -228,9 +235,11 @@ ngOnDestroy()
 
 /*******************************************************************************************/
   upvoteSubscription: ISubscription;
+  mockUpvoters: string[] = [""];
 
-  upvoteeRecipe2(recipe: any)
+  upvoteRecipe(recipe: any)
   {
+
     if(typeof this.commentSubscription != 'undefined')
     {
       this.commentSubscription.unsubscribe();
@@ -240,15 +249,24 @@ ngOnDestroy()
       this.upvoteSubscription.unsubscribe();
     }
 
-    let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
+    let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
-    this.upvoteSubscription = recipeList.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }).subscribe(recipes => {
-        
-      recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes+1)});
+    this.authService.getAuth().subscribe(authState => {
 
-    });
+      this.upvoteSubscription = recipeList.snapshotChanges().map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      }).subscribe(recipes => {
+  
+        this.mockUpvoters = recipes[0].upvoters.slice();
+        this.mockUpvoters.push(authState.displayName);
+          
+        recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes+1), upvoters: this.mockUpvoters});
+  
+      });
+
+    })
+
+    
   }  
 
 /*******************************************************************************************/
@@ -265,7 +283,8 @@ ngOnDestroy()
     {
       this.upvoteSubscription.unsubscribe();
     }
-    else if(typeof this.commentSubscription != 'undefined')
+
+    if(typeof this.commentSubscription != 'undefined')
     {
       this.commentSubscription.unsubscribe();
     }
@@ -284,8 +303,8 @@ ngOnDestroy()
         
       });
 
-      //this.commentFormInput = null; // clear the form
-     /* 
+      this.commentFormInput = null; // clear the form
+     
       // add the added comment to the latest 3 comments
       if(this.recipeComments.length > 2)
       {
@@ -302,21 +321,13 @@ ngOnDestroy()
       {
         this.lotsOfComments = false;
       }
-      */
+      
     }
-    /*
     else
     {
       this.formValid = false;
     }
-    */
-
-    /*
-    onShowMoreComments()
-    {
-      this.lotsOfComments = false;
-    }
-    */
+       
 
   }
 }
