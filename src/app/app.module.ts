@@ -1,4 +1,3 @@
-import { ProfileCompletionGuard } from './guards/profileCompletion.guard';
 // Angular Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -28,7 +27,7 @@ import { AllRecipesComponent } from './Components/all-recipes/all-recipes.compon
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
 import { LoginComponent } from './Components/login/login.component';
-
+import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Services
 import { DataService } from './Services/data.service';
@@ -36,7 +35,7 @@ import { RecipesDataService } from './Services/recipesData.service';
 import { AuthService } from './Services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { nAuthGuard } from './guards/nAuth.guard';
-import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
+import { ProfileCompletionGuard } from './guards/profileCompletion.guard';
 
 // Bootstrap
 import { NgbModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -54,7 +53,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { UserProfileComponent } from './Components/user-profile/user-profile.component';
-
 
 
 
@@ -85,7 +83,7 @@ const appRoutes: Routes = [
     CommentComponent,
     LoginComponent,
     ProfileCompletionComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
 
   imports: [

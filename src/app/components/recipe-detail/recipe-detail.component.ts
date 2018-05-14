@@ -99,18 +99,16 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeMaker = this.changeDetect.makerName;
 
     this.recipeComments_Slice = this.recipeComments.slice();
-    this.recipeComments = this.recipeComments.slice(1,this.recipeComments.length);
 
+    this.numberOfComments = (this.recipeComments.length);
+    this.recipeComments = this.changeDetect.comments;
+    this.lotsOfComments = false;
     
     if(this.recipeComments[0] === "")
     {
       this.numberOfComments = (this.recipeComments.length - 1);
+      this.recipeComments = [];
     }
-    else
-    {
-      this.numberOfComments = (this.recipeComments.length);
-    }
-
 
     if(this.recipeComments.length > 2)
     {
@@ -118,15 +116,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       {
         this.latestComments[i] = this.recipeComments_Slice[i];
       }
-
+      
       this.lotsOfComments = true;
     }
-    else 
-    {
-      this.lotsOfComments = false;
-    }
-
-    //console.log("Comments: " + this.recipeComments + "   Latest: " + this.latestComments + "   SLICE: " + this.recipeComments_Slice);
 
     this.checkUserUpvoteState();
     this.checkUserProfilePhoto();
@@ -293,6 +285,16 @@ ngOnDestroy()
     {
       this.formValid = true;
       this.numberOfComments++;
+
+      /*if(this.recipeComments[0] == "")
+      {
+        console.log("First Comment");
+      }
+      else
+      {
+        console.log("Not first comment")
+      }*/
+
       this.recipeComments.unshift(this.commentFormInput);
     
       let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
