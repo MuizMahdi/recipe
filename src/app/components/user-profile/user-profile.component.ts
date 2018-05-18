@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit
   }
 
 
-  getUser()
+  getUser2()
   {
     this.recipeDataService.getDbUserByName(this.profileUsername).takeUntil(this.ngUnsubscribe).subscribe(users => {
       return users.map(user => {
@@ -50,6 +50,25 @@ export class UserProfileComponent implements OnInit
 
         this.getUserRecipes(this.userID);
       })
+    });
+  }
+
+
+  getUser()
+  {
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(name));
+    
+    return usersList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe(users => {
+      return users.map(user => {
+        this.userName = user.userName;
+        this.userDetails = user.aboutUser;
+        this.userProfileImageSource = user.photoUrl;
+        this.userID = user.uid;
+
+        this.getUserRecipes(this.userID);
+      });
     });
   }
 

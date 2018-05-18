@@ -100,7 +100,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
     this.recipeComments_Slice = this.recipeComments.slice();
 
-    this.numberOfComments = (this.recipeComments.length);
+    this.numberOfComments = this.recipeComments.length;
     this.recipeComments = this.changeDetect.comments;
     this.lotsOfComments = false;
     
@@ -116,7 +116,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       {
         this.latestComments[i] = this.recipeComments_Slice[i];
       }
-      
+
       this.lotsOfComments = true;
     }
 
@@ -285,15 +285,6 @@ ngOnDestroy()
     {
       this.formValid = true;
       this.numberOfComments++;
-
-      /*if(this.recipeComments[0] == "")
-      {
-        console.log("First Comment");
-      }
-      else
-      {
-        console.log("Not first comment")
-      }*/
 
       this.recipeComments.unshift(this.commentFormInput);
     

@@ -35,11 +35,37 @@ export class ARecipeComponent implements OnInit
 
 //---------------------------------------------------------------------------------------------------------------------------------//
 
-  constructor(public dataService: DataService) { }
+  constructor(public dataService: DataService) { 
+    this.recipe2 = {
+      RID: "",
+      name: "",
+      makerName: "",
+      description: "",
+      imagesrc: "",
+      upvotes: 0,
+      upvoted: false,
+      recipeIngredients: [],
+      comments: [],
+      upvoters: []
+    };
+  }
 
   ngOnInit() 
   { 
     this.randomizeImages();
+
+    this.recipe2 = {
+      RID: "",
+      name: "",
+      makerName: "",
+      description: "",
+      imagesrc: "",
+      upvotes: 0,
+      upvoted: false,
+      recipeIngredients: [],
+      comments: [],
+      upvoters: []
+    };
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//
@@ -79,12 +105,12 @@ export class ARecipeComponent implements OnInit
 
 
 //---------------------------------------------------------------------------------------------------------------------------------//
-
+/*
   getRandomImage(min:number, max:number)
   {
     return Math.floor(Math.random() * (max-min + 1)) + min;
   }
-
+*/
 //---------------------------------------------------------------------------------------------------------------------------------//
 
 

@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { DataService } from './../../Services/data.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MyRecipeDetailComponent } from './my-recipe-detail.component';
 
@@ -8,7 +11,9 @@ describe('MyRecipeDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyRecipeDetailComponent ]
+      declarations: [ MyRecipeDetailComponent ],
+      imports: [ FormsModule, ReactiveFormsModule, NgbModule.forRoot() ],
+      providers: [ DataService ]
     })
     .compileComponents();
   }));

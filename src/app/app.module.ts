@@ -57,7 +57,7 @@ import { UserProfileComponent } from './Components/user-profile/user-profile.com
 
 
 // Routes 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   {path:'', component:HomeComponent, canActivate:[nAuthGuard]},
   {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
   {path:'allrecipes', component:AllRecipesComponent},

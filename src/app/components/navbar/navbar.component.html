@@ -24,8 +24,8 @@
 
       </ul>
       
-      <form class="form-inline my-2 my-lg-0">
-        <div [formGroup]="formGroup">
+      <form [formGroup]="formGroup" class="form-inline my-2 my-lg-0">
+        <div>
           <input type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="formCtrl" [matAutocomplete]="auto" placeholder="Search Recipes..">
         </div>
         <button (click)="onSearch()" class="btn btn-light nav-searchbutton" type="submit">Search</button>

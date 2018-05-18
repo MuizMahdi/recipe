@@ -1,4 +1,18 @@
+import { NavbarComponent } from './../navbar/navbar.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { environment } from './../../../environments/environment.prod';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgcFloatButtonModule } from 'ngc-float-button';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from './../../Services/data.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from './../../Services/auth.service';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { RecipesDataService } from './../../Services/recipesData.service';
 
 import { MyRecipesComponent } from './my-recipes.component';
 
@@ -8,7 +22,10 @@ describe('MyRecipesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyRecipesComponent ]
+      declarations: [ MyRecipesComponent, NavbarComponent ],
+      imports: [ MatAutocompleteModule, FormsModule, ReactiveFormsModule, NgcFloatButtonModule, NgbModule.forRoot(), 
+      RouterTestingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule ],
+      providers: [ DataService, AuthService, RecipesDataService ]
     })
     .compileComponents();
   }));
