@@ -1,7 +1,7 @@
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { environment } from './../../../environments/environment.prod';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './../../Services/auth.service';
@@ -12,11 +12,13 @@ import { RecipesDataService } from './../../Services/recipesData.service';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/throw';
 import { LoginComponent } from './login.component';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let service: AuthService;
   let recipeService: RecipesDataService;
+  let router: Router;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
@@ -35,6 +37,7 @@ describe('LoginComponent', () => {
     service = new AuthService(null);
     recipeService = new RecipesDataService(null,null);
     component = new LoginComponent(null,service,null,null,null);
+    router = TestBed.get(Router);
   });
 
   it('should create', () => {
@@ -104,10 +107,12 @@ describe('LoginComponent', () => {
 
   it('should login user onLogin', () => {
     let loginFormGroup = component.loginFormGroup;
+
     expect(loginFormGroup.valid).toBeFalsy();
 
     let emailCtrl = component.loginFormGroup.get('emailCtrl');
     let passwordCtrl = component.loginFormGroup.get('passwordCtrl');
+
     emailCtrl.setValue('0');
     passwordCtrl.setValue('0');
 
@@ -120,48 +125,83 @@ describe('LoginComponent', () => {
 
     component.onLogin();
 
+    expect(component.loginClick).toBeTruthy();
+    expect(component.loginEmail).toBe(emailCtrl.value);
+    expect(component.loginPassword).toBe(passwordCtrl.value);
+
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(emailVal, passwordVal);
-
-    /*spy.calls.mostRecent().returnValue.then(() => {
-      fixture.detectChanges();
-
-      let getAuthSpy = spyOn(service, 'getAuth');
-      expect(getAuthSpy).toHaveBeenCalled();
-
-      done();
-    });*/
-
-    //let getAuthSpy = spyOn(service, 'getAuth').and.returnValue(Promise.resolve(true));
-    //let getDbUserSpy = spyOn(recipeService, 'getDbUserByName').and.returnValue(Promise.resolve(true));
-    //expect(getAuthSpy).toHaveBeenCalled();
   });
 
-  it('should access inside then', () => {
+
+
+  it('should login and then get the logged user', () => {
     let emailCtrl = component.loginFormGroup.get('emailCtrl');
     let passwordCtrl = component.loginFormGroup.get('passwordCtrl');
+
     emailCtrl.setValue('0');
     passwordCtrl.setValue('0');
 
     let spy = spyOn(service, 'login').and.returnValue(Promise.resolve(true));
-    let getAuthSpy = spyOn(service, 'getAuth').and.returnValue(Observable.of('FUCK!'));
-    let getDbUserSpy = spyOn(recipeService, 'getDbUserByName').and.returnValue(Observable.empty());
+    let authState = {displayName: 'name'};
+    let userObject = {completedProfile: true};
+
+    let getAuthSpy = spyOn(service, 'getAuth').and.returnValue(Observable.of(authState)).and.callFake(() => {
+      return recipeService.getDbUserByName(authState.displayName);
+    });
+
+    let getDbUserSpy = spyOn(recipeService, 'getDbUserByName').and.returnValue(Observable.of([userObject]));
 
     component.onLogin();
 
     fixture.whenStable().then(() => {
       expect(getAuthSpy).toHaveBeenCalled();
-      //expect(getDbUserSpy).toHaveBeenCalled(); // NOT BEING CALLED..
 
       service.getAuth().subscribe(authVal => {
-        expect(authVal).toBe('FUCK!');
+        fixture.detectChanges();
+        expect(getDbUserSpy).toHaveBeenCalled();
+        expect(getDbUserSpy).toHaveBeenCalledWith(authState.displayName);
+
+        recipeService.getDbUserByName(authState.displayName).subscribe(users => {
+          users.map(user => {
+            expect(user.completedProfile).toBeTruthy();
+            // expect router to navigate to '/allrecipes'
+          });
+        });
       });
-
-    });
-
+    }) 
   });
 
 
+
+  it('should register user', () => {
+    
+    expect(component.registerClick).toBeFalsy();
+
+    let nameCtrl = component.registerationFormGroup.get('nameCtrl');
+    let emailCtrl = component.registerationFormGroup.get('emailCtrl');
+    let passwordCtrl = component.registerationFormGroup.get('passwordCtrl');
+    let confirmPasswordCtrl = component.registerationFormGroup.get('confirmPasswordCtrl');
+
+    nameCtrl.setValue('0000');
+    emailCtrl.setValue('00');
+    passwordCtrl.setValue('0');
+    confirmPasswordCtrl.setValue('0');
+
+    let registerSpy = spyOn(service, 'register').and.returnValue(Promise.resolve(true));
+
+    component.onRegister();
+
+    expect(component.registerClick).toBeTruthy();
+    expect(component.registerationFormGroup.valid).toBeTruthy();
+    expect(registerSpy).toHaveBeenCalledWith(nameCtrl.value, emailCtrl.value, passwordCtrl.value);
+    
+    /*fixture.whenStable().then(() => {
+      expect(addUserSpy).toHaveBeenCalled();
+      expect(component.swapFormBoolean).toBeFalsy();
+    });*/
+    
+  });
 
 
 });

@@ -31,10 +31,10 @@ export class NavbarComponent implements OnInit
   options: string[] = [];
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
-  recipes: ARecipe[] = this.dataService.getRecipes();
+  //recipes: ARecipe[] = this.dataService.getRecipes();
 
   // AUTHENTICATION RELATED VARIABLES
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   loggedInUserEmail:string;
   loggedInUserName: string;
 
@@ -53,18 +53,19 @@ export class NavbarComponent implements OnInit
   formImageSource: string = null;
 
 
-  constructor(public dataService: DataService, private formBuilder: FormBuilder, private router: Router, 
+  constructor(/*public dataService: DataService,*/ private formBuilder: FormBuilder, private router: Router, 
     private authService: AuthService, private modalService: NgbModal, private recipesDataService: RecipesDataService) 
   { 
+    
     this.buildForm();
-    this.getRecipesNames();
-    this.checkFormCtrlChanges();
+    //this.getRecipesNames();
+    //this.checkFormCtrlChanges();
   }
 
 
   ngOnInit()
   {
-    this.authService.getAuth().subscribe(auth => {
+    /*this.authService.getAuth().subscribe(auth => {
       if(auth)
       {
         this.isLoggedIn = true;
@@ -74,7 +75,7 @@ export class NavbarComponent implements OnInit
       {
         this.isLoggedIn = false;
       }
-    });
+    });*/
   }
 
 
@@ -94,17 +95,17 @@ export class NavbarComponent implements OnInit
   }
 
 
-  getRecipesNames()
+  /*getRecipesNames()
   {
     for(let i=0; i<this.dataService.getRecipes().length; i++)
     {
       this.options[i] = this.dataService.getRecipes()[i].name;
     }
     this.optionsSlice = this.options.slice();
-  }
+  }*/
 
 
-  onSearch()
+  /*onSearch()
   {
 
     for(var i=0; i<this.dataService.getRecipes().length; i++)
@@ -125,10 +126,10 @@ export class NavbarComponent implements OnInit
       }
     }
 
-  }
+  }*/
 
 
-  checkFormCtrlChanges()
+  /*checkFormCtrlChanges()
   {
     const formControl = this.formGroup.get('formCtrl');
 
@@ -156,7 +157,7 @@ export class NavbarComponent implements OnInit
         this.options = this.optionsTemp.slice();
       }
     });
-  }
+  }*/
 
 
 
@@ -169,9 +170,10 @@ export class NavbarComponent implements OnInit
   open(content) 
   {
     this.modalRef = this.modalService.open(content);
+    this.resetFormFields();
 
     // reset & clear everything when modal opens
-    this.submitClicked = false;
+    /*this.submitClicked = false;
     this.recipeAddFormGroup.get('recipeNameCtrl').reset(null);
     this.recipeAddFormGroup.get('recipeDescriptionCtrl').reset(null);
     this.recipeAddFormGroup.get('recipeImageUrlCtrl').reset(null);
@@ -179,7 +181,7 @@ export class NavbarComponent implements OnInit
     this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
 
     this.recipeIngredientsArr = [];
-    this.formImageSource = null;
+    this.formImageSource = null;*/
   }
 
 

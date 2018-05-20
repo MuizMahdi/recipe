@@ -21,7 +21,7 @@ export class ProfileCompletionComponent implements OnInit
   invalidImageUrl: boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, 
+  constructor(private formBuilder: FormBuilder, public authService: AuthService, 
     private recipesDataService: RecipesDataService, private ngFireDB: AngularFireDatabase, private router: Router) 
   { 
     this.buildForm();

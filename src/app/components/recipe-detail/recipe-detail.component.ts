@@ -54,9 +54,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   formValid: boolean = true;
 
   theRecipe: Recipe[];
-  private commentUnsubscribe: Subject<any> = new Subject();
-  private upvoteUnsubscribe: Subject<any> = new Subject();
-  private authUnsubscribe: Subject<any> = new Subject();
+  public commentUnsubscribe: Subject<any> = new Subject();
+  public upvoteUnsubscribe: Subject<any> = new Subject();
+  public authUnsubscribe: Subject<any> = new Subject();
 
   commentingProfileImage: string;
 /*******************************************************************************************/
