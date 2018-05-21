@@ -1,5 +1,4 @@
 import { ARecipe } from './../../models/ARecipe';
-import { DataService } from './../../Services/data.service';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -19,11 +18,11 @@ export class TopRecipesComponent implements OnInit
   topRecipes: ARecipe[];
 
 
-  constructor(private dataService: DataService) 
+constructor(/*private dataService: DataService*/) 
   { 
-    this.topRecipes = [];
-    this.sortedRecipes = dataService.sortedRecipes;
-    this.getTopRecipesData();
+    //this.topRecipes = [];
+    //this.sortedRecipes = dataService.sortedRecipes;
+    //this.getTopRecipesData();
   }
 
   

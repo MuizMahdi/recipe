@@ -8,7 +8,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgcFloatButtonModule } from 'ngc-float-button';
 import { HomeComponent } from './home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from './../../Services/data.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './../../Services/auth.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -26,7 +25,7 @@ describe('HomeComponent', () => {
       declarations: [ HomeComponent, HeaderComponent, NavbarComponent, TopRecipesComponent ],
       imports: [FormsModule, AngularFireAuthModule, ReactiveFormsModule, MatAutocompleteModule, NgcFloatButtonModule, 
       NgbModule.forRoot(), RouterTestingModule, AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule ],
-      providers: [ DataService, AuthService, RecipesDataService ]
+      providers: [ AuthService, RecipesDataService ]
     })
     .compileComponents();
   }));

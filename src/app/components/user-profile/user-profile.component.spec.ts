@@ -13,7 +13,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthService } from './../../Services/auth.service';
-import { DataService } from './../../Services/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserProfileComponent } from './user-profile.component';
@@ -28,7 +27,7 @@ describe('UserProfileComponent', () => {
       declarations: [ UserProfileComponent, NavbarComponent, RecipeDetailComponent, ARecipeComponent, CommentComponent ],
       imports: [ FormsModule, ReactiveFormsModule, MatAutocompleteModule, NgcFloatButtonModule, RouterTestingModule,
       AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule, NgbModule.forRoot() ],
-      providers: [ RecipesDataService, AuthService, DataService ]
+      providers: [ RecipesDataService, AuthService ]
     })
     .compileComponents();
   }));

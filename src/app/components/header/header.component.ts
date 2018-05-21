@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { an_Ingredient } from './../../Models/an_Ingredient';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from '../../Services/data.service';
 
 
 @Component({
@@ -33,7 +32,7 @@ export class HeaderComponent implements OnInit
   formValid: boolean = true;
   
 
-  constructor(private modalService: NgbModal, public dataService: DataService, private router: Router) { }
+  constructor(private modalService: NgbModal, /*public dataService: DataService,*/ private router: Router) { }
 
   private modalRef: NgbModalRef;
 
@@ -62,8 +61,8 @@ export class HeaderComponent implements OnInit
 
   submitRecipe()
   {
-    this.dataService.addRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
-    this.dataService.addMyRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
+    //this.dataService.addRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
+    //this.dataService.addMyRecipe({name: this.formName, description: this.formDescription, imagesrc: this.formImageSource, upvotes:0, ingredients: this.ingredientsNames, amounts: this.ingredientsAmounts, upvoted: false, comments: []});
 
     /*// clear the values after submitting
     this.formName = "";

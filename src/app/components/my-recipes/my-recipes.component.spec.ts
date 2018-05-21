@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgcFloatButtonModule } from 'ngc-float-button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from './../../Services/data.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './../../Services/auth.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -25,7 +24,7 @@ describe('MyRecipesComponent', () => {
       declarations: [ MyRecipesComponent, NavbarComponent ],
       imports: [ MatAutocompleteModule, FormsModule, ReactiveFormsModule, NgcFloatButtonModule, NgbModule.forRoot(), 
       RouterTestingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule ],
-      providers: [ DataService, AuthService, RecipesDataService ]
+      providers: [ AuthService, RecipesDataService ]
     })
     .compileComponents();
   }));

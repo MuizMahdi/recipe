@@ -5,7 +5,6 @@ import { RecipesDataService } from './../../Services/recipesData.service';
 import { an_Ingredient } from './../../models/an_Ingredient';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../models/ARecipe';
-import { DataService } from '../../Services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
@@ -64,7 +63,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-  constructor(public dataService: DataService, 
+  constructor( 
     public recipesDataService: RecipesDataService, 
     private authService: AuthService, 
     private ngFireDB: AngularFireDatabase)
@@ -101,7 +100,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeComments_Slice = this.recipeComments.slice();
 
     this.numberOfComments = this.recipeComments.length;
-    this.recipeComments = this.changeDetect.comments;
+    this.recipeComments = this.changeDetect.comments; // DUPLICATE !
     this.lotsOfComments = false;
     
     if(this.recipeComments[0] === "")
@@ -120,8 +119,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.lotsOfComments = true;
     }
 
-    this.checkUserUpvoteState();
-    this.checkUserProfilePhoto();
+    //this.checkUserUpvoteState();
+    //this.checkUserProfilePhoto();
   }
 
 /*******************************************************************************************/

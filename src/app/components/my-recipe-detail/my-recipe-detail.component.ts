@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { ARecipe } from '../../models/ARecipe';
-import { DataService } from '../../Services/data.service';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { an_Ingredient } from './../../models/an_Ingredient';
 
@@ -58,7 +57,7 @@ export class MyRecipeDetailComponent implements OnInit
 
 /*******************************************************************************************/
 
-  ngOnChanges(changes: SimpleChanges) 
+  /*ngOnChanges(changes: SimpleChanges) 
   {
 
     this.theIngredients = [{name: "", amount:0}]; // Clear the old values on change so it wont mix them up with the new values.
@@ -86,7 +85,7 @@ export class MyRecipeDetailComponent implements OnInit
       this.theIngredients[i] = {name: this.recipeIngredient[i], amount: this.recipeAmount[i]};
     }
 
-  }
+  }*/
 
 /*******************************************************************************************/
 
@@ -94,7 +93,7 @@ export class MyRecipeDetailComponent implements OnInit
 
 /*******************************************************************************************/
 
-  constructor(public dataService: DataService, private modalService: NgbModal) 
+  constructor(/*public dataService: DataService*/ private modalService: NgbModal) 
   { 
     this.theIngredients = [{name: "", amount:0}];  // For some magical reason, it doesn't work unless initiated on the constructor only !
     this.Ingredients = [];
@@ -107,7 +106,7 @@ export class MyRecipeDetailComponent implements OnInit
 
 
 /*******************************************************************************************/
-  private modalRef: NgbModalRef;
+  /*private modalRef: NgbModalRef;
 
   open(content) 
   {
@@ -119,11 +118,11 @@ export class MyRecipeDetailComponent implements OnInit
     this.formImageSource = "";
     this.imageUrlError = false;
     this.formValid = true;
-  }
+  }*/
 
   //////////////////////////////////////////////////////////////////////
 
-  editingData: ARecipe;
+  /*editingData: ARecipe;
 
   editRecipe()
   {
@@ -153,7 +152,7 @@ export class MyRecipeDetailComponent implements OnInit
   }
 
 
-  /* FORM VALIDATION */
+  // FORM VALIDATION 
 
   updateUrl() // on Image URL Error (image not loaded using the given url source)
   {
@@ -177,7 +176,7 @@ export class MyRecipeDetailComponent implements OnInit
     {
       this.formValid = false; // view message if form is invalid (one or more fields incorrect)
     }
-  }
+  }*/
 
 /*******************************************************************************************/
 
@@ -186,7 +185,7 @@ export class MyRecipeDetailComponent implements OnInit
 
 /*******************************************************************************************/
 
-  deleteRecipe()
+  /*deleteRecipe()
   {
     for (let myRecipe of this.dataService.getMyRecipes()) // go through myRecipes in data service
     {
@@ -196,7 +195,7 @@ export class MyRecipeDetailComponent implements OnInit
         this.dataService.deleteRecipe(myRecipe);
       }
     }
-  }
+  }*/
 
 /*******************************************************************************************/
 

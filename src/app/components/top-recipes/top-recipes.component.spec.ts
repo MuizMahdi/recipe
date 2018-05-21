@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataService } from './../../Services/data.service';
 
 import { TopRecipesComponent } from './top-recipes.component';
 
@@ -11,7 +10,7 @@ describe('TopRecipesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TopRecipesComponent ],
       imports: [ ],
-      providers: [ DataService ]
+      providers: [ ]
     })
     .compileComponents();
   }));

@@ -2,7 +2,6 @@ import { FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from './../../Services/data.service';
 import { RouterTestingModule } from '@angular/router/testing';
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -12,7 +11,7 @@ describe('HeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HeaderComponent ],
       imports: [ FormsModule, NgbModule.forRoot(), RouterTestingModule ],
-      providers: [ DataService ]
+      providers: [ ]
     })
     .compileComponents();
   }));

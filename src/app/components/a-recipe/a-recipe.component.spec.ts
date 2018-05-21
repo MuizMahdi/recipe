@@ -1,4 +1,3 @@
-import { DataService } from './../../Services/data.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ARecipeComponent } from './a-recipe.component';
 
@@ -9,7 +8,7 @@ describe('ARecipeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ARecipeComponent ],
-      providers: [ DataService ]
+      providers: [ ]
     })
     .compileComponents();
   }));
@@ -18,7 +17,7 @@ describe('ARecipeComponent', () => {
     fixture = TestBed.createComponent(ARecipeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component = new ARecipeComponent(null);
+    component = new ARecipeComponent();
   });
 
   it('should create', () => {

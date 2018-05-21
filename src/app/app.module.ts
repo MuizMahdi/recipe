@@ -30,7 +30,6 @@ import { LoginComponent } from './Components/login/login.component';
 import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
 
 // Services
-import { DataService } from './Services/data.service';
 import { RecipesDataService } from './Services/recipesData.service';
 import { AuthService } from './Services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -109,7 +108,6 @@ export const appRoutes: Routes = [
   ],
 
   providers: [ 
-    DataService,
     RecipesDataService,
     AuthService,
     AuthGuard,

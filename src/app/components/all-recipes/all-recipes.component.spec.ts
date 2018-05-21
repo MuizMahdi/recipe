@@ -1,4 +1,3 @@
-import { DataService } from './../../Services/data.service';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { environment } from './../../../environments/environment.prod';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -38,7 +37,7 @@ describe('AllRecipesComponent', () => {
       imports: [ ReactiveFormsModule, MatAutocompleteModule, NgcFloatButtonModule, NgxPaginationModule, RouterModule, FormsModule, AngularFireAuthModule,
       AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule, RouterTestingModule, NgbModule.forRoot() ],
 
-      providers: [ AuthService, RecipesDataService, DataService ]
+      providers: [ AuthService, RecipesDataService ]
       
     })
     .compileComponents();

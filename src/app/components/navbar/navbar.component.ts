@@ -2,7 +2,6 @@ import { RecipesDataService } from './../../Services/recipesData.service';
 import { RecipesComponent } from './../recipes/recipes.component';
 import { ARecipe } from './../../models/ARecipe';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataService } from '../../Services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../../Services/auth.service';

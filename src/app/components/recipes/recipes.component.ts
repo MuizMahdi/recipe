@@ -1,7 +1,6 @@
 import { Subject } from 'rxjs/Subject';
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from '../../Services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 
 import { ARecipe } from '../../models/ARecipe';
@@ -38,7 +37,7 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
   
-  constructor(public dataService: DataService, db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
+  constructor(db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
   { }
 
 //-----------------------------------------------------------------------------------------------------------// 
@@ -48,7 +47,7 @@ export class RecipesComponent implements OnInit
 
   ngOnInit() 
   { 
-    this.recipes = this.dataService.getRecipes();
+    //this.recipes = this.dataService.getRecipes();
     window.scroll({top: 0, left: 0, behavior: 'smooth' });
 
 
@@ -62,10 +61,10 @@ export class RecipesComponent implements OnInit
   
 //-----------------------------------------------------------------------------------------------------------//
 
-  addRecipe(recipe: ARecipe)
+  /*addRecipe(recipe: ARecipe)
   {
     this.dataService.addRecipe(recipe);
-  }
+  }*/
 
 //-----------------------------------------------------------------------------------------------------------// 
 

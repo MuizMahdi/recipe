@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { DataService } from '../../Services/data.service';
 
 import { ARecipe } from '../../models/ARecipe';
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ARecipe } from '../../models/ARecipe';
-import { DataService } from '../../Services/data.service';
 import { Recipe } from './../../models/Recipe';
 
 @Component({
@@ -35,7 +34,7 @@ export class ARecipeComponent implements OnInit
 
 //---------------------------------------------------------------------------------------------------------------------------------//
 
-  constructor(public dataService: DataService) { 
+  constructor(/*public dataService: DataService*/) { 
     this.recipe2 = {
       RID: "",
       name: "",
