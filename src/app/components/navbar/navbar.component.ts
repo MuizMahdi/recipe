@@ -52,10 +52,9 @@ export class NavbarComponent implements OnInit
   formImageSource: string = null;
 
 
-  constructor(/*public dataService: DataService,*/ private formBuilder: FormBuilder, private router: Router, 
+  constructor(private formBuilder: FormBuilder, private router: Router, 
     private authService: AuthService, private modalService: NgbModal, private recipesDataService: RecipesDataService) 
   { 
-    
     this.buildForm();
     //this.getRecipesNames();
     //this.checkFormCtrlChanges();
@@ -64,7 +63,7 @@ export class NavbarComponent implements OnInit
 
   ngOnInit()
   {
-    /*this.authService.getAuth().subscribe(auth => {
+    this.authService.getAuth().subscribe(auth => {
       if(auth)
       {
         this.isLoggedIn = true;
@@ -74,7 +73,7 @@ export class NavbarComponent implements OnInit
       {
         this.isLoggedIn = false;
       }
-    });*/
+    });
   }
 
 
@@ -294,5 +293,17 @@ export class NavbarComponent implements OnInit
     }
   }
   */
+
+  navInputFocused: boolean = false;
+
+  onNavInputFocus()
+  {
+    this.navInputFocused = true;
+  }
+
+  onNavInputBlur()
+  {
+    this.navInputFocused = false;
+  }
 
 }

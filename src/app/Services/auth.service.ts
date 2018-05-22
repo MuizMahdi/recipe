@@ -59,6 +59,7 @@ export class AuthService
           if(userData.emailVerified)
           {
             console.log("User email is verified.. proceeding to profile completion check.")
+            console.log(userData.displayName + "PASSED AUTH SERVICE");
             resolve(userData), err => reject(err)
           }
           else
@@ -74,7 +75,5 @@ export class AuthService
   {
     this.afAuth.auth.signOut();
   }
-
-
 
 }

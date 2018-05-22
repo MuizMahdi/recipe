@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit
                 console.log("User doesn't have a complete profile.");
                 this.router.navigate(['/completeProfile']); 
               } else {
-                console.log("User has a complete profile.");
+                console.log("User: " + user.userName + " has a complete profile.");
                 this.router.navigate(['/allrecipes']); 
               }
               

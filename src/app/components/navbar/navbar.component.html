@@ -1,6 +1,6 @@
 <!--detect-scroll (onScroll)="handleScroll($event) add to element(tag) to detect its scroll status-->
 
-<nav class="{{navState}} navb" role="navigation">
+<nav class="{{navState}} navb" [class.navb-input-focused]="navInputFocused" role="navigation">
   <div class="container">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
       
       <form [formGroup]="formGroup" class="form-inline my-2 my-lg-0">
         <div>
-          <input type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="formCtrl" [matAutocomplete]="auto" placeholder="Search Recipes..">
+          <input (focus)="onNavInputFocus()" (blur)="onNavInputBlur()" type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="formCtrl" [matAutocomplete]="auto" placeholder="Search Recipes..">
         </div>
         <button (click)="onSearch()" class="btn btn-light nav-searchbutton" type="submit">Search</button>
       </form>

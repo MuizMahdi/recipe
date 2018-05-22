@@ -35,7 +35,7 @@ export class ARecipeComponent implements OnInit
 //---------------------------------------------------------------------------------------------------------------------------------//
 
   constructor(/*public dataService: DataService*/) { 
-    this.recipe2 = {
+    /*this.recipe2 = {
       RID: "",
       name: "",
       makerName: "",
@@ -46,14 +46,14 @@ export class ARecipeComponent implements OnInit
       recipeIngredients: [],
       comments: [],
       upvoters: []
-    };
+    };*/
   }
 
   ngOnInit() 
   { 
     this.randomizeImages();
 
-    this.recipe2 = {
+    /*this.recipe2 = {
       RID: "",
       name: "",
       makerName: "",
@@ -64,7 +64,7 @@ export class ARecipeComponent implements OnInit
       recipeIngredients: [],
       comments: [],
       upvoters: []
-    };
+    };*/
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------//

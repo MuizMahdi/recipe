@@ -68,6 +68,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     private authService: AuthService, 
     private ngFireDB: AngularFireDatabase)
   { 
+    this.authService.getAuth().subscribe(authState => {
+      console.log("[RecipeDetailComponent]: Current Authenticated User: " + authState.displayName);
+    });
+    
     this.latestComments = [];
   }
 
@@ -102,7 +106,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.numberOfComments = this.recipeComments.length;
     this.recipeComments = this.changeDetect.comments; // DUPLICATE !
     this.lotsOfComments = false;
-    
+
+    console.log("Recipe Comments: " + this.recipeComments);
+    console.log("Recipe Comments Change: " + this.changeDetect.comments);
+
     if(this.recipeComments[0] === "")
     {
       this.numberOfComments = (this.recipeComments.length - 1);
@@ -119,8 +126,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.lotsOfComments = true;
     }
 
-    //this.checkUserUpvoteState();
-    //this.checkUserProfilePhoto();
+    this.checkUserUpvoteState();
+    this.checkUserProfilePhoto();
   }
 
 /*******************************************************************************************/

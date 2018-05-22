@@ -18,7 +18,7 @@ export class AllRecipesComponent implements OnInit
 
   ngOnInit() 
   {
-    /*
+    
     this.authService.getAuth().subscribe(authState => {
 
       if(this.recipesDataService.getDbUserByName(authState.displayName))
@@ -37,7 +37,7 @@ export class AllRecipesComponent implements OnInit
       }
 
     });
-    */
+    
   }
 
 }

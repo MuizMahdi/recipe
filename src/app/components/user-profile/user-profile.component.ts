@@ -1,3 +1,4 @@
+import { AuthService } from './../../Services/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { Recipe } from './../../models/Recipe';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -24,7 +25,7 @@ export class UserProfileComponent implements OnInit
 
   ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private route: ActivatedRoute, private router: Router, private recipeDataService: RecipesDataService, private ngFireDB: AngularFireDatabase) 
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private recipeDataService: RecipesDataService, private ngFireDB: AngularFireDatabase) 
   { 
     this.getRoutingParameters();
   }
@@ -56,17 +57,19 @@ export class UserProfileComponent implements OnInit
 
   getUser()
   {
-    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(name));
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(this.profileUsername));
     
     return usersList.snapshotChanges().map(actions => {
       return actions.map(action => ({ key: action.key, ...action.payload.val() }));
     }).subscribe(users => {
       return users.map(user => {
+
+
         this.userName = user.userName;
         this.userDetails = user.aboutUser;
         this.userProfileImageSource = user.photoUrl;
         this.userID = user.uid;
-
+        console.log("getDbUser: " + this.userName);
         this.getUserRecipes(this.userID);
       });
     });

@@ -1,3 +1,4 @@
+import { AuthService } from './../../Services/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -37,8 +38,12 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
   
-  constructor(db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
-  { }
+  constructor(private authService: AuthService, public db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
+  { 
+    this.authService.getAuth().subscribe(authState => {
+      console.log("[RecipesComponent]: Current Authenticated User: " + authState.displayName);
+    });
+  }
 
 //-----------------------------------------------------------------------------------------------------------// 
 

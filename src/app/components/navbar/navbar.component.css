@@ -22,7 +22,6 @@
     background-position:5px;
     padding-left:40px;
     /*border-radius: 3px;*/
-    border-color: rgb(red, green, blue);
     opacity: .8;
 }
 
@@ -32,10 +31,17 @@
     border-top: 1px solid rgb(199, 199, 199) !important;
     border-bottom: 1.3px solid rgb(205, 205, 205) !important;
     padding: 2px !important;
-    /*box-shadow: 0px 0px 4px 0px rgb(190, 190, 190);*/
     display: block;
     z-index: 1;
 }
+
+.navb-input-focused
+{
+    transition: .35s ease !important;
+    border-bottom: 1.5px solid rgb(92, 92, 92, 0.4) !important;
+    box-shadow: 0px 0px 800px 0px rgb(0, 0, 0);
+}
+
 
 .nav-brand
 {
@@ -117,7 +123,7 @@
 
 ngc-float-button /deep/ .content 
 {
-    background: rgb(109, 167, 255);
+    background: rgb(53, 255, 194);
 }
 
 ngc-float-button /deep/ .content 
@@ -138,6 +144,11 @@ ngc-float-button /deep/ .fab-toggle
 ngc-float-button /deep/  
 {
     color: rgb(91, 189, 206);
+}
+
+ngc-float-button /deep/ #floatbutton-username .content 
+{
+    background: rgb(38, 190, 145);
 }
 
 
