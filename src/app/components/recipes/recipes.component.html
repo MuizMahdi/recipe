@@ -1,6 +1,70 @@
+<!--
 <div *ngIf="theSelectedRecipe" class="container">
   <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>
 </div>
+-->
+
+<!--
+  <ng-template #content let-c="close" let-d="dismiss">
+
+    <div class="modal-header">
+      
+        <img src="{{selectedRecipeImg}}" alt="Recipe Image">
+      
+    </div>
+
+    <div class="modal-body">
+      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>
+    </div>
+
+  </ng-template>
+-->
+
+<!--
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="h-full rounded overflow-hidden deCard">
+      <img class="w-full" src="{{selectedRecipeImg}}" alt="Sunset in the mountains">
+      
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+        <p class="text-grey-darker text-base">
+          Lorem ipsum dolor sit amet, consectetur exercitationem praesentium nihil.
+        </p>
+      </div>
+  </div>
+</ng-template>
+-->
+
+<!--
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="card" style="min-width: 70%">
+    <img class="card-img-top" src="{{selectedRecipeImg}}" alt="Card image cap" style="min-width: 70%;">
+
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+</ng-template>
+-->
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="recipe-card">
+
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
+
+    <div>
+      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>  
+    </div>
+
+  </div>
+</ng-template>
+
+
 
 
 <!--
@@ -14,7 +78,7 @@
 
     <div class="row">
       <li *ngFor="let recipe of recipesDB | paginate: { itemsPerPage: 9, currentPage: p }" class="col-sm-4" >
-        <app-a-recipe [recipeVal2]="recipe" (theRecipeSelected2)="setSelected2($event)" class="col-12 col-md-4"></app-a-recipe>
+        <app-a-recipe (click)="open(content)" [recipeVal2]="recipe" (theRecipeSelected2)="setSelected2($event)" class="col-12 col-md-4"></app-a-recipe>
       </li>
     </div>
 

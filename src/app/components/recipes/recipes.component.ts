@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { ARecipe } from '../../models/ARecipe';
 import { Recipe } from './../../models/Recipe';
@@ -30,7 +31,11 @@ export class RecipesComponent implements OnInit
   theSelectedRecipe: Recipe;
   p: number = 1;
 
+  selectedRecipeImg: string = "";
+
   recipesDB: Recipe[];
+
+  private modalRef: NgbModalRef;
 
   private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -38,7 +43,11 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
   
-  constructor(private authService: AuthService, public db: AngularFireDatabase, public recipeDataService: RecipesDataService) 
+  constructor(
+    private authService: AuthService, 
+    public db: AngularFireDatabase, 
+    public recipeDataService: RecipesDataService,
+    private modalService: NgbModal) 
   { 
     this.authService.getAuth().subscribe(authState => {
       console.log("[RecipesComponent]: Current Authenticated User: " + authState.displayName);
@@ -71,6 +80,12 @@ export class RecipesComponent implements OnInit
     this.dataService.addRecipe(recipe);
   }*/
 
+  
+  open(content) 
+  {
+    this.modalRef = this.modalService.open(content, {size: 'lg'});
+  }
+
 //-----------------------------------------------------------------------------------------------------------// 
 
 
@@ -85,6 +100,8 @@ export class RecipesComponent implements OnInit
   setSelected2(selectedRecipe: Recipe)
   {
     this.theSelectedRecipe = selectedRecipe;
+    this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
+    console.log(this.selectedRecipeImg);
   }
 
 //-----------------------------------------------------------------------------------------------------------// 

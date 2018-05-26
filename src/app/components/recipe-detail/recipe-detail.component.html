@@ -2,16 +2,18 @@
 <div class="recipe">
 
   <div class="maker-info">
-    <span id="recipe-info-text"> Recipe added by: </span> <br>
-    
-    <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-name">
-      {{recipeMaker}} 
+    <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-link">
+      <p id="maker-text"> {{recipeMaker}} </p> 
       <img src="../../../assets/Avatar.jpg" class="maker-photo" alt="Recipe Maker Photo">
     </a>
   </div>
 
+  
+  <span id="tip-text"> 
+    Scroll down to see full details 
+    <a (click)="onShowRecipeDetails()" href="javascript:void(0)" class="material-icons" style="color:rgb(177, 177, 177);">expand_more</a> 
+  </span>
   <hr>
-
   <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
 
 
@@ -47,13 +49,13 @@
     
   </div>
 
-  
+
 
   <div class="container">
     <h3> Comments: {{numberOfComments}}</h3>
     <hr>
-
     <div class="comments">
+      <div id="recipeName"></div>
       <ul *ngIf="lotsOfComments">
         <li *ngFor="let comment of latestComments">
           <div class="a-comment">

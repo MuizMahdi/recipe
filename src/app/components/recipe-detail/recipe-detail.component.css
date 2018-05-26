@@ -23,36 +23,60 @@
 #recipe-info-text
 {
     font-weight: bold; 
-    color:rgb(77, 77, 77);
+    color:rgb(184, 184, 184);
+}
+
+#tip-text
+{
+    font-weight: bold;
+    color: rgb(112, 199, 195);
+    position: relative;
+    margin-top: -5px;
+    margin-left: 5px;
 }
 
 .maker-info
 {
-    margin: 15px 0px 0px 15px;
+    position: absolute;
+    left: 0%;
+    bottom: 11% !important;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.45);
+    padding: 13px 5px 13px 5px;
 }
 
 .maker-photo
 {
     margin-left: 20px;
     margin-top: 20px;
+    margin: 5px 10px;
     border-radius: 50%;
+    float: left;
     width: 80px;
     height: 80px;
 }
 
-.maker-name
+.maker-link
 {
-    color: rgb(150, 150, 150);
-    font-size: 18px;
+    color: rgb(226, 226, 226);
+    font-size: 25px;
     font-weight: bold;
+    text-decoration: none;
+}
+
+#maker-text
+{
+    position: relative;
+    float: right;
+    top:3%;
+    left:3%;
     margin-top: 23px;
-    margin-left: 5px;
+    margin-right: 20px;
 }
 
 .recipe
 {
     border: 8px solid rgb(240, 240, 240);
-    border-radius: 5px;
     background-color: white;
     margin-bottom: 20px;
 }
@@ -248,5 +272,13 @@
     .comment-form button
     {
         margin-left: 74px;
+    }
+}
+
+@media screen and (max-width: 1024px)
+{
+    .maker-info
+    {
+        bottom: 17.5% !important;
     }
 }

@@ -135,17 +135,17 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
 
-ngOnDestroy()
-{
-  this.commentUnsubscribe.next();
-  this.commentUnsubscribe.complete();
+  ngOnDestroy()
+  {
+    this.commentUnsubscribe.next();
+    this.commentUnsubscribe.complete();
 
-  this.upvoteUnsubscribe.next();
-  this.upvoteUnsubscribe.complete();
+    this.upvoteUnsubscribe.next();
+    this.upvoteUnsubscribe.complete();
 
-  this.authUnsubscribe.next();
-  this.authUnsubscribe.complete();
-}
+    this.authUnsubscribe.next();
+    this.authUnsubscribe.complete();
+  }
 
 /*******************************************************************************************/
 
@@ -329,4 +329,12 @@ ngOnDestroy()
        
 
   }
+
+
+  onShowRecipeDetails()
+  {
+    document.getElementById("recipeName").scrollIntoView({ block: 'end',  behavior: 'smooth' });
+  }
+
+
 }
