@@ -4,7 +4,7 @@
   <div class="maker-info">
     <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-link">
       <p id="maker-text"> {{recipeMaker}} </p> 
-      <img src="../../../assets/Avatar.jpg" class="maker-photo" alt="Recipe Maker Photo">
+      <img src="{{makerPhoto}}" class="maker-photo" alt="Recipe Maker Photo">
     </a>
   </div>
 
@@ -41,12 +41,26 @@
 
     <br>
 
-    <div class="recipe-upvotes">
-      <p class="upvote-text"> Upvote </p>
-      <span class="upvote-button" (click)="onUpvote()" [class.upvotedButton]="!canUpvote" [class.unUpvotedButton]="canUpvote"></span>
-      <p class="upvote-number"> {{recipeUpvotes}} </p> 
+    <div *ngIf="canUpvote" class="recipe-upvote">
+      <!--<span class="upvote-button" (click)="onUpvote()" [class.upvotedButton]="!canUpvote" [class.unUpvotedButton]="canUpvote"></span>--> 
+    </div>
+
+    <div *ngIf="canUpvote">
+      <button (click)="onUpvote()" class="upvote-buttons">
+        <span class="material-icons Upvote-Icon">thumb_up_alt</span>
+        <span class="Upvote-Text"> Upvote {{recipeUpvotes}} </span>
+      </button>
     </div>
     
+    <div *ngIf="!canUpvote">
+      <button class="upvote-buttons">
+        <span class="material-icons unUpvote-Icon">thumb_up_alt</span>
+        <span class="unUpvote-Text"> Upvote {{recipeUpvotes}} </span>
+      </button>
+    </div>
+
+
+
   </div>
 
 

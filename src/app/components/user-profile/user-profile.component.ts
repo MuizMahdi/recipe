@@ -5,6 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,14 +21,26 @@ export class UserProfileComponent implements OnInit
   userProfileImageSource: string;
   userID: string;
   userRecipes: any[] = [];
-
+  selectedRecipeImg: string = "";
   theSelectedDaRecipe: Recipe;
+  private modalRef: NgbModalRef;
 
   ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private recipeDataService: RecipesDataService, private ngFireDB: AngularFireDatabase) 
+  constructor(
+    private authService: AuthService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private recipeDataService: RecipesDataService, 
+    private ngFireDB: AngularFireDatabase, 
+    private modalService: NgbModal) 
   { 
     this.getRoutingParameters();
+  }
+
+  open(content) 
+  {
+    this.modalRef = this.modalService.open(content, {size: 'lg'});
   }
 
   getRoutingParameters()
@@ -91,6 +104,7 @@ export class UserProfileComponent implements OnInit
   setSelected2(selectedDaRecipe: Recipe)
   {
     this.theSelectedDaRecipe = selectedDaRecipe;
+    this.selectedRecipeImg = this.theSelectedDaRecipe.imagesrc;
   }
 
 

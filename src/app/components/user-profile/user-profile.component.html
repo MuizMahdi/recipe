@@ -18,15 +18,32 @@
             <div class="user-recipes">
                 <br><br><br><br><br><br><br>
                 
+                <!--
                 <div *ngIf="theSelectedDaRecipe" class="container">
                     <app-recipe-detail [aSelectedRecipe]="theSelectedDaRecipe"></app-recipe-detail>
                 </div>
+                -->
+                
+                <ng-template #content let-c="close" let-d="dismiss">
+                    <div class="recipe-card">
+                  
+                      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
+                  
+                      <div>
+                        <app-recipe-detail [aSelectedRecipe]="theSelectedDaRecipe"></app-recipe-detail>  
+                      </div>
+                  
+                    </div>
+                  </ng-template>
 
                 <div class="all-recipes-list">
                     <ul>
                         <div class="row">
                             <li *ngFor="let recipe of userRecipes" class="col-sm-4" >
-                                <app-a-recipe [recipeVal2]="recipe" (theRecipeSelected2)="setSelected2($event)" class="col-12 col-md-4"></app-a-recipe>
+                                <app-a-recipe (click)="open(content)" [recipeVal2]="recipe" (theRecipeSelected2)="setSelected2($event)" class="col-12 col-md-4"></app-a-recipe>
                             </li>
                         </div>
                     </ul>

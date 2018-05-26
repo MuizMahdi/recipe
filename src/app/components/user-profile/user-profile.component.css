@@ -81,4 +81,55 @@ hr
     opacity: .3;
 }
 
+.recipe-card
+{
+    border-top-right-radius: 1%;
+    border-top-left-radius: 1%;
+    margin-bottom: -30px;
+    width: 150vh !important;
+    right: -16% !important;
+    position: fixed;   
+    height: 90vh; 
+    overflow-y: scroll;
+}
 
+.close
+{
+    position: relative;
+    right:2%;
+    top:2%;
+    color: rgb(153, 153, 153);   
+}
+
+
+.recipe-card-image
+{
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center top; 
+    height: 80vh;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+@media screen and (max-width: 1024px) 
+{
+
+    .recipe-card
+    {
+        width: 100% !important;
+        right: 0% !important;
+        position: relative;  
+        height: 97vh; 
+        overflow-y: scroll;
+    }
+
+    .recipe-card-image
+    {
+        background-size: cover;
+        background-attachment: unset;
+        height: 80vh;
+    }
+}

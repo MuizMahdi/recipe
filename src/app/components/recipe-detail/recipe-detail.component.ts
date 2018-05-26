@@ -42,6 +42,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeUpvoted: boolean;
 
   imageSource: string = "../../../assets/ArrowUp_Gray.jpg";
+  makerPhoto: string = "";
 
   commentFormInput: string;
   latestComments: string[];
@@ -51,6 +52,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   canUpvote: boolean = true;
   formValid: boolean = true;
+
 
   theRecipe: Recipe[];
   public commentUnsubscribe: Subject<any> = new Subject();
@@ -67,11 +69,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     public recipesDataService: RecipesDataService, 
     private authService: AuthService, 
     private ngFireDB: AngularFireDatabase)
-  { 
-    this.authService.getAuth().subscribe(authState => {
-      console.log("[RecipeDetailComponent]: Current Authenticated User: " + authState.displayName);
-    });
-    
+  {  
     this.latestComments = [];
   }
 
@@ -126,12 +124,27 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.lotsOfComments = true;
     }
 
+
+    this.getRecipeMakerPhoto();
+
     this.checkUserUpvoteState();
     this.checkUserProfilePhoto();
   }
 
 /*******************************************************************************************/
 
+/*******************************************************************************************/
+
+  getRecipeMakerPhoto()
+  {
+    this.recipesDataService.getDbUserByName(this.recipeMaker).subscribe(users => {
+      return users.map(user => {
+        this.makerPhoto = user.photoUrl;
+      })
+    })
+  }
+
+/*******************************************************************************************/
 
 /*******************************************************************************************/
 
