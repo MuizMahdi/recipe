@@ -53,7 +53,7 @@
     </div>
     
     <div *ngIf="!canUpvote">
-      <button class="upvote-buttons">
+      <button (click)="onUnUpvote()" class="upvote-buttons">
         <span class="material-icons unUpvote-Icon">thumb_up_alt</span>
         <span class="unUpvote-Text"> Upvote {{recipeUpvotes}} </span>
       </button>

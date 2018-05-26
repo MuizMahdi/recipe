@@ -241,6 +241,20 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     }
   }
 
+  onUnUpvote()
+  {
+    if(!this.canUpvote)
+    {
+      this.recipeUpvotes = this.recipeUpvotes - 1; 
+      this.canUpvote = true; 
+      this.unUpvoteRecipe(this.aSelectedRecipe);
+    }
+    else
+    {
+      console.log("wtf..");
+    }
+  }
+
 /*******************************************************************************************/
 
 
@@ -277,8 +291,56 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
     })
 
+  } 
+  
+
+
+  unUpvoteRecipe(recipe: any)
+  {
+
+    if(typeof this.commentSubscription != 'undefined')
+    {
+      this.commentSubscription.unsubscribe();
+    }
+    else if(typeof this.upvoteSubscription != 'undefined')
+    {
+      this.upvoteSubscription.unsubscribe();
+    }
+
+    let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
+
+    this.authService.getAuth().subscribe(authState => {
+
+      this.upvoteSubscription = recipeList.snapshotChanges().map(changes => {
+        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      }).subscribe(recipes => {
+
+        this.mockUpvoters = this.deleteUpvoter(recipes[0].upvoters.slice(), authState.displayName).slice();
+
+        recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes-1), upvoters: this.mockUpvoters});
+        
+      });
+
+    })
+ 
+  }
+  
+  
+  deleteUpvoter(array:string[], upvoter:string)
+  {
+    let index = array.indexOf(upvoter);
+
+    if(index == array.length-1)
+    {
+      return array.splice(0, index);
+    }
+
+    let temp1:string[] = array.slice().splice(0, index);
+    let temp2:string[] = array.slice().splice(index+1, array.length-1);
+
+    return temp1.concat(temp2);
     
-  }  
+  }
 
 /*******************************************************************************************/
 
