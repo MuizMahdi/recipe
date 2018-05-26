@@ -59,6 +59,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   public upvoteUnsubscribe: Subject<any> = new Subject();
   public authUnsubscribe: Subject<any> = new Subject();
 
+  upvoteSubscription: ISubscription;
+  unUpvoteSubscription: ISubscription;
+
   commentingProfileImage: string;
 /*******************************************************************************************/
 
@@ -150,6 +153,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   ngOnDestroy()
   {
+    this.upvoteSubscription.unsubscribe();
+    this.unUpvoteSubscription.unsubscribe();
+
     this.commentUnsubscribe.next();
     this.commentUnsubscribe.complete();
 
@@ -259,7 +265,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 
 /*******************************************************************************************/
-  upvoteSubscription: ISubscription;
   mockUpvoters: string[] = [""];
 
   upvoteRecipe(recipe: any)
@@ -272,6 +277,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     else if(typeof this.upvoteSubscription != 'undefined')
     {
       this.upvoteSubscription.unsubscribe();
+    }
+    else if(typeof this.unUpvoteSubscription != 'undefined')
+    {
+      this.unUpvoteSubscription.unsubscribe();
     }
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
@@ -306,19 +315,23 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     {
       this.upvoteSubscription.unsubscribe();
     }
+    else if(typeof this.unUpvoteSubscription != 'undefined')
+    {
+      this.unUpvoteSubscription.unsubscribe();
+    }
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
     this.authService.getAuth().subscribe(authState => {
 
-      this.upvoteSubscription = recipeList.snapshotChanges().map(changes => {
+      this.unUpvoteSubscription = recipeList.snapshotChanges().map(changes => {
         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       }).subscribe(recipes => {
 
         this.mockUpvoters = this.deleteUpvoter(recipes[0].upvoters.slice(), authState.displayName).slice();
 
         recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes-1), upvoters: this.mockUpvoters});
-        
+
       });
 
     })
@@ -360,6 +373,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     if(typeof this.commentSubscription != 'undefined')
     {
       this.commentSubscription.unsubscribe();
+    }
+    else if(typeof this.unUpvoteSubscription != 'undefined')
+    {
+      this.unUpvoteSubscription.unsubscribe();
     }
     
     if(valid)

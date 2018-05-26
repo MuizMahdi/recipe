@@ -41,10 +41,6 @@
 
     <br>
 
-    <div *ngIf="canUpvote" class="recipe-upvote">
-      <!--<span class="upvote-button" (click)="onUpvote()" [class.upvotedButton]="!canUpvote" [class.unUpvotedButton]="canUpvote"></span>--> 
-    </div>
-
     <div *ngIf="canUpvote">
       <button (click)="onUpvote()" class="upvote-buttons">
         <span class="material-icons Upvote-Icon">thumb_up_alt</span>
@@ -58,8 +54,6 @@
         <span class="unUpvote-Text"> Upvote {{recipeUpvotes}} </span>
       </button>
     </div>
-
-
 
   </div>
 
@@ -88,8 +82,7 @@
           </div>
         </li>
       </ul>
-    
-      
+        
       <div class="add-comment">
         <form #f="ngForm" (ngSubmit)="addComment(f)" class="comment-form" novalidate>
           
