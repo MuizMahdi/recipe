@@ -62,13 +62,11 @@ export class RecipesComponent implements OnInit
   ngOnInit() 
   { 
     //this.recipes = this.dataService.getRecipes();
-    window.scroll({top: 0, left: 0, behavior: 'smooth' });
-
 
     this.recipeDataService.getRecipesChanges().takeUntil(this.ngUnsubscribe).subscribe( val => {
       this.recipesDB = val;
     });
-  }
+  } 
 
 //-----------------------------------------------------------------------------------------------------------// 
 

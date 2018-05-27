@@ -116,15 +116,6 @@
     font-size: 35px;
 }
 
-
-/*INGREDIENTS*/
-/*.ingredients-list
-{
-    margin-top: 130px;
-    margin-bottom: 10px;
-    padding: 40px;
-}*/
-
 .list
 {
     margin-top: 130px;
@@ -160,11 +151,18 @@
 
     padding: 13px 18px;
     border-radius: 30px;
+
+    margin-bottom: 20px;
 }
 
 .upvote-buttons:hover
 {
     background-color: rgba(218, 218, 218, 0.3);
+}
+
+.upvote-buttons:focus
+{
+    outline: none;
 }
 
 .Upvote-Icon
@@ -215,7 +213,7 @@
     margin-bottom: 10px;
 }
 
-.comment-form input
+.comment-input
 {
     height: 50px;
     width: 90%;
@@ -245,10 +243,10 @@
     margin-right: 10px;
 }
 
-.comment-form button
+.comment-button
 {
-    margin-top: -40px;
-    margin-left: 0px;
+    margin-top: 0px;
+    width: 25vh;
 }
 
 .show-more
