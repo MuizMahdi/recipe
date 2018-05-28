@@ -1,3 +1,4 @@
+import { Comment } from './../../models/Comment';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from './../../Services/auth.service';
 import { Recipe } from './../../models/Recipe';
@@ -37,7 +38,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeImageSource: string;
   recipeDescription: string;
   recipeIngredients: string[];
-  recipeComments: string[];
+  recipeComments: Comment[];
   recipeUpvotes: number;
   recipeUpvoted: boolean;
 
@@ -45,10 +46,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   makerPhoto: string = "";
 
   commentFormInput: string;
-  latestComments: string[];
+  latestComments: Comment[];
   lotsOfComments: boolean = false;
   numberOfComments: number;
-  recipeComments_Slice: string[];
+  recipeComments_Slice: Comment[];
 
   canUpvote: boolean = true;
   formValid: boolean = true;
@@ -107,16 +108,13 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.numberOfComments = this.recipeComments.length;
     this.recipeComments = this.changeDetect.comments; // DUPLICATE !
     this.lotsOfComments = false;
-
-    console.log("Recipe Comments: " + this.recipeComments);
-    console.log("Recipe Comments Change: " + this.changeDetect.comments);
-
-    if(this.recipeComments[0] === "")
+    
+    if(this.recipeComments[0].comment === "")
     {
       this.numberOfComments = (this.recipeComments.length - 1);
       this.recipeComments = [];
     }
-
+   
     if(this.recipeComments.length > 2)
     {
       for(let i=0; i<3; i++)
@@ -126,7 +124,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
       this.lotsOfComments = true;
     }
-
 
     this.getRecipeMakerPhoto();
 
@@ -153,14 +150,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   ngOnDestroy()
   {
-    this.upvoteSubscription.unsubscribe();
-    this.unUpvoteSubscription.unsubscribe();
-
-    this.commentUnsubscribe.next();
-    this.commentUnsubscribe.complete();
-
-    this.upvoteUnsubscribe.next();
-    this.upvoteUnsubscribe.complete();
+    this.unSubscribeAll();
 
     this.authUnsubscribe.next();
     this.authUnsubscribe.complete();
@@ -193,10 +183,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 /*******************************************************************************************/
   checkUserUpvoteState()
   {
-    this.commentUnsubscribe.next();
-    this.commentUnsubscribe.complete();
-    this.upvoteUnsubscribe.next();
-    this.upvoteUnsubscribe.complete();
+    this.unSubscribeAll();
 
     this.authService.getAuth().takeUntil(this.authUnsubscribe).subscribe(authState => {
 
@@ -270,18 +257,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   upvoteRecipe(recipe: any)
   {
 
-    if(typeof this.commentSubscription != 'undefined')
-    {
-      this.commentSubscription.unsubscribe();
-    }
-    else if(typeof this.upvoteSubscription != 'undefined')
-    {
-      this.upvoteSubscription.unsubscribe();
-    }
-    else if(typeof this.unUpvoteSubscription != 'undefined')
-    {
-      this.unUpvoteSubscription.unsubscribe();
-    }
+    this.unSubscribeAll();
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
@@ -307,18 +283,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   unUpvoteRecipe(recipe: any)
   {
 
-    if(typeof this.commentSubscription != 'undefined')
-    {
-      this.commentSubscription.unsubscribe();
-    }
-    else if(typeof this.upvoteSubscription != 'undefined')
-    {
-      this.upvoteSubscription.unsubscribe();
-    }
-    else if(typeof this.unUpvoteSubscription != 'undefined')
-    {
-      this.unUpvoteSubscription.unsubscribe();
-    }
+    this.unSubscribeAll();
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
@@ -365,67 +330,96 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   addComment({value, valid})
   {
 
-    if(typeof this.upvoteSubscription != 'undefined')
-    {
-      this.upvoteSubscription.unsubscribe();
-    }
-
-    if(typeof this.commentSubscription != 'undefined')
-    {
-      this.commentSubscription.unsubscribe();
-    }
-    else if(typeof this.unUpvoteSubscription != 'undefined')
-    {
-      this.unUpvoteSubscription.unsubscribe();
-    }
+    this.unSubscribeAll();
     
     if(valid)
     {
       this.formValid = true;
       this.numberOfComments++;
 
-      this.recipeComments.unshift(this.commentFormInput);
-    
-      let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
+      this.authService.getAuth().subscribe(authState => {
+        this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
+          return users.map(user => {
 
-      this.commentSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
-        
-        recipeList.update(recipes[0].key, {comments: this.recipeComments});
-        
+            let mockComment:Comment = {
+              comment: this.commentFormInput,
+              commenter: authState.displayName,
+              commenterPhotoURL: user.photoUrl
+            }
+
+            console.log(mockComment);
+
+            this.recipeComments.unshift(mockComment);
+
+            this.updateRecipeComments();
+
+            this.commentFormInput = null; // clear the form
+
+          });
+        });
       });
 
-      this.commentFormInput = null; // clear the form
-     
-      // add the added comment to the latest 3 comments
-      if(this.recipeComments.length > 2)
-      {
-        this.recipeComments_Slice = this.recipeComments.slice();
+      //this.recipeComments.unshift(this.commentFormInput);
+      this.checkLatestComments();
 
-        for(let i=0; i<3; i++)
-        {
-          this.latestComments[i] = this.recipeComments_Slice[i];
-        }
-
-        this.lotsOfComments = true;
-      }
-      else 
-      {
-        this.lotsOfComments = false;
-      }
-      
     }
     else
     {
       this.formValid = false;
     }
+    
        
 
   }
 
+  updateRecipeComments()
+  {
+    let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
+
+    this.commentSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
+      recipeList.update(recipes[0].key, {comments: this.recipeComments});
+    });
+  }
+
+  checkLatestComments()
+  {
+    // add the added comment to the latest 3 comments
+    if(this.recipeComments.length > 2)
+    {
+      this.recipeComments_Slice = this.recipeComments.slice();
+
+      for(let i=0; i<3; i++)
+      {
+        this.latestComments[i] = this.recipeComments_Slice[i];
+      }
+
+      this.lotsOfComments = true;
+    }
+    else 
+    {
+      this.lotsOfComments = false;
+    }
+  }
 
   onShowRecipeDetails()
   {
     document.getElementById("recipeName").scrollIntoView({ block: 'end',  behavior: 'smooth' });
+  }
+
+  unSubscribeAll()
+  {
+    if(typeof this.commentSubscription != 'undefined')
+    {
+      this.commentSubscription.unsubscribe();
+    }
+    else if(typeof this.upvoteSubscription != 'undefined')
+    {
+      this.upvoteSubscription.unsubscribe();
+    }
+    else if(typeof this.unUpvoteSubscription != 'undefined')
+    {
+      this.unUpvoteSubscription.unsubscribe();
+    }
   }
 
 

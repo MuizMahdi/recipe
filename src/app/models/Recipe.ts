@@ -1,3 +1,5 @@
+import { Comment } from './Comment';
+
 export interface Recipe
 {
     RID: string;
@@ -8,6 +10,6 @@ export interface Recipe
     upvotes: number;
     upvoted: boolean;
     recipeIngredients: any[];
-    comments: string[];
+    comments: Comment[];
     upvoters: string[];
 }

@@ -1,3 +1,4 @@
+import { Comment } from './../../models/Comment';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { RecipesComponent } from './../recipes/recipes.component';
 import { ARecipe } from './../../models/ARecipe';
@@ -45,7 +46,7 @@ export class NavbarComponent implements OnInit
   recipeIngredient: string;
   recipeIngredientAmount: string;
   recipeIngredientsArr: any[] = [];
-  recipeComments: string[] = [""];
+  recipeComments: Comment[] = [{comment:"", commenter:"", commenterPhotoURL:""}];
   recipeUpvoters: string[] = [""];
   submitClicked: boolean = false;
   imageUrlError: boolean = false;

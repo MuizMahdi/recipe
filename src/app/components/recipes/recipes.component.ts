@@ -65,6 +65,13 @@ export class RecipesComponent implements OnInit
 
     this.recipeDataService.getRecipesChanges().takeUntil(this.ngUnsubscribe).subscribe( val => {
       this.recipesDB = val;
+
+      /*
+      for(let i=0; i<val.length; i++)
+      {
+        this.recipesDB.unshift(val[i]);
+      }
+      */
     });
   } 
 
