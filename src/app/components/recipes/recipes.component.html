@@ -16,6 +16,11 @@
       <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>  
     </div>
 
+    <div *ngIf="isAuthenticatedUserRecipe">
+      <button id="recipe-edit" class="btn btn-success">Edit</button>
+      <button id="recipe-delete" class="btn btn-success">Delete</button>
+    </div>
+
   </div>
 </ng-template>
 

@@ -1,9 +1,11 @@
+import { ISubscription } from 'rxjs/Subscription';
 import { AuthService } from './../../Services/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { ARecipeComponent } from './../a-recipe/a-recipe.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 import { ARecipe } from '../../models/ARecipe';
 import { Recipe } from './../../models/Recipe';
@@ -32,12 +34,15 @@ export class RecipesComponent implements OnInit
   p: number = 1;
 
   selectedRecipeImg: string = "";
+  isAuthenticatedUserRecipe: boolean = false;
 
   recipesDB: Recipe[];
 
   private modalRef: NgbModalRef;
 
   private ngUnsubscribe: Subject<any> = new Subject();
+  private routerSubscription: ISubscription;
+
 
 //-----------------------------------------------------------------------------------------------------------// 
 
@@ -47,22 +52,24 @@ export class RecipesComponent implements OnInit
     private authService: AuthService, 
     public db: AngularFireDatabase, 
     public recipeDataService: RecipesDataService,
-    private modalService: NgbModal) 
-  { 
-    this.authService.getAuth().subscribe(authState => {
-      console.log("[RecipesComponent]: Current Authenticated User: " + authState.displayName);
-    });
-  }
+    private modalService: NgbModal,
+    private router: Router) 
+  {   }
 
 //-----------------------------------------------------------------------------------------------------------// 
+
+  onRouteChange()
+  {
+    this.routerSubscription = this.router.events.subscribe(route => {
+      this.modalRef.dismiss();   
+    });
+  }
 
 
 //-----------------------------------------------------------------------------------------------------------// 
 
   ngOnInit() 
   { 
-    //this.recipes = this.dataService.getRecipes();
-
     this.recipeDataService.getRecipesChanges().takeUntil(this.ngUnsubscribe).subscribe( val => {
       this.recipesDB = val;
 
@@ -73,18 +80,14 @@ export class RecipesComponent implements OnInit
       }
       */
     });
+
+    this.onRouteChange();
   } 
 
 //-----------------------------------------------------------------------------------------------------------// 
 
   
 //-----------------------------------------------------------------------------------------------------------//
-
-  /*addRecipe(recipe: ARecipe)
-  {
-    this.dataService.addRecipe(recipe);
-  }*/
-
   
   open(content) 
   {
@@ -96,27 +99,44 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
 
-  /*setSelected(selectedRecipe: ARecipe)
-  {
-    this.dataService.selectedRecipe(selectedRecipe);
-    this.theSelectedRecipe = selectedRecipe;
-  }*/
-
   setSelected2(selectedRecipe: Recipe)
   {
     this.theSelectedRecipe = selectedRecipe;
     this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
-    console.log(this.selectedRecipeImg);
+    this.checkIfUserRecipe();
   }
 
 //-----------------------------------------------------------------------------------------------------------// 
 
 
+//-----------------------------------------------------------------------------------------------------------//
 
   ngOnDestroy() 
   {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.routerSubscription.unsubscribe();
   }
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+
+//-----------------------------------------------------------------------------------------------------------//
+
+  checkIfUserRecipe() 
+  {
+    this.authService.getAuth().subscribe(authState => {
+      if(authState.displayName === this.theSelectedRecipe.makerName) 
+      {
+        this.isAuthenticatedUserRecipe = true;
+      }
+      else 
+      {
+        this.isAuthenticatedUserRecipe = false;
+      }
+    });
+  }
+
+//-----------------------------------------------------------------------------------------------------------// 
 
 }
