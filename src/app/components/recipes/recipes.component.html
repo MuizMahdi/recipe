@@ -13,12 +13,12 @@
     <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
 
     <div>
-      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail>  
+      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail> 
     </div>
 
-    <div *ngIf="isAuthenticatedUserRecipe">
-      <button id="recipe-edit" class="btn btn-success">Edit</button>
-      <button id="recipe-delete" class="btn btn-success">Delete</button>
+    <div class="maker-buttons" *ngIf="isAuthenticatedUserRecipe">
+      <button (click)="onRecipeEdit()" id="recipe-edit" class="btn btn-info">Edit</button>
+      <button (click)="onRecipeDelete()" id="recipe-delete" class="btn btn-info">Delete</button>
     </div>
 
   </div>

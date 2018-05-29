@@ -142,6 +142,15 @@ export class RecipesDataService implements OnDestroy
     this.ngFireDB.list<any>('/recipes').push(recipe);
   }
 
+  deleteRecipe(recipe: any)
+  {
+    let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
+
+    this.getDbListObject(recipeList).subscribe(recipes => {
+      recipeList.remove(recipes[0].key);
+    });
+  }
+
 /*******************************************************************************************/
 
 
