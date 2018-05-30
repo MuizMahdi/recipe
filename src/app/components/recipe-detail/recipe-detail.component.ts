@@ -1,19 +1,17 @@
-import { Comment } from './../../models/Comment';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { RecipesDataService } from './../../Services/recipesData.service';
+import { RecipesComponent } from './../recipes/recipes.component';
+import { an_Ingredient } from './../../models/an_Ingredient';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AuthService } from './../../Services/auth.service';
-import { Recipe } from './../../models/Recipe';
-import { RecipesDataService } from './../../Services/recipesData.service';
-import { an_Ingredient } from './../../models/an_Ingredient';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { ARecipe } from '../../models/ARecipe';
-import { Observable } from 'rxjs/Observable';
-import { OnChanges } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Router } from '@angular/router';
-import 'rxjs/add/operator/takeUntil';
-
+import { SimpleChanges, OnChanges } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
+import { Comment } from './../../models/Comment';
+import { Recipe } from './../../models/Recipe';
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -27,11 +25,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
 /*******************************************************************************************/
   @Input() aSelectedRecipe: Recipe;
-  changeDetect: Recipe;
 
-  private authSubscription: ISubscription;
-  private recipeSubscription: ISubscription;
-  private unsubscribe = new Subject<void>();
+  changeDetect: Recipe;
 
   recipeName: string;
   recipeMaker: string;
@@ -42,7 +37,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   recipeUpvotes: number;
   recipeUpvoted: boolean;
 
-  imageSource: string = "../../../assets/ArrowUp_Gray.jpg";
   makerPhoto: string = "";
 
   commentFormInput: string;
@@ -50,20 +44,18 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   lotsOfComments: boolean = false;
   numberOfComments: number;
   recipeComments_Slice: Comment[];
+  commentingProfileImage: string = "";
 
   canUpvote: boolean = true;
   formValid: boolean = true;
 
-
   theRecipe: Recipe[];
-  public commentUnsubscribe: Subject<any> = new Subject();
-  public upvoteUnsubscribe: Subject<any> = new Subject();
-  public authUnsubscribe: Subject<any> = new Subject();
 
+  authUnsubscribe: Subject<any> = new Subject();
   upvoteSubscription: ISubscription;
   unUpvoteSubscription: ISubscription;
 
-  commentingProfileImage: string;
+  mockRecipeComments: string[] = [];
 /*******************************************************************************************/
 
 
@@ -78,11 +70,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   }
 
   ngOnInit()
-  {  }
+  { }
 
 /*******************************************************************************************/
 
-  mockRecipeComments: string[] = [];
+ 
 /*******************************************************************************************/
 
   ngOnChanges(changes: SimpleChanges) 
@@ -91,7 +83,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     for (let propName in changes) 
     {
       let chng = changes[propName];
-      this.changeDetect = chng.currentValue; // RETURNS THE OBJECT IT SELF
+      this.changeDetect = chng.currentValue;
     }
     
     this.recipeName = this.changeDetect.name;
@@ -106,7 +98,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeComments_Slice = this.recipeComments.slice();
 
     this.numberOfComments = this.recipeComments.length;
-    this.recipeComments = this.changeDetect.comments; // DUPLICATE !
+    //this.recipeComments = this.changeDetect.comments;
     this.lotsOfComments = false;
     
     if(this.recipeComments[0].comment === "")
@@ -126,9 +118,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     }
 
     this.getRecipeMakerPhoto();
-
     this.checkUserUpvoteState();
-    this.checkUserProfilePhoto();
   }
 
 /*******************************************************************************************/
@@ -151,30 +141,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   ngOnDestroy()
   {
     this.unSubscribeAll();
-
     this.authUnsubscribe.next();
     this.authUnsubscribe.complete();
-  }
-
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
-
-  checkUserProfilePhoto()
-  {
-    this.authService.getAuth().subscribe(authState => {
-
-      if(authState.photoURL != null && authState.photoURL != "")
-      {
-        this.commentingProfileImage = authState.photoURL;
-      }
-      else
-      {
-        this.commentingProfileImage = "https://i.imgur.com/g2Ju9YJ.png";
-      }
-      
-    });
   }
 
 /*******************************************************************************************/
@@ -186,6 +154,12 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.unSubscribeAll();
 
     this.authService.getAuth().takeUntil(this.authUnsubscribe).subscribe(authState => {
+
+      this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
+        return users.map(user => {
+          this.commentingProfileImage = user.photoUrl;
+        });
+      });
 
       this.recipesDataService.getDbRecipeByName(this.aSelectedRecipe.name).takeUntil(this.authUnsubscribe).subscribe(recipes => {
         return recipes.map(recipe => {
@@ -204,7 +178,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       })
     });
   }
-
 /*******************************************************************************************/
 
 
@@ -214,7 +187,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     this.lotsOfComments = false;
   }
-  
+
 /*******************************************************************************************/
 
 
@@ -279,7 +252,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   } 
   
 
-
   unUpvoteRecipe(recipe: any)
   {
 
@@ -317,7 +289,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     let temp2:string[] = array.slice().splice(index+1, array.length-1);
 
     return temp1.concat(temp2);
-    
   }
 
 /*******************************************************************************************/
@@ -359,7 +330,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
         });
       });
 
-      //this.recipeComments.unshift(this.commentFormInput);
       this.checkLatestComments();
 
     }
@@ -367,8 +337,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     {
       this.formValid = false;
     }
-    
-       
 
   }
 
@@ -421,6 +389,5 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.unUpvoteSubscription.unsubscribe();
     }
   }
-
 
 }

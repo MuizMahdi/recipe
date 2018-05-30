@@ -1,22 +1,18 @@
-import { ISubscription } from 'rxjs/Subscription';
-import { AuthService } from './../../Services/auth.service';
-import { Subject } from 'rxjs/Subject';
-import { ARecipeComponent } from './../a-recipe/a-recipe.component';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-
-import { ARecipe } from '../../models/ARecipe';
-import { Recipe } from './../../models/Recipe';
-
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { RecipesDataService } from './../../Services/recipesData.service';
+import { ARecipeComponent } from './../a-recipe/a-recipe.component';
+import { ModalService } from './../../Services/modal.service';
+import { AuthService } from './../../Services/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { ISubscription } from 'rxjs/Subscription';
+import { Recipe } from './../../models/Recipe';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 
-import { Client } from './../../models/clients';
-import { RecipesDataService } from './../../Services/recipesData.service';
 
 @Component({
   selector: 'app-recipes',
@@ -29,48 +25,35 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
   
-  recipes: ARecipe[];
-  theSelectedRecipe: Recipe;
-  p: number = 1;
-
-  selectedRecipeImg: string = "";
+  private routerSubscription: ISubscription; 
   isAuthenticatedUserRecipe: boolean = false;
-
+  selectedRecipeImg: string = "";
+  public modalRef: NgbModalRef;
+  theSelectedRecipe: Recipe;
   recipesDB: Recipe[];
-
-  private modalRef: NgbModalRef;
-
-  private ngUnsubscribe: Subject<any> = new Subject();
-  private routerSubscription: ISubscription;
-
+  p: number = 1;
 
 //-----------------------------------------------------------------------------------------------------------// 
 
 //-----------------------------------------------------------------------------------------------------------// 
   
   constructor(
+    public recipeDataService: RecipesDataService,
+    private recipeModalService: ModalService,
     private authService: AuthService, 
     public db: AngularFireDatabase, 
-    public recipeDataService: RecipesDataService,
     private modalService: NgbModal,
     private router: Router) 
-  {   }
+  {}
 
 //-----------------------------------------------------------------------------------------------------------// 
-
-  onRouteChange()
-  {
-    this.routerSubscription = this.router.events.subscribe(route => {
-      this.modalRef.dismiss();   
-    });
-  }
 
 
 //-----------------------------------------------------------------------------------------------------------// 
 
   ngOnInit() 
   { 
-    this.recipeDataService.getRecipesChanges().takeUntil(this.ngUnsubscribe).subscribe( val => {
+    this.recipeDataService.getRecipesChanges().subscribe( val => {
       this.recipesDB = val;
 
       /*
@@ -83,6 +66,18 @@ export class RecipesComponent implements OnInit
 
     this.onRouteChange();
   } 
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+
+//-----------------------------------------------------------------------------------------------------------// 
+
+  onRouteChange()
+  {
+    this.routerSubscription = this.router.events.subscribe(route => {
+      this.modalRef.dismiss();   
+    });
+  }
 
 //-----------------------------------------------------------------------------------------------------------// 
 
@@ -99,23 +94,11 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
 
-  setSelected2(selectedRecipe: Recipe)
+  setSelected(selectedRecipe: Recipe)
   {
     this.theSelectedRecipe = selectedRecipe;
     this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
     this.checkIfUserRecipe();
-  }
-
-//-----------------------------------------------------------------------------------------------------------// 
-
-
-//-----------------------------------------------------------------------------------------------------------//
-
-  ngOnDestroy() 
-  {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-    this.routerSubscription.unsubscribe();
   }
 
 //-----------------------------------------------------------------------------------------------------------// 
@@ -159,5 +142,15 @@ export class RecipesComponent implements OnInit
   }
 
 //-----------------------------------------------------------------------------------------------------------//
+
+
+//-----------------------------------------------------------------------------------------------------------//
+
+  ngOnDestroy() 
+  {
+    this.routerSubscription.unsubscribe();
+  }
+
+//-----------------------------------------------------------------------------------------------------------// 
 
 }

@@ -1,0 +1,14 @@
+
+  <div class="recipe-card">
+
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    
+    <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
+
+    <div>
+      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail> 
+    </div>
+
+  </div>
