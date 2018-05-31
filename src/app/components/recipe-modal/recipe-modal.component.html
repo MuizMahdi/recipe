@@ -1,14 +1,77 @@
+<div class="modal-header">
+  <h4 class="modal-title">Edit Recipe</h4>
+</div>
 
-  <div class="recipe-card">
+<div class="modal-body">
+  <form [formGroup]="recipeFormGroup" (submit)="onSubmit()" class="form-group" novalidate>
+    <div *ngIf="!recipeFormGroup.valid && submitClicked" class="alert alert-danger">Some of the information entered are wrong or missing, please enter them in the correct form</div>
+  <!-- CONTENTS START-->
 
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    
-    <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
+  <!--Name-->
+    <label for="text" class="form-labels">Recipe Name:</label>
+    <input formControlName="recipeNameCtrl" type="text" class="form-control" minlength="2" maxlength="50" placeholder="New recipe name" required>
 
-    <div>
-      <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe"></app-recipe-detail> 
+    <div class="Errors">
+      <div *ngIf="recipeFormGroup.controls['recipeNameCtrl'].errors?.required  && recipeFormGroup.controls['recipeNameCtrl'].touched" class="alert alert-danger"> A Recipe name is required </div>
+      <div *ngIf="recipeFormGroup.controls['recipeNameCtrl'].errors?.minlength && recipeFormGroup.controls['recipeNameCtrl'].touched" class="alert alert-danger"> Recipe name should be at least 2 characters </div>
+    </div>
+  <!--Name-->
+
+
+  <!--Description-->
+    <label for="text" class="form-labels">Recipe Description:</label>
+    <input formControlName="recipeDescriptionCtrl" type="text" class="form-control"  minlength="3">
+
+    <div class="Errors">
+      <div *ngIf="recipeFormGroup.controls['recipeDescriptionCtrl'].errors?.minlength && recipeFormGroup.controls['recipeDescriptionCtrl'].touched" class="alert alert-danger"> Recipe description should be at least 3 characters </div>
+    </div>
+  <!--Description-->
+
+
+  <!--Image URL-->
+    <label for="text" class="form-labels">Recipe Image URL: </label>
+    <input formControlName="recipeImageUrlCtrl" [(ngModel)]="formImageSource" name="formImageSource" type="text" class="form-control" required>
+
+    <div class="Errors">
+      <div *ngIf="recipeFormGroup.controls['recipeImageUrlCtrl'].errors?.required  && recipeFormGroup.controls['recipeImageUrlCtrl'].touched" class="alert alert-danger"> A Recipe image URL is required </div>
+      <div *ngIf="imageUrlError && recipeFormGroup.controls['recipeImageUrlCtrl'].touched" class="alert alert-danger"> Invalid Image URL </div>
     </div>
 
-  </div>
+    <img *ngIf="formImageSource" [src]="formImageSource" (error)="onImageUrlError()" (load)="onNoImageUrlError()" style="max-height:400px; max-width:200px;" class="recipe-image">
+  <!--Image URL-->
+
+
+  <!--Ingredients-->
+    <div class="recipe-ingredients">
+
+      <div class="ingredient">
+          <label for="text">Ingredient</label>
+          <input formControlName="anIngredientCtrl" type="text" class="form-control">
+      </div>
+
+      <div class="amount">
+          <label for="text">Amount</label>
+          <input formControlName="anIngredientAmountCtrl" type="text" class="form-control">
+      </div>
+
+    </div>
+
+    <div *ngIf="recipeIngredientsArr.length > 0" class="ingredients-list">
+      <ul class="list-group">
+        <li *ngFor="let ingredient of recipeIngredientsArr" class="list-group-item">
+          {{ingredient.name}}
+          <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
+        </li>
+      </ul>
+    </div>
+  <!--Ingredients-->
+
+  <!-- CONTENTS END-->
+    <div class="modal-footer">
+      <input type="button" (click)="addIngredient()" value="Add Ingredient" id="add-button" class="btn btn-primary">
+      <!--
+      <input type="submit" value="Submit Recipe" class="btn btn-primary">
+      -->
+    </div>  
+  </form>
+</div>

@@ -159,28 +159,16 @@ export class NavbarComponent implements OnInit
   }*/
 
 
-
   onLogout()
   {
     this.authService.logout();
   }
   
-  /* RECIPE ADDING MODAL FUNCTIONS */
+
   open(content) 
   {
     this.modalRef = this.modalService.open(content);
     this.resetFormFields();
-
-    // reset & clear everything when modal opens
-    /*this.submitClicked = false;
-    this.recipeAddFormGroup.get('recipeNameCtrl').reset(null);
-    this.recipeAddFormGroup.get('recipeDescriptionCtrl').reset(null);
-    this.recipeAddFormGroup.get('recipeImageUrlCtrl').reset(null);
-    this.recipeAddFormGroup.get('anIngredientCtrl').reset(null);
-    this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
-
-    this.recipeIngredientsArr = [];
-    this.formImageSource = null;*/
   }
 
 

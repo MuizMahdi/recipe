@@ -76,8 +76,8 @@ hr
 .maker-buttons button:hover
 {
     color: rgb(255, 255, 255);
-    background-color: rgb(180, 206, 255);
-    border-color: rgb(180, 206, 255);
+    background-color: rgb(147, 185, 255);
+    border-color: rgb(147, 185, 255);
 }
 
 @media screen and (max-width: 1024px) 

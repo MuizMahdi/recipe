@@ -1,53 +1,56 @@
-.recipe-card
+body.modal-open /* Prevent the right padding when open */
 {
-    border-top-right-radius: 1%;
-    border-top-left-radius: 1%;
-    margin-bottom: -30px;
-    width: 150vh !important;
-    right: -16% !important;
-    position: fixed;   
-    height: 90vh; 
-    overflow-y: scroll;
-}
-
-.close
-{
-    position: relative;
-    right:2%;
-    top:2%;
-    color: rgb(153, 153, 153);   
+    width:100% !important;
+    padding-right:0 !important;
+    overflow-y:scroll !important;
+    /*position:fixed !important;
+    overflow: visible !important;*/
+    overflow: auto !important;
+    
 }
 
 
-.recipe-card-image
+.modal /* Center that shit */
 {
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center top; 
-    height: 80vh;
+  padding-top: 90px;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+
+.ingredient
+{
+    float: left;
 }
 
-@media screen and (max-width: 1024px) 
+
+.amount
 {
+    float: right;
+}
 
-    .recipe-card
-    {
-        width: 100% !important;
-        right: 0% !important;
-        position: relative;  
-        height: 97vh; 
-        overflow-y: scroll;
-    }
 
-    .recipe-card-image
-    {
-        background-size: cover;
-        background-attachment: unset;
-        height: 80vh;
-    }
+.recipe-image
+{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
 
+
+.form-labels
+{
+    margin-top: 15px;
+}
+
+
+.ingredients-list
+{
+    overflow: auto;
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+
+.modal-footer
+{
+    float: right;
 }

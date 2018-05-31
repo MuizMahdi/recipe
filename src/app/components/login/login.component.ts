@@ -1,11 +1,11 @@
-import { RecipesDataService } from './../../Services/recipesData.service';
-import { AuthService } from './../../Services/auth.service';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { AngularFireDatabase , AngularFireList, AngularFireObject } from 'angularfire2/database';
-import { matchOtherValidator } from './../../models/matchOtherValidator';
+import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { FlashMessagesService, FlashMessagesModule } from 'angular2-flash-messages';
+import { RecipesDataService } from './../../Services/recipesData.service';
+import { matchOtherValidator } from './../../models/matchOtherValidator';
+import { AuthService } from './../../Services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,22 +16,26 @@ import { FlashMessagesService, FlashMessagesModule } from 'angular2-flash-messag
 
 export class LoginComponent implements OnInit 
 {
-
-  loginFormGroup: FormGroup;
   registerationFormGroup: FormGroup;
+  loginFormGroup: FormGroup;
 
   swapFormBoolean: boolean = false; 
-  loginClick: boolean = false;
   registerClick: boolean = false;
-
-  loginEmail: string;
-  loginPassword: string;
+  loginClick: boolean = false;
 
   registerationUsername: string;
-  registerationEmail: string;
   registerationPassword: string;
+  registerationEmail: string;
+  loginPassword: string;
+  loginEmail: string;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, public router:Router,  public ngFireDB: AngularFireDatabase, public recipesDataService: RecipesDataService)
+  constructor(
+    private recipesDataService: RecipesDataService,
+    private ngFireDB: AngularFireDatabase, 
+    private formBuilder: FormBuilder, 
+    private authService: AuthService, 
+    private router:Router,  
+    )
   { 
     this.buildForms();
   }
@@ -63,15 +67,15 @@ export class LoginComponent implements OnInit
     if(this.loginFormGroup.valid)
     {
       this.authService.login(this.loginEmail, this.loginPassword)
-      .then( res => { // after logging in
+      .then( res => { 
 
-        this.authService.getAuth().subscribe(authState => { // get authentication state to get current logged in user
+        this.authService.getAuth().subscribe(authState => { 
         
           // find the user object in DB that matches with the name of the current logged in user 
           this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
             return users.map(user => {
 
-              if(!user.completedProfile) // and if they still haven't completed their profile
+              if(!user.completedProfile)
               {
                 console.log("User doesn't have a complete profile.");
                 this.router.navigate(['/completeProfile']); 
@@ -82,9 +86,8 @@ export class LoginComponent implements OnInit
               
             })
           });
-
-        }) // getAuth END
-      }) // .then END
+        }) 
+      }) 
       .catch( err => {
         console.log(err.message);
       });
@@ -104,9 +107,7 @@ export class LoginComponent implements OnInit
     if(this.registerationFormGroup.valid)
     {
       this.authService.register(this.registerationUsername, this.registerationEmail, this.registerationPassword)
-      .then( res => { // after registering
-
-        // Create a mock user object using registeration form data
+      .then( res => { 
 
         let userObject = {
           uid: "", 
