@@ -1,47 +1,46 @@
-import { AuthService } from './../../Services/auth.service';
-import { Subject } from 'rxjs/Subject';
-import { Recipe } from './../../models/Recipe';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { RecipesDataService } from './../../Services/recipesData.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService } from './../../Services/auth.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Recipe } from './../../models/Recipe';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
+
 export class UserProfileComponent implements OnInit 
 {
-
-  profileUsername: string;
-  userName: string;
-  userDetails: string;
-  userProfileImageSource: string;
-  userID: string;
-  userRecipes: any[] = [];
-  selectedRecipeImg: string = "";
-  theSelectedDaRecipe: Recipe;
-  private modalRef: NgbModalRef;
-
   ngUnsubscribe: Subject<any> = new Subject();
 
+  userProfileImageSource: string;
+  selectedRecipeImg: string = "";
+  profileUsername: string;
+  userDetails: string;
+  userName: string;
+  userID: string;
+
+  isAuthenticatedUserRecipe: boolean = false;
+  isEditingRecipe: boolean = false;
+  showRecipeModal: boolean = false;
+  theSelectedRecipe: Recipe;
+  userRecipes: any[] = [];
+  
   constructor(
+    private recipeDataService: RecipesDataService, 
+    private ngFireDB: AngularFireDatabase,
     private authService: AuthService, 
     private route: ActivatedRoute, 
-    private router: Router, 
-    private recipeDataService: RecipesDataService, 
-    private ngFireDB: AngularFireDatabase, 
-    private modalService: NgbModal) 
+    private router: Router) 
   { 
     this.getRoutingParameters();
   }
 
-  open(content) 
-  {
-    this.modalRef = this.modalService.open(content, {size: 'lg'});
-  }
+  ngOnInit() 
+  { }
 
   getRoutingParameters()
   {
@@ -50,23 +49,6 @@ export class UserProfileComponent implements OnInit
       this.getUser();
     });
   }
-
-
-  getUser2()
-  {
-    this.recipeDataService.getDbUserByName(this.profileUsername).takeUntil(this.ngUnsubscribe).subscribe(users => {
-      return users.map(user => {
-
-        this.userName = user.userName;
-        this.userDetails = user.aboutUser;
-        this.userProfileImageSource = user.photoUrl;
-        this.userID = user.uid;
-
-        this.getUserRecipes(this.userID);
-      })
-    });
-  }
-
 
   getUser()
   {
@@ -77,17 +59,15 @@ export class UserProfileComponent implements OnInit
     }).subscribe(users => {
       return users.map(user => {
 
-
         this.userName = user.userName;
         this.userDetails = user.aboutUser;
         this.userProfileImageSource = user.photoUrl;
         this.userID = user.uid;
-        console.log("getDbUser: " + this.userName);
+ 
         this.getUserRecipes(this.userID);
       });
     });
   }
-
   
   getUserRecipes(uid: any)
   {
@@ -100,21 +80,26 @@ export class UserProfileComponent implements OnInit
     });
   }
 
-
-  setSelected2(selectedDaRecipe: Recipe)
+  setSelected(selectedRecipe: Recipe)
   {
-    this.theSelectedDaRecipe = selectedDaRecipe;
-    this.selectedRecipeImg = this.theSelectedDaRecipe.imagesrc;
+    this.showRecipeModal = true;
+    this.theSelectedRecipe = selectedRecipe;
+    this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
   }
 
-
-  ngOnInit() 
-  { }
+  getModalState(event: boolean)
+  {
+    if(event) {
+      this.showRecipeModal = false;
+    } 
+    else {
+      this.showRecipeModal = true;
+    }
+  }
 
   ngOnDestroy() 
   {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
 }

@@ -1,13 +1,8 @@
-import { Comment } from './../../models/Comment';
-import { RecipesDataService } from './../../Services/recipesData.service';
-import { RecipesComponent } from './../recipes/recipes.component';
-import { ARecipe } from './../../models/ARecipe';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RecipesDataService } from './../../Services/recipesData.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from './../../Services/auth.service';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -18,49 +13,28 @@ import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-boo
 
 export class NavbarComponent implements OnInit 
 {
-  
-  locationOnTop: boolean = true;
-  locationNotOnTop: boolean = false;
-  navState: string ="navbar sticky-top navbar-expand-lg navbar-dark bg-dark"; //starts being transparent (remove navbar-dark bg-dark so it doesn't start black)
-  
-  formGroup: FormGroup;
-
-  private modalRef: NgbModalRef;
-  
-  // RECIPE SEARCH VARIABLES
-  options: string[] = [];
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
-  //recipes: ARecipe[] = this.dataService.getRecipes();
+  options: string[] = [];
 
-  // AUTHENTICATION RELATED VARIABLES
+  showRecipeModal: boolean = false;
+  navInputFocused: boolean = false;
   isLoggedIn: boolean = false;
+
   loggedInUserEmail:string;
-  loggedInUserName: string;
+  loggedInUserName: string; 
+  formGroup: FormGroup;
 
-  // RECIPE ADDING MODAL VARIABLES
-  recipeAddFormGroup: FormGroup;
-  recipeName: string;
-  recipeDescription: string;
-  recipeImageUrl: string;
-  recipeIngredient: string;
-  recipeIngredientAmount: string;
-  recipeIngredientsArr: any[] = [];
-  recipeComments: Comment[] = [{comment:"", commenter:"", commenterPhotoURL:""}];
-  recipeUpvoters: string[] = [""];
-  submitClicked: boolean = false;
-  imageUrlError: boolean = false;
-  formImageSource: string = null;
-
-
-  constructor(private formBuilder: FormBuilder, private router: Router, 
-    private authService: AuthService, private modalService: NgbModal, private recipesDataService: RecipesDataService) 
+  constructor(
+    private recipesDataService: RecipesDataService
+    private formBuilder: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router) 
   { 
     this.buildForm();
     //this.getRecipesNames();
     //this.checkFormCtrlChanges();
   }
-
 
   ngOnInit()
   {
@@ -77,23 +51,28 @@ export class NavbarComponent implements OnInit
     });
   }
 
+  modal()
+  {
+    this.showRecipeModal = true;
+  }
+
+  getModalState(event: boolean)
+  {
+    if(event) {
+      this.showRecipeModal = false;
+    } 
+    else {
+      this.showRecipeModal = true;
+    }
+  }
 
   buildForm()
   {
     this.formGroup = this.formBuilder.group({
       formCtrl: ['', Validators.required]
     });
-
-    this.recipeAddFormGroup = new FormGroup({
-      recipeNameCtrl: new FormControl(null, [Validators.required]),
-      recipeDescriptionCtrl: new FormControl(null, []),
-      recipeImageUrlCtrl: new FormControl(null, [Validators.required]),
-      anIngredientCtrl: new FormControl(null, []),
-      anIngredientAmountCtrl: new FormControl(null, []),
-    });
   }
-
-
+  
   /*getRecipesNames()
   {
     for(let i=0; i<this.dataService.getRecipes().length; i++)
@@ -102,7 +81,6 @@ export class NavbarComponent implements OnInit
     }
     this.optionsSlice = this.options.slice();
   }*/
-
 
   /*onSearch()
   {
@@ -126,7 +104,6 @@ export class NavbarComponent implements OnInit
     }
 
   }*/
-
 
   /*checkFormCtrlChanges()
   {
@@ -158,133 +135,11 @@ export class NavbarComponent implements OnInit
     });
   }*/
 
-
   onLogout()
   {
     this.authService.logout();
   }
   
-
-  open(content) 
-  {
-    this.modalRef = this.modalService.open(content);
-    this.resetFormFields();
-  }
-
-
-  resetFormFields()
-  {
-    this.submitClicked = false;
-    this.recipeAddFormGroup.get('recipeNameCtrl').reset(null);
-    this.recipeAddFormGroup.get('recipeDescriptionCtrl').reset(null);
-    this.recipeAddFormGroup.get('recipeImageUrlCtrl').reset(null);
-    this.recipeAddFormGroup.get('anIngredientCtrl').reset(null);
-    this.recipeAddFormGroup.get('anIngredientAmountCtrl').reset(null);
-
-    this.recipeIngredientsArr = [];
-    this.formImageSource = null;
-  }
-
-
-  addIngredient()
-  {
-    this.recipeIngredient = this.recipeAddFormGroup.get('anIngredientCtrl').value;
-    this.recipeIngredientAmount = this.recipeAddFormGroup.get('anIngredientAmountCtrl').value;
-
-    this.recipeIngredientsArr.push({name:this.recipeIngredient, amount:this.recipeIngredientAmount});
-  }
-
-  
-  onRecipeSubmit()
-  {
-    this.submitClicked = true;
-
-    
-    this.recipeName = this.recipeAddFormGroup.get('recipeNameCtrl').value;
-    this.recipeDescription = this.recipeAddFormGroup.get('recipeDescriptionCtrl').value;
-    this.recipeImageUrl = this.recipeAddFormGroup.get('recipeImageUrlCtrl').value;
-
-    let auth = this.authService.getAuth().subscribe(authState => {
-      
-      let mockRecipe = {
-        RID: authState.uid,
-        name: this.recipeName,
-        makerName: authState.displayName,
-        description: this.recipeDescription,
-        imagesrc: this.recipeImageUrl,
-        comments: this.recipeComments,
-        recipeIngredients: this.recipeIngredientsArr,
-        upvoters: this.recipeUpvoters,
-        upvotes: 0,
-        upvoted: false
-      }
-
-      if(this.recipeAddFormGroup.valid)
-      {
-        this.recipesDataService.addRecipe(mockRecipe);
-      }
-    
-      this.resetFormFields();
-
-    });
-    
-
-    if(this.recipeAddFormGroup.valid) // if no error in form
-    {
-      this.modalRef.close(); // close the modal
-          
-    } 
-    
-  }
-
-
-  onImageUrlError() { this.imageUrlError = true; }
-  onNoImageUrlError(){this.imageUrlError = false;}
-
-
-  /*
-  middleEventsCounter: number = 0;
-  atTheTop: boolean = true;
-
-  
-  public handleScroll(event: ScrollEvent) 
-  {
-    if (event.isReachingBottom) 
-    {
-      console.log(`AT THE BOTTOM`);
-      this.middleEventsCounter = 0;
-    }
-
-    if (event.isReachingTop) 
-    {
-      this.atTheTop = true; //true after a single event of at top (isReachingTop)
-      this.middleEventsCounter = 0;
-    }
-
-    if (event.isWindowEvent) 
-    {
-      this.middleEventsCounter = this.middleEventsCounter + 1;
-
-      if (this.middleEventsCounter > 36)
-      {
-        this.middleEventsCounter = 0;
-        this.atTheTop = false; // false only after 10 events of in middle (isWindowEvent)
-      } 
-    }
-
-    if(this.atTheTop)
-    {
-      //transparent
-      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-dark";
-    } else { // if atTheTop is false
-      //not transparent
-      this.navState = "navbar sticky-top navbar-expand-lg navbar-dark bg-dark";
-    }
-  }
-  */
-
-  navInputFocused: boolean = false;
-
   onNavInputFocus()
   {
     this.navInputFocused = true;
@@ -294,5 +149,4 @@ export class NavbarComponent implements OnInit
   {
     this.navInputFocused = false;
   }
-
 }

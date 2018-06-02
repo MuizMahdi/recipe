@@ -36,7 +36,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     service = new AuthService(null);
     recipeService = new RecipesDataService(null,null);
-    component = new LoginComponent(null,service,null,null,null);
+    component = new LoginComponent(null,,null,null,service,null);
     router = TestBed.get(Router);
   });
 

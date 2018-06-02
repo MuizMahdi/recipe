@@ -1,53 +1,10 @@
-
-
-
-
-
-
-
-
-
-<ng-template #content let-c="close" let-d="dismiss">
-
-  <!-- RECIPE DETAILS UI -->
-  <div *ngIf="!isEditingRecipe">
-    <app-recipe-details-modal [selectedRecipe]="theSelectedRecipe"></app-recipe-details-modal>
-
-    <div class="maker-buttons" *ngIf="isAuthenticatedUserRecipe">
-      <button (click)="onRecipeEdit()" id="recipe-edit" class="btn btn-info">Edit</button>
-      <button (click)="onRecipeDelete()" id="recipe-delete" class="btn btn-info">Delete</button>
-    </div>
-  </div>
-
-
-  
-
-  <!-- EDITING RECIPE UI -->
-  <div *ngIf="isEditingRecipe">
-
-    <app-recipe-modal [selectedRecipe]="theSelectedRecipe" (editingDataEmitter)="updateRecipe($event)"></app-recipe-modal>
-    
-    <div class="maker-buttons" *ngIf="isAuthenticatedUserRecipe">
-      <button (click)="onEditingCancel()" id="recipe-edit" class="btn btn-info">Cancel</button>
-      <button (click)="onEditingSubmit()" id="recipe-delete" class="btn btn-info">Submit</button>
-    </div>
-  </div>
-  
-</ng-template>
-
-
-  
-
-
-
-
-
+<app-recipe-modal *ngIf="showRecipeModal" [selectedRecipe]="theSelectedRecipe" (modalCloseEventEmitter)="getModalState($event)"></app-recipe-modal>
 
 <div class="all-recipes-list">
   <ul>
     <div class="row">
       <li *ngFor="let recipe of recipesDB | paginate: { itemsPerPage: 9, currentPage: p }" class="col-sm-4" >
-        <app-a-recipe (click)="open(content)" [recipeVal2]="recipe" (theRecipeSelected2)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
+        <app-a-recipe [recipeVal2]="recipe" (theRecipeSelected2)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
       </li>
     </div>
   </ul>

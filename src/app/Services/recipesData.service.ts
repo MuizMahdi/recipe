@@ -35,7 +35,6 @@ export class RecipesDataService implements OnDestroy
 
   ngOnDestroy() 
   {
-    // Unsubscribe just in case, for safety
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -77,8 +76,6 @@ export class RecipesDataService implements OnDestroy
 
     })
     
-
-    // Memory Leak when upvoting twice, so no upvoting twice... ITS A FEATURE !
   }
 
 /*******************************************************************************************/
