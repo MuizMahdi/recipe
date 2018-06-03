@@ -21,6 +21,7 @@ export class RecipeModalComponent implements OnInit
 {
   private editingSubscription: ISubscription;
   private routerSubscription: ISubscription; 
+  private authSubscription: ISubscription;
   private modalRef: NgbModalRef;
   recipeFormGroup: FormGroup;
 
@@ -191,6 +192,7 @@ export class RecipeModalComponent implements OnInit
     this.submitClicked = true;
     this.modalRef.close();
     this.emitModalClose();
+    this.unSubscribeAll();
     
     if(typeof this.theSelectedRecipe != 'undefined')
     {
@@ -232,7 +234,7 @@ export class RecipeModalComponent implements OnInit
     let recipeDescription = this.recipeFormGroup.get('recipeDescriptionCtrl').value;
     let recipeImageUrl = this.recipeFormGroup.get('recipeImageUrlCtrl').value;
     
-    this.authService.getAuth().subscribe(authState => {
+    this.authSubscription = this.authService.getAuth().subscribe(authState => {
       
       let addingData = {
         RID: authState.uid,
@@ -271,6 +273,9 @@ export class RecipeModalComponent implements OnInit
   {
     if(typeof this.editingSubscription != 'undefined') {
       this.editingSubscription.unsubscribe();
+    } 
+    else if(typeof this.authSubscription != 'undefined') {
+      this.authSubscription.unsubscribe();
     }
 
     this.routerSubscription.unsubscribe();
@@ -279,5 +284,6 @@ export class RecipeModalComponent implements OnInit
   ngOnDestroy()
   {
     this.modalRef.close();
+    this.unSubscribeAll();
   }
 }

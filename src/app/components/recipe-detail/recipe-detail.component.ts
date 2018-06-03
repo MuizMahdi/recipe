@@ -325,7 +325,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
             this.updateRecipeComments();
 
             this.commentFormInput = null; // clear the form
-
           });
         });
       });

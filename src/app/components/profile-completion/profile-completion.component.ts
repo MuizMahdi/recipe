@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { AuthService } from './../../Services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { AngularFireDatabase , AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-profile-completion',
@@ -16,19 +17,24 @@ export class ProfileCompletionComponent implements OnInit
 {
 
   profileCompletionFormGroup: FormGroup;
-  photoUrl: string = ""; // Change it to uploading image later.
+  authSubscription: ISubscription;
+  getDbListSubscription: ISubscription;
+  photoUrl: string = "";
   aboutUser: string;
   invalidImageUrl: boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder, public authService: AuthService, 
-    private recipesDataService: RecipesDataService, private ngFireDB: AngularFireDatabase, private router: Router) 
+  constructor(
+    private formBuilder: FormBuilder, 
+    private authService: AuthService, 
+    private recipesDataService: RecipesDataService, 
+    private ngFireDB: AngularFireDatabase, 
+    private router: Router) 
   { 
     this.buildForm();
   }
 
   ngOnInit() { }
-
 
   buildForm()
   {
@@ -43,13 +49,13 @@ export class ProfileCompletionComponent implements OnInit
     //this.photoUrl = this.profileCompletionFormGroup.get('photoUrlCtrl').value; // Used ngModel instead for real-time image validation check
     this.aboutUser = this.profileCompletionFormGroup.get('aboutUserCtrl').value;
     
-    this.authService.getAuth().subscribe(authState => {
+    this.authSubscription = this.authService.getAuth().subscribe(authState => {
       let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(authState.displayName));
 
-      this.recipesDataService.getDbListObject(usersList).subscribe(users => {
+      this.getDbListSubscription = this.recipesDataService.getDbListObject(usersList).subscribe(users => {
         return users.map(user => {
 
-          if(this.invalidImageUrl) // gotta also check if its a valid image, damn people may type random text and submit.
+          if(this.invalidImageUrl)
           {
             this.photoUrl = user.photoUrl;
           }
@@ -71,19 +77,6 @@ export class ProfileCompletionComponent implements OnInit
       });
     });
     
-    /*
-    this.recipesDataService.findUserWithName(authState.displayName).map(user => {
-      userObject.update(user.key, {
-      uid: user.uid,
-      userName: user.userName,
-      email: user.email,
-      photoUrl: user.photoUrl,
-      completedProfile: true, 
-      recipesIDs: user.recipesIDs
-      });
-    });
-
-    */ 
   }
 
   onValidProfileImageUrl()
@@ -96,6 +89,20 @@ export class ProfileCompletionComponent implements OnInit
     this.invalidImageUrl = true;
   }
 
+  ngOnDestroy()
+  {
+    this.unSubscribeAll();
+  }
+
+  unSubscribeAll()
+  {
+    if(typeof this.authSubscription != 'undefined') {
+      this.authSubscription.unsubscribe();
+    }
+    else if (typeof this.getDbListSubscription != 'undefined') {
+      this.getDbListSubscription.unsubscribe();
+    }
+  }
 
 
 }

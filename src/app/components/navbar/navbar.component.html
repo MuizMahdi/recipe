@@ -16,10 +16,19 @@
 
         <li class="nav-item">
           <div *ngIf="isLoggedIn">
-            <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/myrecipes">Notifications</a>
+            <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/myrecipes">
+              
+              <div style="display: inline;"> 
+                Notifications 
+                <!--
+                <span (click)="onShowRecipeDetails()" href="javascript:void(0)" class="material-icons" style="color:rgb(177, 177, 177); font-size: 23px; position:absolute; top:30%; left:41.5%;">notifications</span>  
+                -->
+                <!-- Add pop(down) menu -->
+              </div>
+              
+            </a>
           </div>
         </li>
-
       </ul>
       
       <form [formGroup]="formGroup" class="form-inline my-2 my-lg-0">
@@ -44,9 +53,9 @@
       </div>
 
       <div *ngIf="isLoggedIn">
-        <ngc-float-button class="floating-button" icon="face" direction="bottom" [open]="closed" color="white">
-          <ngc-float-item-button (click)="modal()" icon="control_point" content="Add Recipe"></ngc-float-item-button>
-          <ngc-float-item-button icon="note_add" content="Request Recipe"></ngc-float-item-button>
+        <ngc-float-button class="floating-button" icon="account_circle" direction="bottom" [open]="closed" color="white">
+          <ngc-float-item-button (click)="modal()" icon="add" content="Add Recipe"></ngc-float-item-button>
+          <ngc-float-item-button (click)="redirectToProfile()" icon="face" content="My Profile"></ngc-float-item-button>
           <ngc-float-item-button icon="settings" content="Settings"></ngc-float-item-button>
         </ngc-float-button>
       </div>

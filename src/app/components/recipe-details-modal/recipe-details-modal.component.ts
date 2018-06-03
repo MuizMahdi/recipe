@@ -10,7 +10,7 @@ import { Recipe } from '../../models/Recipe';
 
 export class RecipeDetailsModalComponent implements OnInit 
 {
-  @Output() modalCloseEventEmitter = new EventEmitter<boolean>;
+  @Output() modalCloseEventEmitter = new EventEmitter<boolean>();
   @Input('selectedRecipe') theSelectedRecipe: Recipe;
   selectedRecipeImg: string = "";
 

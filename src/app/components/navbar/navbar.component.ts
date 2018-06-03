@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@ang
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from './../../Services/auth.service';
+import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 
 export class NavbarComponent implements OnInit 
 {
+  private authSubscription: ISubscription;
+
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
   options: string[] = [];
@@ -26,7 +29,7 @@ export class NavbarComponent implements OnInit
   formGroup: FormGroup;
 
   constructor(
-    private recipesDataService: RecipesDataService
+    private recipesDataService: RecipesDataService,
     private formBuilder: FormBuilder, 
     private authService: AuthService, 
     private router: Router) 
@@ -84,7 +87,6 @@ export class NavbarComponent implements OnInit
 
   /*onSearch()
   {
-
     for(var i=0; i<this.dataService.getRecipes().length; i++)
     {
       if(this.formGroup.get('formCtrl').value === this.dataService.getRecipes()[i].name)
@@ -95,27 +97,21 @@ export class NavbarComponent implements OnInit
         window.scroll({top: 0, left: 0, behavior: 'smooth' });
         break;
       }
-
       if( (i == this.dataService.getRecipes().length - 1) && (this.formGroup.get('formCtrl').value !== this.dataService.getRecipes()[i].name) ) 
       {
         alert("There is no such recipe posted.");
         break;
       }
     }
-
   }*/
 
   /*checkFormCtrlChanges()
   {
     const formControl = this.formGroup.get('formCtrl');
-
     formControl.valueChanges.forEach( (value: string) => {
-
       this.optionsTemp = [];
       this.options = this.optionsSlice.slice();
-
       let j = 0;
-
       if(!value)
       {
         this.options = this.optionsSlice;
@@ -148,5 +144,21 @@ export class NavbarComponent implements OnInit
   onNavInputBlur()
   {
     this.navInputFocused = false;
+  }
+
+  redirectToProfile()
+  {
+    this.authSubscription = this.authService.getAuth().subscribe(authState => {
+      let authUser = authState.displayName;
+      this.router.navigate(['/profile/' + authUser]);
+    });
+  }
+
+  ngOnDestroy()
+  {
+    if(typeof this.authSubscription != 'undefined')
+    {
+      this.authSubscription.unsubscribe();
+    }
   }
 }
