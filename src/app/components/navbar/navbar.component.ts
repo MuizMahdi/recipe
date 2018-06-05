@@ -154,6 +154,43 @@ export class NavbarComponent implements OnInit
     });
   }
 
+  userNotifications: any[] = [];
+  getUserNotifications()
+  {
+    this.authService.getAuth().subscribe(authState => {
+      this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
+        return users.map(user => {
+
+          this.userNotifications = user.notifications;
+
+          for(let i=0; i<=user.notifications.length-1; i++)
+          {
+            if(i==10) break;
+
+            let string = this.userNotifications[i];
+            let splitArray = string.split(" has ");
+            
+            if(splitArray[0] !== "")
+            {
+              let notifierVal:string =  splitArray[0];
+              let theNotificationVal:string = splitArray[1];
+              this.userNotifications[i] = {notifier: notifierVal, theNotification: theNotificationVal};
+            }
+            
+          }
+
+          if(this.userNotifications[this.userNotifications.length-1] === "")
+          {
+            this.userNotifications.pop();
+          }
+
+          console.log(this.userNotifications);
+
+        });
+      });
+    });
+  }
+
   ngOnDestroy()
   {
     if(typeof this.authSubscription != 'undefined')

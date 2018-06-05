@@ -115,7 +115,8 @@ export class LoginComponent implements OnInit
           aboutUser: "",
           completedProfile: false,
           recipesIDs: [""],
-          recipesCount: 0
+          recipesCount: 0,
+          notifications: [""]
         }
 
         this.recipesDataService.addUser(userObject); // Add the user object to the Database users list

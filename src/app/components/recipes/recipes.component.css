@@ -50,3 +50,9 @@ hr
     max-width: 178px;
     background: gainsboro;
 }
+
+html, body 
+{
+    max-width: 100%;
+    overflow-x: hidden;
+}

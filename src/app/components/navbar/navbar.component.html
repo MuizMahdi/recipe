@@ -16,17 +16,29 @@
 
         <li class="nav-item">
           <div *ngIf="isLoggedIn">
-            <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/myrecipes">
-              
-              <div style="display: inline;"> 
-                Notifications 
-                <!--
-                <span (click)="onShowRecipeDetails()" href="javascript:void(0)" class="material-icons" style="color:rgb(177, 177, 177); font-size: 23px; position:absolute; top:30%; left:41.5%;">notifications</span>  
-                -->
-                <!-- Add pop(down) menu -->
-              </div>
-              
+
+            <a (click)="getUserNotifications()" [ngbPopover]="notificationsContent" popoverTitle="Notifications" placement="bottom" class="nav-link"> 
+              <span class="material-icons notifications-icon">notifications</span>  
+              Notifications 
             </a>
+
+            <ng-template #notificationsContent>
+              <ul class="notifications">
+                <li *ngFor="let notification of userNotifications">
+                  <div>
+                    <a routerLink="/profile/{{notification.notifier}}" id="notifier">
+                      {{notification.notifier}}
+                    </a>
+                    <a (click)="emitNotificationRecipe()" href="javascript:void(0)" id="theNotification">
+                      has {{notification.theNotification}}
+                    </a>
+                  </div>
+                  
+                  <hr>
+                </li>
+              </ul>
+            </ng-template>
+
           </div>
         </li>
       </ul>
