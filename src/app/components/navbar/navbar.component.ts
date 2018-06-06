@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
 
 export class NavbarComponent implements OnInit 
 {
-  private authSubscription: ISubscription;
+  authSubscription: ISubscription;
+  notificationStatusSubscription: ISubscription;
+  getDbUserSubscription: ISubscription;
 
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
@@ -23,6 +25,7 @@ export class NavbarComponent implements OnInit
   showRecipeModal: boolean = false;
   navInputFocused: boolean = false;
   isLoggedIn: boolean = false;
+  userNotificationState:boolean;
 
   loggedInUserEmail:string;
   loggedInUserName: string; 
@@ -44,8 +47,17 @@ export class NavbarComponent implements OnInit
     this.authService.getAuth().subscribe(auth => {
       if(auth)
       {
+        //this.unsubscribeAll();
+        
         this.isLoggedIn = true;
         this.loggedInUserEmail = auth.email;
+
+        this.notificationStatusSubscription = this.recipesDataService.getDbUserByName(auth.displayName).subscribe(users => {
+          return users.map(user => {
+            this.userNotificationState = user.notificationState;
+          });
+        });
+
       }
       else
       {
@@ -157,8 +169,10 @@ export class NavbarComponent implements OnInit
   userNotifications: any[] = [];
   getUserNotifications()
   {
+    this.unsubscribeAll();
+
     this.authService.getAuth().subscribe(authState => {
-      this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
+      this.getDbUserSubscription = this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
         return users.map(user => {
 
           this.userNotifications = user.notifications;
@@ -174,6 +188,7 @@ export class NavbarComponent implements OnInit
             {
               let notifierVal:string =  splitArray[0];
               let theNotificationVal:string = splitArray[1];
+              
               this.userNotifications[i] = {notifier: notifierVal, theNotification: theNotificationVal};
             }
             
@@ -184,18 +199,36 @@ export class NavbarComponent implements OnInit
             this.userNotifications.pop();
           }
 
-          console.log(this.userNotifications);
+          this.changeMakerNotificationState(authState.displayName);
 
         });
       });
     });
   }
 
-  ngOnDestroy()
+  changeMakerNotificationState(makerName:string)
+  {
+    this.recipesDataService.setUserNotificationState(makerName, false);
+  }
+
+  unsubscribeAll()
   {
     if(typeof this.authSubscription != 'undefined')
     {
       this.authSubscription.unsubscribe();
     }
+    if(typeof this.notificationStatusSubscription != 'undefined')
+    {
+      this.notificationStatusSubscription.unsubscribe();
+    }
+    if(typeof this.getDbUserSubscription != 'undefined')
+    {
+      this.getDbUserSubscription.unsubscribe();
+    }
+  }
+
+  ngOnDestroy()
+  {
+    this.unsubscribeAll();
   }
 }

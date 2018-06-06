@@ -18,26 +18,29 @@
           <div *ngIf="isLoggedIn">
 
             <a (click)="getUserNotifications()" [ngbPopover]="notificationsContent" popoverTitle="Notifications" placement="bottom" class="nav-link"> 
-              <span class="material-icons notifications-icon">notifications</span>  
+              <span [class.notifications-icon-active]="userNotificationState" [class.notifications-icon]="!userNotificationState" class="material-icons">notifications</span>  
               Notifications 
             </a>
 
-            <ng-template #notificationsContent>
-              <ul class="notifications">
-                <li *ngFor="let notification of userNotifications">
-                  <div>
-                    <a routerLink="/profile/{{notification.notifier}}" id="notifier">
-                      {{notification.notifier}}
-                    </a>
-                    <a (click)="emitNotificationRecipe()" href="javascript:void(0)" id="theNotification">
-                      has {{notification.theNotification}}
-                    </a>
-                  </div>
-                  
-                  <hr>
-                </li>
-              </ul>
-            </ng-template>
+            <div class="popover">
+              <ng-template #notificationsContent >
+                <ul class="notifications">
+                  <li *ngFor="let notification of userNotifications">
+                    <div>
+                      <a routerLink="/profile/{{notification.notifier}}" id="notifier">
+                        {{notification.notifier}}
+                      </a>
+                      <a (click)="emitNotificationRecipe()" href="javascript:void(0)" id="theNotification">
+                        has {{notification.theNotification}}
+                      </a>
+                    </div>
+                    
+                    <hr>
+                  </li>
+                </ul>
+              </ng-template>
+            </div>
+            
 
           </div>
         </li>

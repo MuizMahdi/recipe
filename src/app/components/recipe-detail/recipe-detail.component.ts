@@ -52,13 +52,16 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   theRecipe: Recipe[];
 
   authUnsubscribe: Subject<any> = new Subject();
-  upvoteSubscription: ISubscription;
+  notificationSubscription: ISubscription;
+  recipesDataSubscription: ISubscription;
   unUpvoteSubscription: ISubscription;
   commentSubscription: ISubscription;
+  upvoteSubscription: ISubscription;
   authSubscription: ISubscription;
-  recipesDataSubscription: ISubscription;
+ 
 
-  mockRecipeComments: string[] = [];
+  mockRecipeComments: string[] = [];  
+  makerNotifications:string[] = [];
   mockUpvoters: string[] = [""];
   mockComments: string[] = [""];
 /*******************************************************************************************/
@@ -75,7 +78,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   }
 
   ngOnInit()
-  { }
+  {}
 
 /*******************************************************************************************/
 
@@ -251,15 +254,14 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   }
 
-  makerNotifications:string[] = [];
-  notificationSubscription: ISubscription;
+
   
   notifyMaker(recipeMaker:string, notifier:string, recipeName:string, notificationType:string)
   {
+    this.unSubscribeAll();
+
     if(recipeMaker != notifier)
     {
-      this.unSubscribeAll();
-
       let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(recipeMaker));
 
       this.notificationSubscription = this.recipesDataService.getDbListObject(usersList).subscribe(users => {
@@ -278,10 +280,16 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
         usersList.update(users[0].key, {notifications: this.makerNotifications});
 
+        this.changeMakerNotificationState(recipeMaker);
+
       });
     }
   }
-  
+
+  changeMakerNotificationState(recipeMaker: string)
+  {
+    this.recipesDataService.setUserNotificationState(recipeMaker, true);
+  }
 
   unUpvoteRecipe(recipe: any)
   {
@@ -305,7 +313,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     })
  
   }
-  
   
   deleteUpvoter(array:string[], upvoter:string)
   {

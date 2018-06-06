@@ -14,6 +14,7 @@ import { Action } from 'rxjs/scheduler/Action';
 @Injectable()
 export class RecipesDataService implements OnDestroy
 {
+
 /*******************************************************************************************/
 
   public recipeReturned: Recipe[];
@@ -41,49 +42,9 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-/*******************************************************************************************/
-  mockUpvoters: string[] = [""];
-
-  upvoteRecipe(recipe: Recipe)
-  {
-    let recipeList = this.ngFireDB.list<Recipe>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
-
-    this.authService.getAuth().takeUntil(this.ngUnsubscribe).subscribe(authState => {
-
-      let recipeSubscription = recipeList.snapshotChanges().map(actions => {
-        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-      }).takeUntil(this.ngUnsubscribe).subscribe(recipes => {
-        return recipes.map(recipe => {
-
-          this.mockUpvoters = recipe.upvoters.slice();
-          this.mockUpvoters.push(authState.displayName);
-
-          recipeList.update(recipe.key, {
-            RID: recipe.RID,
-            name: recipe.name,
-            makerName: recipe.makerName,
-            description: recipe.description,
-            imagesrc: recipe.imagesrc,
-            upvotes: recipe.upvotes+1,
-            upvoted: recipe.upvoted, 
-            recipeIngredients: recipe.recipeIngredients,
-            comments: recipe.comments,
-            upvoters: this.mockUpvoters
-          });
-  
-        });
-      });  
-
-    })
-    
-  }
 
 /*******************************************************************************************/
 
-
-/*******************************************************************************************/
-
-  // find user in database and return an object so then it can be updates using 'usersList.update(user.key, {other parameters/keys})' used on login component
   getDbUserByName(name: string)
   { 
     let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(name));
@@ -170,22 +131,14 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-
-/*******************************************************************************************/
-
-  /*selectedRecipe(theRecipe: Recipe)
+  setUserNotificationState(userName:string, state:boolean)
   {
-    this.selected = theRecipe;
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(userName));
+
+    this.getDbListObject(usersList).subscribe(users => {
+      usersList.update(users[0].key, {notificationState: state});
+    });
   }
-
-  getSelectedRecipe(): ARecipe
-  {
-    return this.selected;
-  }*/
-
-/*******************************************************************************************/
-
-
 
 /****** ~ NOTE ~ *******************************************************************************/ 
   /*

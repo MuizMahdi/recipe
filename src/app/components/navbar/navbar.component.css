@@ -98,18 +98,28 @@
 .notifications 
 {
     list-style-type: none;
-    text-align: left;
     margin: 0;
     padding: 0;
+    overflow-y: scroll !important;
+    max-height: 62vh;
+}
+
+.popover 
+{
+    max-width: 500px !important;
+}
+
+::-webkit-scrollbar { 
+    width: 0px; 
 }
 
 .notifications a
 {
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     text-transform: none; 
-    display: inline-flex; 
-    vertical-align: middle;
+    display: inline-flex;
+    text-align: justify;
 }
 
 .notifications #notifier:hover
@@ -119,13 +129,16 @@
 
 .notifications #notifier
 {
+    font-size: 18px;
     margin-bottom:15px;
-    text-align: center !important;
+    position: relative;
+    top:20px;
 }
 
 .notifications #theNotification
 {
     color: rgb(80, 80, 80) !important;
+    margin-bottom: 10px;
 }
 
 
