@@ -131,14 +131,6 @@ export class RecipesDataService implements OnDestroy
 
 /*******************************************************************************************/
 
-  setUserNotificationState(userName:string, state:boolean)
-  {
-    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(userName));
-
-    this.getDbListObject(usersList).subscribe(users => {
-      usersList.update(users[0].key, {notificationState: state});
-    });
-  }
 
 /****** ~ NOTE ~ *******************************************************************************/ 
   /*

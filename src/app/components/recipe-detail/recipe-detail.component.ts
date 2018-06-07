@@ -19,10 +19,8 @@ import 'rxjs/add/operator/takeUntil';
   styleUrls: ['./recipe-detail.component.css']
 })
 
-
 export class RecipeDetailComponent implements OnInit, OnChanges
 {
-
 /*******************************************************************************************/
   @Input() aSelectedRecipe: Recipe;
 
@@ -58,15 +56,14 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   commentSubscription: ISubscription;
   upvoteSubscription: ISubscription;
   authSubscription: ISubscription;
- 
 
   mockRecipeComments: string[] = [];  
   makerNotifications:string[] = [];
   mockUpvoters: string[] = [""];
   mockComments: string[] = [""];
+
+  authenticatedUserName: string;
 /*******************************************************************************************/
-
-
 /*******************************************************************************************/
 
   constructor( 
@@ -78,16 +75,19 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   }
 
   ngOnInit()
-  {}
+  {
+    this.getAuthenticatedUserName();
+  }
 
-/*******************************************************************************************/
-
- 
-/*******************************************************************************************/
+  getAuthenticatedUserName()
+  {
+    this.authSubscription = this.authService.getAuth().subscribe(authState=> {
+      this.authenticatedUserName = authState.displayName.slice(0);
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) 
   {
-
     for (let propName in changes) 
     {
       let chng = changes[propName];
@@ -131,10 +131,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.checkUserUpvoteState();
   }
 
-/*******************************************************************************************/
-
-/*******************************************************************************************/
-
   getRecipeMakerPhoto()
   {
     this.recipesDataService.getDbUserByName(this.recipeMaker).subscribe(users => {
@@ -144,14 +140,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     })
   }
 
-/*******************************************************************************************/
-
-/*******************************************************************************************/
   checkUserUpvoteState()
   {
     this.unSubscribeAll();
 
-    this.authSubscription = this.authService.getAuth().takeUntil(this.authUnsubscribe).subscribe(authState => {
+    this.authSubscription = this.authService.getAuth().subscribe(authState => {
 
       this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
         return users.map(user => {
@@ -172,24 +165,16 @@ export class RecipeDetailComponent implements OnInit, OnChanges
             }
           }
 
-        })
-      })
+        });
+      });
     });
+
   }
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
 
   onShowMoreComments()
   {
     this.lotsOfComments = false;
   }
-
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
 
   onUpvote()
   {
@@ -219,42 +204,26 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     }
   }
 
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
-  
-
   upvoteRecipe(recipe: any)
   {
-
     this.unSubscribeAll();
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
 
-    this.authService.getAuth().subscribe(authState => {
+    this.upvoteSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
 
-      this.upvoteSubscription = recipeList.snapshotChanges().map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }).subscribe(recipes => {
-  
-        this.mockUpvoters = recipes[0].upvoters.slice();
-        this.mockUpvoters.push(authState.displayName);
-          
-        recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes+1), upvoters: this.mockUpvoters});
+      this.mockUpvoters = recipes[0].upvoters.slice();
+      this.mockUpvoters.push(this.authenticatedUserName);
+        
+      recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes+1), upvoters: this.mockUpvoters});
 
-        let recipeMaker:string = recipes[0].makerName;
-        let upvoter:string = authState.displayName;
-        let recipeName:string = recipes[0].name;
+      let recipeMaker:string = recipes[0].makerName;
+      let upvoter:string = this.authenticatedUserName;
+      let recipeName:string = recipes[0].name;
 
-        this.notifyMaker(recipeMaker, upvoter, recipeName, "upvote");
-      });
-
-    })
-
+      this.notifyMaker(recipeMaker, upvoter, recipeName, "upvote");
+    });
   }
-
-
   
   notifyMaker(recipeMaker:string, notifier:string, recipeName:string, notificationType:string)
   {
@@ -268,7 +237,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
         let mockNotification:string;
 
-        if(notificationType === "upvote") { // Is it '===' or '==' ... not sure
+        if(notificationType === "upvote") { 
           mockNotification = (notifier + " has upvoted your " + recipeName + " recipe");
         }
         else if(notificationType === "comment") {
@@ -286,32 +255,30 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     }
   }
 
+  NotificationStateSubscription: ISubscription;
   changeMakerNotificationState(recipeMaker: string)
   {
-    this.recipesDataService.setUserNotificationState(recipeMaker, true);
+    this.unSubscribeAll();
+    //this.recipesDataService.setUserNotificationState(recipeMaker, true);
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(recipeMaker));
+
+    this.NotificationStateSubscription = this.recipesDataService.getDbListObject(usersList).subscribe(users => {
+      usersList.update(users[0].key, {notificationState: true});
+    });
   }
 
   unUpvoteRecipe(recipe: any)
   {
-
     this.unSubscribeAll();
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipe.name));
+  
+    this.unUpvoteSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
 
-    this.authSubscription = this.authService.getAuth().subscribe(authState => {
+      this.mockUpvoters = this.deleteUpvoter(recipes[0].upvoters.slice(), this.authenticatedUserName).slice();
 
-      this.unUpvoteSubscription = recipeList.snapshotChanges().map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }).subscribe(recipes => {
-
-        this.mockUpvoters = this.deleteUpvoter(recipes[0].upvoters.slice(), authState.displayName).slice();
-
-        recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes-1), upvoters: this.mockUpvoters});
-
-      });
-
-    })
- 
+      recipeList.update(recipes[0].key, {upvotes:(recipes[0].upvotes-1), upvoters: this.mockUpvoters});
+    });
   }
   
   deleteUpvoter(array:string[], upvoter:string)
@@ -329,12 +296,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     return temp1.concat(temp2);
   }
 
-/*******************************************************************************************/
-
-
-/*******************************************************************************************/
-
-
   addComment({value, valid})
   {
 
@@ -345,24 +306,22 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.formValid = true;
       this.numberOfComments++;
 
-      this.authSubscription = this.authService.getAuth().subscribe(authState => {
-        this.recipesDataSubscription = this.recipesDataService.getDbUserByName(authState.displayName).subscribe(users => {
-          return users.map(user => {
+      this.recipesDataSubscription = this.recipesDataService.getDbUserByName(this.authenticatedUserName).subscribe(users => {
+        return users.map(user => {
 
-            let mockComment:Comment = {
-              comment: this.commentFormInput,
-              commenter: authState.displayName,
-              commenterPhotoURL: user.photoUrl
-            }
+          let mockComment:Comment = {
+            comment: this.commentFormInput,
+            commenter: this.authenticatedUserName,
+            commenterPhotoURL: user.photoUrl
+          }
 
-            this.recipeComments.unshift(mockComment);
+          this.recipeComments.unshift(mockComment);
 
-            let upvoter:string = authState.displayName;
+          let upvoter:string = this.authenticatedUserName;
 
-            this.updateRecipeComments(upvoter);
+          this.updateRecipeComments(upvoter);
 
-            this.commentFormInput = null;
-          });
+          this.commentFormInput = null;
         });
       });
 
@@ -379,7 +338,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   updateRecipeComments(upvoter:string)
   {
     this.unSubscribeAll();
-
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.aSelectedRecipe.name));
 
     this.commentSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
@@ -437,6 +395,9 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     if(typeof this.recipesDataSubscription !== 'undefined') {
       this.recipesDataSubscription.unsubscribe();
     }
+    if(typeof this.NotificationStateSubscription !== 'undefined') {
+      this.NotificationStateSubscription.unsubscribe();
+    }
   }
 
   ngOnDestroy()
@@ -444,4 +405,5 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.unSubscribeAll();
   }
 
+/*******************************************************************************************/
 }

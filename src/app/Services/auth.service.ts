@@ -11,8 +11,6 @@ export class AuthService
   constructor(public afAuth: AngularFireAuth) 
   { }
 
-
-  // Check whether user is logged in or not (user state) as an observable
   getAuth()
   {
     return this.afAuth.authState.map(auth => auth);
@@ -47,7 +45,6 @@ export class AuthService
         })
     });
   }
-  // Create a user then update the user profile, giving then a displayName of name and an empty photoURL (for now).
 
   login(email: string, password: string) 
   {

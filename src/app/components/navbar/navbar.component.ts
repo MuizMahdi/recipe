@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@ang
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from './../../Services/auth.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 
@@ -14,18 +15,20 @@ import { Router } from '@angular/router';
 
 export class NavbarComponent implements OnInit 
 {
-  authSubscription: ISubscription;
   notificationStatusSubscription: ISubscription;
+  NotificationStateSubscription: ISubscription;
   getDbUserSubscription: ISubscription;
+  authSubscription: ISubscription;
 
+  userNotifications: any[] = [];
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
   options: string[] = [];
 
   showRecipeModal: boolean = false;
   navInputFocused: boolean = false;
-  isLoggedIn: boolean = false;
   userNotificationState:boolean;
+  isLoggedIn: boolean = false;
 
   loggedInUserEmail:string;
   loggedInUserName: string; 
@@ -33,6 +36,7 @@ export class NavbarComponent implements OnInit
 
   constructor(
     private recipesDataService: RecipesDataService,
+    private ngFireDB: AngularFireDatabase,
     private formBuilder: FormBuilder, 
     private authService: AuthService, 
     private router: Router) 
@@ -47,22 +51,24 @@ export class NavbarComponent implements OnInit
     this.authService.getAuth().subscribe(auth => {
       if(auth)
       {
-        //this.unsubscribeAll();
-        
         this.isLoggedIn = true;
         this.loggedInUserEmail = auth.email;
 
-        this.notificationStatusSubscription = this.recipesDataService.getDbUserByName(auth.displayName).subscribe(users => {
-          return users.map(user => {
-            this.userNotificationState = user.notificationState;
-          });
-        });
-
+        this.getUserNotificationState(auth.displayName);
       }
       else
       {
         this.isLoggedIn = false;
       }
+    });
+  }
+
+  getUserNotificationState(userName:string)
+  {
+    this.notificationStatusSubscription = this.recipesDataService.getDbUserByName(userName).subscribe(users => {
+      return users.map(user => {
+        this.userNotificationState = user.notificationState;
+      });
     });
   }
 
@@ -166,7 +172,6 @@ export class NavbarComponent implements OnInit
     });
   }
 
-  userNotifications: any[] = [];
   getUserNotifications()
   {
     this.unsubscribeAll();
@@ -208,7 +213,13 @@ export class NavbarComponent implements OnInit
 
   changeMakerNotificationState(makerName:string)
   {
-    this.recipesDataService.setUserNotificationState(makerName, false);
+    this.unsubscribeAll();
+  
+    let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(makerName));
+
+    this.NotificationStateSubscription = this.recipesDataService.getDbListObject(usersList).subscribe(users => {
+      usersList.update(users[0].key, {notificationState: false});
+    });
   }
 
   unsubscribeAll()
@@ -217,13 +228,13 @@ export class NavbarComponent implements OnInit
     {
       this.authSubscription.unsubscribe();
     }
-    if(typeof this.notificationStatusSubscription != 'undefined')
-    {
-      this.notificationStatusSubscription.unsubscribe();
-    }
     if(typeof this.getDbUserSubscription != 'undefined')
     {
       this.getDbUserSubscription.unsubscribe();
+    }
+    if(typeof this.NotificationStateSubscription != 'undefined')
+    {
+      this.NotificationStateSubscription.unsubscribe();
     }
   }
 
