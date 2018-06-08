@@ -30,9 +30,12 @@
                       <a routerLink="/profile/{{notification.notifier}}" id="notifier">
                         {{notification.notifier}}
                       </a>
-                      <a (click)="emitNotificationRecipe()" href="javascript:void(0)" id="theNotification">
+                      <a (click)="emitNotificationRecipe(notification.theRecipe)" href="javascript:void(0)" id="theNotification">
                         has {{notification.theNotification}}
                       </a>
+                    </div>
+                    <div *ngIf="userNotifications.length == 0">
+                      <p> You have no notifications </p>
                     </div>
                     <hr>
                   </li>

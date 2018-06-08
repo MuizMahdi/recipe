@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar (RecipeEmitter)="setSelected($event)"></app-navbar>
 <br>
 
 <app-recipe-modal *ngIf="showRecipeModal" [selectedRecipe]="theSelectedRecipe" (modalCloseEventEmitter)="getModalState($event)"></app-recipe-modal>

@@ -18,8 +18,9 @@ import { Subject } from 'rxjs/Subject';
 
 export class NavbarComponent implements OnInit 
 {
-  @Output() searchedRecipeEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() RecipeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+  NotificationRecipeEmitSubscription: ISubscription;
   notificationStatusSubscription: ISubscription;
   NotificationStateSubscription: ISubscription;
   getDbUserSubscription: ISubscription;
@@ -39,11 +40,11 @@ export class NavbarComponent implements OnInit
   loggedInUserEmail: string;
   loggedInUserName: string; 
   searchedRecipes: any[];
+  emittedRecipe:any;
 
   searchInput = new Subject();
   searchFormGroup: FormGroup;
-
-
+  
   constructor(
     private recipesDataService: RecipesDataService,
     private ngFireDB: AngularFireDatabase,
@@ -99,6 +100,7 @@ export class NavbarComponent implements OnInit
 
       this.recipesDataService.getDbListObject(recipesList).subscribe(recipes => {
         this.searchedRecipes = recipes;
+        this.emittedRecipe = Object.assign({}, recipes[0]);
       });
 
     });
@@ -135,7 +137,7 @@ export class NavbarComponent implements OnInit
       searchCtrl: ['', Validators.required]
     });
   }
-  
+
   onSearch()
   {
     let recipeName = this.searchFormGroup.get('searchCtrl').value;
@@ -143,8 +145,7 @@ export class NavbarComponent implements OnInit
     if(recipeName.trim().length > 0)
     {
       recipeName = recipeName.trim();
-      
-      
+      this.RecipeEmitter.emit(this.emittedRecipe);
     }
   }
 
@@ -192,8 +193,9 @@ export class NavbarComponent implements OnInit
             {
               let notifierVal:string =  splitArray[0];
               let theNotificationVal:string = splitArray[1];
+              let recipe:string = theNotificationVal.split(' recipe')[0].split('your ')[1];
               
-              this.userNotifications[i] = {notifier: notifierVal, theNotification: theNotificationVal};
+              this.userNotifications[i] = {notifier: notifierVal, theNotification: theNotificationVal, theRecipe: recipe};
             }
             
           }
@@ -208,6 +210,20 @@ export class NavbarComponent implements OnInit
         });
       });
     });
+  }
+
+  emitNotificationRecipe(recipeName:string)
+  {
+    this.unsubscribeAll();
+
+    let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(recipeName));
+    let notificationRecipeObject:any;
+
+    this.NotificationRecipeEmitSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
+      notificationRecipeObject = Object.assign({}, recipes[0]);
+      this.RecipeEmitter.emit(notificationRecipeObject);
+    });
+     
   }
 
   changeMakerNotificationState(makerName:string)
@@ -234,6 +250,10 @@ export class NavbarComponent implements OnInit
     if(typeof this.NotificationStateSubscription != 'undefined')
     {
       this.NotificationStateSubscription.unsubscribe();
+    }
+    if(typeof this.NotificationRecipeEmitSubscription != 'undefined')
+    {
+      this.NotificationRecipeEmitSubscription.unsubscribe();
     }
   }
 
