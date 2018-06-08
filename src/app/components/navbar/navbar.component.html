@@ -34,7 +34,6 @@
                         has {{notification.theNotification}}
                       </a>
                     </div>
-                    
                     <hr>
                   </li>
                 </ul>
@@ -46,16 +45,16 @@
         </li>
       </ul>
       
-      <form [formGroup]="formGroup" class="form-inline my-2 my-lg-0">
+      <form [formGroup]="searchFormGroup" class="form-inline my-2 my-lg-0">
         <div>
-          <input (focus)="onNavInputFocus()" (blur)="onNavInputBlur()" type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="formCtrl" [matAutocomplete]="auto" placeholder="Search Recipes..">
+          <input (keydown)="getKeystrokes($event)" (focus)="onNavInputFocus()" (blur)="onNavInputBlur()" type="text" class="form-control mr-sm-2 nav-searchinput" formControlName="searchCtrl" [matAutocomplete]="auto" placeholder="Search Recipes...">
         </div>
         <button (click)="onSearch()" class="btn btn-light nav-searchbutton" type="submit">Search</button>
       </form>
       
       <mat-autocomplete #auto="matAutocomplete" class="auto-complete">
-        <mat-option *ngFor="let option of options" [value]="option">
-          <h6 class="auto-complete-menu-text">{{ option }}</h6>
+        <mat-option *ngFor="let recipe of searchedRecipes" [value]="recipe.name">
+          <h6 class="auto-complete-menu-text">{{recipe.name}}</h6>
         </mat-option>
       </mat-autocomplete>
       

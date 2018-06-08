@@ -238,7 +238,7 @@ export class RecipeModalComponent implements OnInit
       
       let addingData = {
         RID: authState.uid,
-        name: recipeName,
+        name: recipeName.toLowerCase(),
         makerName: authState.displayName,
         description: recipeDescription,
         imagesrc: recipeImageUrl,

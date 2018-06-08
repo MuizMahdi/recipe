@@ -1,10 +1,13 @@
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
+import { Component, OnInit, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { RecipesDataService } from './../../Services/recipesData.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from './../../Services/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +18,8 @@ import { Router } from '@angular/router';
 
 export class NavbarComponent implements OnInit 
 {
+  @Output() searchedRecipeEmitter: EventEmitter<any> = new EventEmitter<any>();
+
   notificationStatusSubscription: ISubscription;
   NotificationStateSubscription: ISubscription;
   getDbUserSubscription: ISubscription;
@@ -30,9 +35,14 @@ export class NavbarComponent implements OnInit
   userNotificationState:boolean;
   isLoggedIn: boolean = false;
 
-  loggedInUserEmail:string;
+  lastSearchKeypress: number = 0;
+  loggedInUserEmail: string;
   loggedInUserName: string; 
-  formGroup: FormGroup;
+  searchedRecipes: any[];
+
+  searchInput = new Subject();
+  searchFormGroup: FormGroup;
+
 
   constructor(
     private recipesDataService: RecipesDataService,
@@ -47,6 +57,12 @@ export class NavbarComponent implements OnInit
   }
 
   ngOnInit()
+  {
+    this.getUserAuthenticationAndEmail();
+    this.getSearchedRecipe();
+  }
+
+  getUserAuthenticationAndEmail()
   {
     this.authService.getAuth().subscribe(auth => {
       if(auth)
@@ -72,6 +88,32 @@ export class NavbarComponent implements OnInit
     });
   }
 
+  getSearchedRecipe()
+  {
+    this.searchInput.subscribe(val => {
+      
+      let start = val[0];
+      let end = val[1];
+
+      let recipesList = this.ngFireDB.list('/recipes', ref => ref.orderByChild('name').limitToFirst(10).startAt(start).endAt(end));
+
+      this.recipesDataService.getDbListObject(recipesList).subscribe(recipes => {
+        this.searchedRecipes = recipes;
+      });
+
+    });
+  }
+
+  getKeystrokes($event)
+  {
+    if($event.timeStamp - this.lastSearchKeypress > 100)
+    {
+      let q = $event.target.value.toLowerCase();
+      this.searchInput.next([q,(q+"\uf8ff")]);
+    }
+    this.lastSearchKeypress = $event.timeStamp;
+  }
+
   modal()
   {
     this.showRecipeModal = true;
@@ -89,65 +131,22 @@ export class NavbarComponent implements OnInit
 
   buildForm()
   {
-    this.formGroup = this.formBuilder.group({
-      formCtrl: ['', Validators.required]
+    this.searchFormGroup = this.formBuilder.group({
+      searchCtrl: ['', Validators.required]
     });
   }
   
-  /*getRecipesNames()
+  onSearch()
   {
-    for(let i=0; i<this.dataService.getRecipes().length; i++)
-    {
-      this.options[i] = this.dataService.getRecipes()[i].name;
-    }
-    this.optionsSlice = this.options.slice();
-  }*/
+    let recipeName = this.searchFormGroup.get('searchCtrl').value;
 
-  /*onSearch()
-  {
-    for(var i=0; i<this.dataService.getRecipes().length; i++)
+    if(recipeName.trim().length > 0)
     {
-      if(this.formGroup.get('formCtrl').value === this.dataService.getRecipes()[i].name)
-      {
-        console.log(this.dataService.getRecipes()[i].name);
-        this.router.navigate(['./allrecipes']);
-        this.dataService.selectedRecipe(this.dataService.getRecipes()[i]);
-        window.scroll({top: 0, left: 0, behavior: 'smooth' });
-        break;
-      }
-      if( (i == this.dataService.getRecipes().length - 1) && (this.formGroup.get('formCtrl').value !== this.dataService.getRecipes()[i].name) ) 
-      {
-        alert("There is no such recipe posted.");
-        break;
-      }
+      recipeName = recipeName.trim();
+      
+      
     }
-  }*/
-
-  /*checkFormCtrlChanges()
-  {
-    const formControl = this.formGroup.get('formCtrl');
-    formControl.valueChanges.forEach( (value: string) => {
-      this.optionsTemp = [];
-      this.options = this.optionsSlice.slice();
-      let j = 0;
-      if(!value)
-      {
-        this.options = this.optionsSlice;
-      } 
-      else 
-      {
-        for(var i=0; i<this.options.length; i++) // go through options
-        {
-          if (this.options[i].toLowerCase().startsWith(value.toLowerCase())) // if an option starts with whats typed in (converted to lower case)
-          {
-            this.optionsTemp[j] = this.options[i]; // add it to the temp array's first value
-            j++;
-          }
-        }
-        this.options = this.optionsTemp.slice();
-      }
-    });
-  }*/
+  }
 
   onLogout()
   {

@@ -16,14 +16,11 @@ import { NgcFloatButtonModule } from 'ngc-float-button';
 // Components
 import { AppComponent } from './app.component';
 import { RecipesComponent } from './Components/recipes/recipes.component';
-import { MyRecipesComponent } from './Components/my-recipes/my-recipes.component';
 import { ARecipeComponent } from './Components/a-recipe/a-recipe.component';
 import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-import { HeaderComponent } from './Components/header/header.component';
 import { HomeComponent } from './Components/home/home.component';
 import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe-detail.component';
-import { AllRecipesComponent } from './Components/all-recipes/all-recipes.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
 import { LoginComponent } from './Components/login/login.component';
@@ -56,13 +53,10 @@ import { environment } from '../environments/environment';
 import { UserProfileComponent } from './Components/user-profile/user-profile.component';
 
 
-
-
 // Routes 
 export const appRoutes: Routes = [
   {path:'', component:HomeComponent, canActivate:[nAuthGuard]},
-  {path:'myrecipes', component:MyRecipesComponent, canActivate:[AuthGuard]},
-  {path:'allrecipes', component:AllRecipesComponent},
+  {path:'allrecipes', component:RecipesComponent},
   {path:'completeProfile', component:ProfileCompletionComponent},
   {path:'login', component:LoginComponent},
   {path:'profile/:userName', component:UserProfileComponent}
@@ -73,14 +67,11 @@ export const appRoutes: Routes = [
   declarations: [
     AppComponent,
     RecipesComponent,
-    MyRecipesComponent,
     ARecipeComponent,
     RecipeDetailComponent,
     NavbarComponent,
-    HeaderComponent,
     HomeComponent,
     MyRecipeDetailComponent,
-    AllRecipesComponent,
     TopRecipesComponent,
     CommentComponent,
     LoginComponent,
@@ -123,6 +114,5 @@ export const appRoutes: Routes = [
 
   bootstrap: [ AppComponent ]
 })
-
 
 export class AppModule { }

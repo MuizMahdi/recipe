@@ -29,6 +29,20 @@ export class RecipesDataService implements OnDestroy
 
   constructor(public ngFireDB: AngularFireDatabase, public authService: AuthService) { }
 
+  getRecipes(start, end): any
+  {
+    /*
+    let recipesList = this.ngFireDB.list('/recipes', ref => ref.orderByChild('name').limitToFirst(10).startAt(start).endAt(end));
+    
+    return recipesList.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    });*/
+
+    start.map(val => {
+      console.log(val);
+    })
+
+  }
 /*******************************************************************************************/
 
 
