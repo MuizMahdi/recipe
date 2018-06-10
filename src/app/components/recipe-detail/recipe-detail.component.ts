@@ -25,7 +25,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   
   @Output() modalCloseEventEmitter = new EventEmitter<boolean>();
   @Input() aSelectedRecipe: Recipe;
-  //@Input() aSelectedRecipe: Recipe;
 
   changeDetect: Recipe;
 
@@ -97,7 +96,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.modalCloseEventEmitter.emit(true);
   }
 
-  test:string;
   ngOnChanges(changes: SimpleChanges) 
   {
     for (let propName in changes) 
@@ -108,21 +106,26 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
     this.unSubscribeAll();
     
-    this.recipeName = this.changeDetect.name;
-    this.recipeImageSource = this.changeDetect.imagesrc;
+    this.recipeIngredients = this.changeDetect.recipeIngredients;
     this.recipeDescription = this.changeDetect.description;
+    this.selectedRecipeImg = this.aSelectedRecipe.imagesrc;
+    this.recipeImageSource = this.changeDetect.imagesrc;
+    this.recipeComments = this.changeDetect.comments;
     this.recipeUpvotes = this.changeDetect.upvotes;
     this.recipeUpvoted = this.changeDetect.upvoted;
-    this.recipeIngredients = this.changeDetect.recipeIngredients;
-    this.recipeComments = this.changeDetect.comments;
     this.recipeMaker = this.changeDetect.makerName;
+    this.recipeName = this.changeDetect.name;
+    
+    this.initilizeComments();
+    this.getRecipeMakerPhoto();
+    this.checkUserUpvoteState();
+  }
 
-    this.selectedRecipeImg = this.aSelectedRecipe.imagesrc;
-
-    this.recipeComments_Slice = this.recipeComments.slice();
+  initilizeComments()
+  {
+    let recipeCommentsSlice = this.recipeComments.slice();
 
     this.numberOfComments = this.recipeComments.length;
-
     this.lotsOfComments = false;
     
     if(this.recipeComments[0].comment === "")
@@ -135,14 +138,10 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     {
       for(let i=0; i<3; i++)
       {
-        this.latestComments[i] = this.recipeComments_Slice[i];
+        this.latestComments[i] = recipeCommentsSlice[i];
       }
-
       this.lotsOfComments = true;
     }
-
-    this.getRecipeMakerPhoto();
-    this.checkUserUpvoteState();
   }
 
   getRecipeMakerPhoto()
@@ -302,7 +301,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   addComment({value, valid})
   {
-
     this.unSubscribeAll();
     
     if(valid)
@@ -323,14 +321,13 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
           let upvoter:string = this.authenticatedUserName;
 
+          this.checkLatestComments();
+
           this.updateRecipeComments(upvoter);
 
           this.commentFormInput = null;
         });
       });
-
-      this.checkLatestComments();
-
     }
     else
     {
@@ -347,6 +344,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.commentSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
       recipeList.update(recipes[0].key, {comments: this.recipeComments});
 
+      
       let recipeMaker:string = recipes[0].makerName;
       let recipeName:string = recipes[0].name;
 
@@ -358,11 +356,11 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     if(this.recipeComments.length > 2)
     {
-      this.recipeComments_Slice = this.recipeComments.slice();
-
+      let recipeCommentsSlice = this.recipeComments.slice();
+      
       for(let i=0; i<3; i++)
       {
-        this.latestComments[i] = this.recipeComments_Slice[i];
+        this.latestComments[i] = recipeCommentsSlice[i];
       }
 
       this.lotsOfComments = true;
@@ -407,5 +405,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     this.unSubscribeAll();
   }
+
 /*******************************************************************************************/
 }
