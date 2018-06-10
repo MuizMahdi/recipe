@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { environment } from './../../../environments/environment.prod';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, FormBuilder }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { AuthService } from './../../Services/auth.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';

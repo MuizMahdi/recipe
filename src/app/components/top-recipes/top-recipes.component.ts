@@ -1,7 +1,4 @@
-import { ARecipe } from './../../models/ARecipe';
 import { Component, OnInit } from '@angular/core';
-
-
 
 @Component({
   selector: 'app-top-recipes',
@@ -9,13 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top-recipes.component.css']
 })
 
-
-
 export class TopRecipesComponent implements OnInit 
 {
   
-  sortedRecipes: ARecipe[];
-  topRecipes: ARecipe[];
+  //sortedRecipes: ARecipe[];
+  //topRecipes: ARecipe[];
 
 
 constructor(/*private dataService: DataService*/) 
@@ -26,6 +21,7 @@ constructor(/*private dataService: DataService*/)
   }
 
   
+  /*
   getTopRecipesData()
   {
     for(var i=0; i<6; i++)
@@ -33,6 +29,7 @@ constructor(/*private dataService: DataService*/)
       this.topRecipes[i] = this.sortedRecipes[i];
     }
   }
+  */
 
   ngOnInit(){}
 

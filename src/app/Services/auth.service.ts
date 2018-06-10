@@ -2,12 +2,10 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService 
 {
-
   constructor(public afAuth: AngularFireAuth) 
   { }
 
@@ -31,8 +29,6 @@ export class AuthService
             catch(e) 
             {
               // Everything works fine but theres still an error, saying the userData is null.
-              // If its null then how does the updateProfile work and the verification gets sent !?
-              console.log("Da fuk ??"); // yeah.. ADDED ON THE BUGS LIST
             }
            
             userData.sendEmailVerification().then( (success) => {
@@ -50,7 +46,6 @@ export class AuthService
   {
     return new Promise( (resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)  
-      //.then( userData => resolve(userData), err => reject(err) )
       .then( userData => {
         this.afAuth.authState.subscribe(userData => {
           if(userData.emailVerified)

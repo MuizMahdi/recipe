@@ -41,13 +41,13 @@ describe('ARecipeComponent', () => {
 
   it('should keep recipe image as is, if image source url is more than 5 characters long', () => {
     component.recipe2.imagesrc = "000000";
-    component.randomizeImages();
+    component.setDefaultImageOnError();
     expect(component.imageSource).toBe(component.recipe2.imagesrc);
   });
 
   it('should set the recipe image to default, if image source url is less than 5 characters long', () => {
     component.recipe2.imagesrc = "000";
-    component.randomizeImages();
+    component.setDefaultImageOnError();
     expect(component.recipe2.imagesrc).toBe("https://cdn3.iconfinder.com/data/icons/food-and-ingredients/512/Food_and_Drinks_Fish_dish-01-512.png");
   });
 

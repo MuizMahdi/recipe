@@ -22,6 +22,7 @@ export class ProfileCompletionComponent implements OnInit
   photoUrl: string = "";
   aboutUser: string;
   invalidImageUrl: boolean = false;
+  submitClicked:boolean = false;
 
 
   constructor(
@@ -47,6 +48,7 @@ export class ProfileCompletionComponent implements OnInit
   onSubmit()
   {
     //this.photoUrl = this.profileCompletionFormGroup.get('photoUrlCtrl').value; // Used ngModel instead for real-time image validation check
+    this.submitClicked = true;
     this.aboutUser = this.profileCompletionFormGroup.get('aboutUserCtrl').value;
     
     this.authSubscription = this.authService.getAuth().subscribe(authState => {

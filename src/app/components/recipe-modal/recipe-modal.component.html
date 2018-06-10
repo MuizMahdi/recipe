@@ -7,7 +7,11 @@
 
   <div *ngIf="!isEditingRecipe">
 
+    <!--
     <app-recipe-details-modal [selectedRecipe]="theSelectedRecipe" (modalCloseEventEmitter)="closeModal($event)"></app-recipe-details-modal>
+    -->
+
+    <app-recipe-detail [aSelectedRecipe]="theSelectedRecipe" (modalCloseEventEmitter)="closeModal($event)"></app-recipe-detail>
 
     <div class="maker-buttons" *ngIf="isAuthenticatedUserRecipe">
       <button (click)="onRecipeEdit()" id="recipe-edit" class="btn btn-info">Edit</button>

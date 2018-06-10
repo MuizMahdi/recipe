@@ -1,104 +1,112 @@
+<div class="recipe-card">
 
-<div class="recipe">
-
-  <div class="maker-info">
-    <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-link">
-      <p id="maker-text"> {{recipeMaker}} </p> 
-      <img src="{{makerPhoto}}" class="maker-photo" alt="Recipe Maker Photo">
-    </a>
-  </div>
-
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+  </button>
   
-  <span id="tip-text"> 
-    Scroll down to see full details 
-    <a (click)="onShowRecipeDetails()" href="javascript:void(0)" class="material-icons" style="color:rgb(177, 177, 177);">expand_more</a> 
-  </span>
-  <hr>
-  <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
+  <div class="recipe-card-image" [ngStyle]="{'background-image': 'url(' + selectedRecipeImg + ')'}"></div>
+  
+  <div class="recipe">
 
-
-  <div class="recipe-name">
-    <p> {{recipeName}} </p>
-  </div> 
-
-
-  <div>
-    <p class="recipe-text"> {{recipeDescription}} </p>
-  </div>
-
-
-  <div class="container">
-
-    <div class="list">
-      <h2 class="ingredients-list-header"> Ingredients list: </h2>
-      <ul class="list-group ggg">
-        <li *ngFor="let ingredient of recipeIngredients" id="ingredient" class="list-group-item d-flex justify-content-between align-items-center"> 
-          {{ingredient.name}}
-          <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
-        </li>
-      </ul>
+    <div class="maker-info">
+      <a routerLink="/profile/{{recipeMaker}}" href="#" class="maker-link">
+        <p id="maker-text"> {{recipeMaker}} </p> 
+        <img src="{{makerPhoto}}" class="maker-photo" alt="Recipe Maker Photo">
+      </a>
     </div>
 
-    <br>
-
-    <div *ngIf="canUpvote">
-      <button (click)="onUpvote()" class="upvote-buttons">
-        <span class="material-icons Upvote-Icon">thumb_up_alt</span>
-        <span class="Upvote-Text"> Upvote {{recipeUpvotes}} </span>
-      </button>
-    </div>
     
-    <div *ngIf="!canUpvote">
-      <button (click)="onUnUpvote()" class="upvote-buttons">
-        <span class="material-icons unUpvote-Icon">thumb_up_alt</span>
-        <span class="unUpvote-Text"> Upvote {{recipeUpvotes}} </span>
-      </button>
+    <span id="tip-text"> 
+      Scroll down to see full details 
+      <a (click)="onShowRecipeDetails()" href="javascript:void(0)" class="material-icons" style="color:rgb(177, 177, 177);">expand_more</a> 
+    </span>
+    <hr>
+    <img src="{{recipeImageSource}}" style="max-height:1366px; max-width:750px;" alt="Recipe Large Image" class="recipe-image">
+
+
+    <div class="recipe-name">
+      <p> {{recipeName}} </p>
+    </div> 
+
+
+    <div>
+      <p class="recipe-text"> {{recipeDescription}} </p>
     </div>
 
-  </div>
+
+    <div class="container">
+
+      <div class="list">
+        <h2 class="ingredients-list-header"> Ingredients list: </h2>
+        <ul class="list-group ggg">
+          <li *ngFor="let ingredient of recipeIngredients" id="ingredient" class="list-group-item d-flex justify-content-between align-items-center"> 
+            {{ingredient.name}}
+            <span class="badge badge-primary badge-pill">{{ingredient.amount}}</span> 
+          </li>
+        </ul>
+      </div>
+
+      <br>
+
+      <div *ngIf="canUpvote">
+        <button (click)="onUpvote()" class="upvote-buttons">
+          <span class="material-icons Upvote-Icon">thumb_up_alt</span>
+          <span class="Upvote-Text"> Upvote {{recipeUpvotes}} </span>
+        </button>
+      </div>
+      
+      <div *ngIf="!canUpvote">
+        <button (click)="onUnUpvote()" class="upvote-buttons">
+          <span class="material-icons unUpvote-Icon">thumb_up_alt</span>
+          <span class="unUpvote-Text"> Upvote {{recipeUpvotes}} </span>
+        </button>
+      </div>
+
+    </div>
 
 
 
-  <div class="container">
-    <h3> Comments: {{numberOfComments}}</h3>
-    <hr>
-    <div class="comments">
-      <div id="recipeName"></div>
-      <ul *ngIf="lotsOfComments">
-        <li *ngFor="let comment of latestComments">
-          <div class="a-comment">
-            <app-comment [theComment]="comment"></app-comment>
-            <hr>
-          </div>
-        </li>
-        <a *ngIf="lotsOfComments" (click)="onShowMoreComments()" href="javascript:void(0)" class="show-more"> Show more </a>
-      </ul>
-
-      <ul *ngIf="!lotsOfComments">
-        <li *ngFor="let comment of recipeComments">
-          <div class="a-comment">
-            <app-comment [theComment]="comment"></app-comment>
-            <hr>
-          </div>
-        </li>
-      </ul>
+    <div class="container">
+      <h3> Comments: {{numberOfComments}}</h3>
+      <hr>
+      <div class="comments">
+        <div id="recipeName"></div>
         
-      <div class="add-comment">
-        <form #f="ngForm" (ngSubmit)="addComment(f)" class="comment-form" novalidate>
+        <ul *ngIf="lotsOfComments">
+          <li *ngFor="let comment of latestComments">
+            <div class="a-comment">
+              <app-comment [theComment]="comment"></app-comment>
+              <hr>
+            </div>
+          </li>
+          <a *ngIf="lotsOfComments" (click)="onShowMoreComments()" href="javascript:void(0)" class="show-more"> Show more </a>
+        </ul>
+
+        <ul *ngIf="!lotsOfComments">
+          <li *ngFor="let comment of recipeComments">
+            <div class="a-comment">
+              <app-comment [theComment]="comment"></app-comment>
+              <hr>
+            </div>
+          </li>
+        </ul>
           
-          <div class="errors">
-            <div *ngIf="!formValid && comment.touched" class="alert alert-danger"> You need to write a comment before posting it </div>
-          </div>
-
-          <img src="{{commentingProfileImage}}" alt="Avatar Image">
-          <input class="comment-input" type="text" #comment="ngModel" [(ngModel)]="commentFormInput" name="commentFormInput" placeholder="Add a comment..." minlength="2" required>
-          <input type="submit" value="Add Comment" class="btn btn-primary comment-button">
+        <div class="add-comment">
+          <form #f="ngForm" (ngSubmit)="addComment(f)" class="comment-form" novalidate>
             
-        </form>
+            <div class="errors">
+              <div *ngIf="!formValid && comment.touched" class="alert alert-danger"> You need to write a comment before posting it </div>
+            </div>
 
+            <img src="{{commentingProfileImage}}" alt="Avatar Image">
+            <input class="comment-input" type="text" #comment="ngModel" [(ngModel)]="commentFormInput" name="commentFormInput" placeholder="Add a comment..." minlength="2" required>
+            <input type="submit" value="Add Comment" class="btn btn-primary comment-button">
+              
+          </form>
+
+        </div>
       </div>
     </div>
+
   </div>
-
 </div>
-

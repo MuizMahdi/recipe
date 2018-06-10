@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ARecipe } from '../../models/ARecipe';
 import { Recipe } from './../../models/Recipe';
 
 @Component({
@@ -13,75 +12,28 @@ export class ARecipeComponent implements OnInit
 { 
 
 //---------------------------------------------------------------------------------------------------------------------------------//
-  @Input('recipeVal') recipe: ARecipe;
+  @Output() theRecipeSelected2 = new EventEmitter<Recipe>();
   @Input('recipeVal2') recipe2: Recipe;
 
-  @Input('locatorIDReceived') locatorIDString3: string;
-  imageSource: string;
-  imagesSources: string[] = [ "assets/R01.png", "assets/R02.png", "assets/R03.jpg", "assets/R04.jpg", "assets/R05.jpg", "assets/R06.jpg", "assets/R07.jpg", "assets/R08.jpg", "assets/R09.jpg" ];
-
-
   showMoreText: boolean = false; 
-  fullDescription: string;
-  miniDescription: string;
   shortText: boolean;
 
-  @Output() theRecipeSelected = new EventEmitter<ARecipe>();
-  @Output() theRecipeSelected2 = new EventEmitter<Recipe>();
-
+  fullDescription: string;
+  miniDescription: string;
+  imageSource: string;
 //---------------------------------------------------------------------------------------------------------------------------------//
 
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-  constructor(/*public dataService: DataService*/) { 
-    /*this.recipe2 = {
-      RID: "",
-      name: "",
-      makerName: "",
-      description: "",
-      imagesrc: "",
-      upvotes: 0,
-      upvoted: false,
-      recipeIngredients: [],
-      comments: [],
-      upvoters: []
-    };*/
-  }
+  constructor() { }
 
   ngOnInit() 
   { 
-    this.randomizeImages();
-
-    /*this.recipe2 = {
-      RID: "",
-      name: "",
-      makerName: "",
-      description: "",
-      imagesrc: "",
-      upvotes: 0,
-      upvoted: false,
-      recipeIngredients: [],
-      comments: [],
-      upvoters: []
-    };*/
+    this.setDefaultImageOnError();
   }
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
 
   ngAfterContentInit()
   {
-    // reset the 'show more', showing it, and viewing the miniDescription every time the page is left and opened again.
     this.initShowMore();
   }
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
 
   initShowMore()
   {
@@ -100,22 +52,7 @@ export class ARecipeComponent implements OnInit
     this.recipe2.description = this.miniDescription;
   }
 
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-/*
-  getRandomImage(min:number, max:number)
-  {
-    return Math.floor(Math.random() * (max-min + 1)) + min;
-  }
-*/
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-  randomizeImages()
+  setDefaultImageOnError()
   { 
     if(this.recipe2.imagesrc.length > 5)
     {
@@ -128,27 +65,10 @@ export class ARecipeComponent implements OnInit
     }
   }
 
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-  getSelected()
-  {
-    this.theRecipeSelected.emit({name: this.recipe.name, description: this.fullDescription, imagesrc: this.recipe.imagesrc, upvotes: this.recipe.upvotes, ingredients: this.recipe.ingredients, amounts: this.recipe.amounts, upvoted: this.recipe.upvoted, comments: this.recipe.comments});
-  }
-
   getSelected2()
   {
     this.theRecipeSelected2.emit(this.recipe2);
-
-    //window.scroll({top: 0, left: 0, behavior: 'smooth' }); // scroll to top of page with smooth animation.
   }
-
-//---------------------------------------------------------------------------------------------------------------------------------//
-
-
-//---------------------------------------------------------------------------------------------------------------------------------//
 
   showMore()
   {
@@ -167,7 +87,5 @@ export class ARecipeComponent implements OnInit
     }
 
   }
-
-//---------------------------------------------------------------------------------------------------------------------------------//
 
 }

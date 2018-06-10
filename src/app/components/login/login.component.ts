@@ -1,6 +1,5 @@
 import { AngularFireDatabase , AngularFireList, AngularFireObject } from 'angularfire2/database';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
-import { FlashMessagesService, FlashMessagesModule } from 'angular2-flash-messages';
 import { RecipesDataService } from './../../Services/recipesData.service';
 import { matchOtherValidator } from './../../models/matchOtherValidator';
 import { AuthService } from './../../Services/auth.service';

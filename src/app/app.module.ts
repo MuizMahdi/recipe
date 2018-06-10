@@ -20,12 +20,10 @@ import { ARecipeComponent } from './Components/a-recipe/a-recipe.component';
 import { RecipeDetailComponent } from './Components/recipe-detail/recipe-detail.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { HomeComponent } from './Components/home/home.component';
-import { MyRecipeDetailComponent } from './Components/my-recipe-detail/my-recipe-detail.component';
 import { TopRecipesComponent } from './Components/top-recipes/top-recipes.component';
 import { CommentComponent } from './Components/comment/comment.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ProfileCompletionComponent } from './components/profile-completion/profile-completion.component';
-import { RecipeDetailsModalComponent } from './components/recipe-details-modal/recipe-details-modal.component';
 import { RecipeModalComponent } from './Components/recipe-modal/recipe-modal.component';
 
 // Services
@@ -71,13 +69,11 @@ export const appRoutes: Routes = [
     RecipeDetailComponent,
     NavbarComponent,
     HomeComponent,
-    MyRecipeDetailComponent,
     TopRecipesComponent,
     CommentComponent,
     LoginComponent,
     ProfileCompletionComponent,
     UserProfileComponent,
-    RecipeDetailsModalComponent,
     RecipeModalComponent,
   ],
 

@@ -1,7 +1,6 @@
 import { environment } from './../../../environments/environment.prod';
 import { TopRecipesComponent } from './../top-recipes/top-recipes.component';
 import { NavbarComponent } from './../navbar/navbar.component';
-import { HeaderComponent } from './../header/header.component';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -22,7 +21,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent, HeaderComponent, NavbarComponent, TopRecipesComponent ],
+      declarations: [ HomeComponent, NavbarComponent, TopRecipesComponent ],
       imports: [FormsModule, AngularFireAuthModule, ReactiveFormsModule, MatAutocompleteModule, NgcFloatButtonModule, 
       NgbModule.forRoot(), RouterTestingModule, AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule ],
       providers: [ AuthService, RecipesDataService ]

@@ -22,7 +22,10 @@ import 'rxjs/add/operator/takeUntil';
 export class RecipeDetailComponent implements OnInit, OnChanges
 {
 /*******************************************************************************************/
+  
+  @Output() modalCloseEventEmitter = new EventEmitter<boolean>();
   @Input() aSelectedRecipe: Recipe;
+  //@Input() aSelectedRecipe: Recipe;
 
   changeDetect: Recipe;
 
@@ -63,8 +66,12 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   mockComments: string[] = [""];
 
   authenticatedUserName: string;
+
+  selectedRecipeImg: string = "";
+
 /*******************************************************************************************/
 /*******************************************************************************************/
+
   constructor( 
     public recipesDataService: RecipesDataService, 
     private authService: AuthService, 
@@ -85,6 +92,12 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     });
   }
 
+  closeModal()
+  {
+    this.modalCloseEventEmitter.emit(true);
+  }
+
+  test:string;
   ngOnChanges(changes: SimpleChanges) 
   {
     for (let propName in changes) 
@@ -103,6 +116,8 @@ export class RecipeDetailComponent implements OnInit, OnChanges
     this.recipeIngredients = this.changeDetect.recipeIngredients;
     this.recipeComments = this.changeDetect.comments;
     this.recipeMaker = this.changeDetect.makerName;
+
+    this.selectedRecipeImg = this.aSelectedRecipe.imagesrc;
 
     this.recipeComments_Slice = this.recipeComments.slice();
 

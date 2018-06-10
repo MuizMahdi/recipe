@@ -2,7 +2,6 @@ import { environment } from './../../environments/environment.prod';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { TestBed, inject } from '@angular/core/testing';
 import { AngularFireAuth, AngularFireAuthModule } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import { AngularFireModule } from 'angularfire2/angularfire2';
 

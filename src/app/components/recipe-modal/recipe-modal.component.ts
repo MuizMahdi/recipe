@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { RecipesDataService } from './../../Services/recipesData.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './../../Services/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ISubscription } from 'rxjs/Subscription';
 import { Comment } from './../../models/Comment';
 import { Recipe } from './../../models/Recipe';
 import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -19,7 +20,7 @@ import { Router } from '@angular/router';
 
 export class RecipeModalComponent implements OnInit 
 {
-  recipeEditSubscription: ISubscription;
+  private recipeEditSubscription: ISubscription;
   private routerSubscription: ISubscription; 
   private authSubscription: ISubscription;
   private modalRef: NgbModalRef;
