@@ -8,7 +8,7 @@
     </button>
 
     <div *ngIf="isLoggedIn" class="float-test">
-      <ngc-float-button class="floating-button" icon="expand_more" direction="{{floatingButtonDirection}}" [open]="closed" color="white">
+      <ngc-float-button class="floating-button" icon="{{floatingButtonIcon}}" direction="{{floatingButtonDirection}}" [open]="closed" color="white">
         <ngc-float-item-button (click)="modal()" icon="add" content="Add Recipe"></ngc-float-item-button>
         <ngc-float-item-button (click)="redirectToProfile()" icon="face" content="My Profile"></ngc-float-item-button>
         <ngc-float-item-button (click)="onLogout()" icon="keyboard_tab" content="Logout"></ngc-float-item-button>

@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 
 export class RecipeModalComponent implements OnInit 
 {
-  private editingSubscription: ISubscription;
+  recipeEditSubscription: ISubscription;
   private routerSubscription: ISubscription; 
   private authSubscription: ISubscription;
   private modalRef: NgbModalRef;
@@ -162,6 +162,11 @@ export class RecipeModalComponent implements OnInit
     this.recipeIngredientsArr.push({name:this.recipeIngredient, amount:this.recipeIngredientAmount});
   }
 
+  deleteIngredient(ingredient:any)
+  {
+    this.recipeIngredientsArr.splice(this.recipeIngredientsArr.indexOf(ingredient), 1);
+  }
+
   onRecipeDelete()
   {
     this.modalRef.close();
@@ -189,11 +194,7 @@ export class RecipeModalComponent implements OnInit
 
   onEditingSubmit()
   {
-    this.submitClicked = true;
-    this.modalRef.close();
-    this.emitModalClose();
-    this.unSubscribeAll();
-    
+
     if(typeof this.theSelectedRecipe != 'undefined')
     {
       this.applyRecipeEdits();
@@ -203,12 +204,13 @@ export class RecipeModalComponent implements OnInit
       this.addRecipe();
     }
 
+    this.submitClicked = true;
+    this.modalRef.close();
+    this.emitModalClose();
   }
   
   applyRecipeEdits()
   {
-    this.unSubscribeAll();
-    
     let editingData:any = {
       formGroup: this.recipeFormGroup,
       ingredientsArray: this.recipeIngredientsArr
@@ -216,7 +218,7 @@ export class RecipeModalComponent implements OnInit
 
     let recipeList = this.ngFireDB.list<any>('/recipes', ref => ref.orderByChild('name').equalTo(this.theSelectedRecipe.name));
 
-    this.editingSubscription = this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
+    this.recipesDataService.getDbListObject(recipeList).subscribe(recipes => {
 
       recipeList.update(recipes[0].key, {
         name: editingData.formGroup.get('recipeNameCtrl').value,
@@ -271,10 +273,10 @@ export class RecipeModalComponent implements OnInit
 
   unSubscribeAll()
   {
-    if(typeof this.editingSubscription != 'undefined') {
-      this.editingSubscription.unsubscribe();
+    if(typeof this.recipeEditSubscription !== 'undefined') {
+      this.recipeEditSubscription.unsubscribe();
     } 
-    else if(typeof this.authSubscription != 'undefined') {
+    else if(typeof this.authSubscription !== 'undefined') {
       this.authSubscription.unsubscribe();
     }
 

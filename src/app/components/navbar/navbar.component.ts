@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit
   isLoggedIn: boolean = false;
 
   floatingButtonDirection: string;
+  floatingButtonIcon: string;
   lastSearchKeypress: number = 0;
   loggedInUserEmail: string;
   loggedInUserName: string; 
@@ -71,9 +72,11 @@ export class NavbarComponent implements OnInit
 
     if(isMobile) {
       this.floatingButtonDirection = "top";
+      this.floatingButtonIcon = "expand_less";
     }
     else {
       this.floatingButtonDirection = "bottom";
+      this.floatingButtonIcon = "expand_more";
     }
   }
 
