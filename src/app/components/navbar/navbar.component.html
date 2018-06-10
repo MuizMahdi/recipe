@@ -1,17 +1,28 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark navb" [class.navb-input-focused]="navInputFocused" role="navigation">
   <div class="container">
 
+    <a class="navbar-brand nav-brand" href="#" routerLink="/">RECIPE</a>
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div *ngIf="isLoggedIn" class="float-test">
+      <ngc-float-button class="floating-button" icon="expand_more" direction="{{floatingButtonDirection}}" [open]="closed" color="white">
+        <ngc-float-item-button (click)="modal()" icon="add" content="Add Recipe"></ngc-float-item-button>
+        <ngc-float-item-button (click)="redirectToProfile()" icon="face" content="My Profile"></ngc-float-item-button>
+        <ngc-float-item-button (click)="onLogout()" icon="keyboard_tab" content="Logout"></ngc-float-item-button>
+      </ngc-float-button>
+    </div>
 
-      <a class="navbar-brand nav-brand" href="#" routerLink="/">RECIPE</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0 nav-links">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active-link" href="#" routerLink="/allrecipes">All Recipes</a>
+          <a class="nav-link recipes-icon" routerLinkActive="active-link" href="#" routerLink="/allrecipes"> 
+            <span class="material-icons recipes-icon">cake</span>  
+            <span style="margin-left: 10px;">Recipes</span> 
+          </a>
         </li>
 
         <li class="nav-item">
@@ -19,7 +30,7 @@
 
             <a (click)="getUserNotifications()" [ngbPopover]="notificationsContent" popoverTitle="Notifications" placement="bottom" class="nav-link"> 
               <span [class.notifications-icon-active]="userNotificationState" [class.notifications-icon]="!userNotificationState" class="material-icons">notifications</span>  
-              Notifications 
+              <span style="margin-left: 3px;">Notifications</span> 
             </a>
 
             <div class="popover">
@@ -61,24 +72,12 @@
         </mat-option>
       </mat-autocomplete>
       
-      <div *ngIf="isLoggedIn">
-        <a (click)="onLogout()" routerLink="/" href="#" class="login-logout">Logout</a>
-      </div>
-      
       <div *ngIf="!isLoggedIn">
           <a routerLink="/login" href="#" class="login-logout">Login or Register</a>
       </div>
 
-      <div *ngIf="isLoggedIn">
-        <ngc-float-button class="floating-button" icon="account_circle" direction="bottom" [open]="closed" color="white">
-          <ngc-float-item-button (click)="modal()" icon="add" content="Add Recipe"></ngc-float-item-button>
-          <ngc-float-item-button (click)="redirectToProfile()" icon="face" content="My Profile"></ngc-float-item-button>
-          <ngc-float-item-button icon="settings" content="Settings"></ngc-float-item-button>
-        </ngc-float-button>
-      </div>
-
     </div>
-    
+  
   </div>
 </nav>
 

@@ -26,23 +26,22 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   changeDetect: Recipe;
 
-  recipeName: string;
-  recipeMaker: string;
+  recipeIngredients: string[];
   recipeImageSource: string;
   recipeDescription: string;
-  recipeIngredients: string[];
   recipeComments: Comment[];
-  recipeUpvotes: number;
   recipeUpvoted: boolean;
+  recipeUpvotes: number;
+  recipeMaker: string;
+  recipeName: string;
 
-  makerPhoto: string = "";
-
-  commentFormInput: string;
-  latestComments: Comment[];
-  lotsOfComments: boolean = false;
-  numberOfComments: number;
-  recipeComments_Slice: Comment[];
   commentingProfileImage: string = "";
+  lotsOfComments: boolean = false;
+  recipeComments_Slice: Comment[];
+  latestComments: Comment[];
+  commentFormInput: string;
+  numberOfComments: number;
+  makerPhoto: string = "";
 
   canUpvote: boolean = true;
   formValid: boolean = true;
@@ -50,6 +49,7 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   theRecipe: Recipe[];
 
   authUnsubscribe: Subject<any> = new Subject();
+  NotificationStateSubscription: ISubscription;
   notificationSubscription: ISubscription;
   recipesDataSubscription: ISubscription;
   unUpvoteSubscription: ISubscription;
@@ -65,7 +65,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   authenticatedUserName: string;
 /*******************************************************************************************/
 /*******************************************************************************************/
-
   constructor( 
     public recipesDataService: RecipesDataService, 
     private authService: AuthService, 
@@ -184,10 +183,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.canUpvote = false; 
       this.upvoteRecipe(this.aSelectedRecipe);
     }
-    else
-    {
-      console.log("wtf..");
-    }
   }
 
   onUnUpvote()
@@ -197,10 +192,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
       this.recipeUpvotes = this.recipeUpvotes - 1; 
       this.canUpvote = true; 
       this.unUpvoteRecipe(this.aSelectedRecipe);
-    }
-    else
-    {
-      console.log("wtf..");
     }
   }
 
@@ -250,16 +241,14 @@ export class RecipeDetailComponent implements OnInit, OnChanges
         usersList.update(users[0].key, {notifications: this.makerNotifications});
 
         this.changeMakerNotificationState(recipeMaker);
-
       });
     }
   }
 
-  NotificationStateSubscription: ISubscription;
   changeMakerNotificationState(recipeMaker: string)
   {
     this.unSubscribeAll();
-    //this.recipesDataService.setUserNotificationState(recipeMaker, true);
+
     let usersList = this.ngFireDB.list<any>('/users', ref => ref.orderByChild('userName').equalTo(recipeMaker));
 
     this.NotificationStateSubscription = this.recipesDataService.getDbListObject(usersList).subscribe(users => {
@@ -352,7 +341,6 @@ export class RecipeDetailComponent implements OnInit, OnChanges
 
   checkLatestComments()
   {
-    // add the added comment to the latest 3 comments
     if(this.recipeComments.length > 2)
     {
       this.recipeComments_Slice = this.recipeComments.slice();
@@ -404,6 +392,5 @@ export class RecipeDetailComponent implements OnInit, OnChanges
   {
     this.unSubscribeAll();
   }
-
 /*******************************************************************************************/
 }

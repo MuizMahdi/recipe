@@ -23,6 +23,7 @@
     padding-left:40px;
     /*border-radius: 3px;*/
     opacity: .8;
+    transition: .3s ease-in-out;
 }
 
 .navb
@@ -35,11 +36,17 @@
     z-index: 1;
 }
 
+.nav-searchinput:focus
+{
+    width: 550px; 
+    transition: .3s ease-in-out;
+}
+
 .navb-input-focused
 {
-    transition: .35s ease !important;
+    transition: .35s ease-in-out;
     border-bottom: 1.3px solid rgb(92, 92, 92, 0.4) !important;
-    box-shadow: 0px 0px 800px 0px rgb(0, 0, 0);
+    box-shadow: 0px 0px 800px 0px rgb(0, 0, 0);  
 }
 
 
@@ -79,9 +86,17 @@
     cursor: pointer;
 }
 
+.recipes-icon
+{
+    color:rgb(147, 211, 205); 
+    font-size: 23px; 
+    display: inline-flex; 
+    vertical-align: middle;
+}
+
 .notifications-icon
 {
-    color:rgb(177, 177, 177); 
+    color:rgb(147, 211, 205);  
     font-size: 23px; 
     display: inline-flex; 
     vertical-align: middle;
@@ -216,7 +231,7 @@ ngc-float-button /deep/ #floatbutton-username .content
 }
 
 
-@media screen and (max-width: 991px) 
+@media screen and (max-width: 1024px) 
 {
     .active-link
     {
@@ -238,7 +253,34 @@ ngc-float-button /deep/ #floatbutton-username .content
     .navb
     {
         margin-right: -20px;
-    }     
+        right: 4%;
+    }   
+
+    .nav-searchinput:focus
+    {
+        width: 95vw; 
+        transition: .3s ease-in-out;
+    }
+
+    .nav-brand
+    {
+        font-size: 20px;
+        padding: 0%;
+        margin: 0%;
+        margin-left: 5vw;
+    } 
+    
+    .float-test
+    {
+        position: absolute;
+        top: 97vh;
+        right: 8vw;
+    }
+
+    ngc-float-button /deep/ .fab-toggle
+    {
+        margin-bottom: 20px;
+    }
 }
 
 @media screen and (min-width: 991px) 

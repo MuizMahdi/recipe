@@ -30,16 +30,17 @@ export class NavbarComponent implements OnInit
   optionsSlice: string[] = [];
   optionsTemp: string[] = [];
   options: string[] = [];
+  searchedRecipes: any[];
 
   showRecipeModal: boolean = false;
   navInputFocused: boolean = false;
   userNotificationState:boolean;
   isLoggedIn: boolean = false;
 
+  floatingButtonDirection: string;
   lastSearchKeypress: number = 0;
   loggedInUserEmail: string;
   loggedInUserName: string; 
-  searchedRecipes: any[];
   emittedRecipe:any;
 
   searchInput = new Subject();
@@ -61,6 +62,19 @@ export class NavbarComponent implements OnInit
   {
     this.getUserAuthenticationAndEmail();
     this.getSearchedRecipe();
+    this.getUserPlatform();
+  }
+
+  getUserPlatform()
+  {
+    let isMobile:boolean = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+
+    if(isMobile) {
+      this.floatingButtonDirection = "top";
+    }
+    else {
+      this.floatingButtonDirection = "bottom";
+    }
   }
 
   getUserAuthenticationAndEmail()
