@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from './../../models/Recipe';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-recipes',
@@ -26,7 +27,7 @@ export class RecipesComponent implements OnInit
 
 //-----------------------------------------------------------------------------------------------------------// 
   
-  constructor(private recipesDataService: RecipesDataService) { }
+  constructor(private recipesDataService: RecipesDataService, public afAuth: AngularFireAuth) { }
 
   ngOnInit() 
   { 

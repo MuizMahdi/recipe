@@ -1,195 +1,167 @@
 .showcase
 {
-    height: 100vh;
-    background-size:cover;
-    background-position: center; 
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://i1.wp.com/res.cloudinary.com/qriyo/image/upload/v1498814320/10227e-food-on-the-table-top-hd-wallpaper_tlnepw.jpg?resize=4872%2C2656&ssl=1);
-    background-attachment: fixed; 
-    position: relative;
+   height: 100vh;
+   background-size:cover;
+   background-position: center; 
+   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://i.imgur.com/SQVPm9o.jpg);
+   background-attachment: fixed; 
+   position: relative;
 }
 
 .logoAndBar
 {
-    margin-bottom: 180px;
-    margin-left: 10%;
+   margin-bottom: 180px;
+   margin-left: 10%;
 }
 
 .logoAndBar h1
 {
-    color: #ffffff;
-    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-    font-size: 50px;
-    font-weight: normal;
-    padding-top: 20px;
+   color: #ffffff;
+   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+   font-size: 50px;
+   font-weight: normal;
+   padding-top: 20px;
 }
 
 .secondContents
 {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+   text-align: center;
+   position: absolute;
+   width: 100%;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
 }
 
 .midText
 {
-    color: #ffffff;
+   color: #ffffff;
+   font-size: 2em;
+   font-family: "Century Gothic";
 }
 
-.midText h1
+.midButton
 {
-    font-size: 32px;
-    font-family: "Century Gothic";
+   font-size: 100%;
+   color: #ffffff;
+   background-color: Transparent;
+   border-style: solid;
+   border-radius: 30px;
+   border-width: 1px;
+   padding: 13px 18px;
+   margin-top: 35px;
+   margin-bottom: 2px;
 }
 
-.midButtons
+.midButton:hover
 {
-    margin-top: 35px;
-}
-
-.midButtons button
-{
-    font-size: 20px;
-    color: #ffffff;
-    background-color: Transparent;
-    border-style: solid;
-    border-width: 1px;
-    padding: 13px 18px;
-    margin-right: 21px;
-    border-radius: 30px;
-}
-
-.midButtons button:hover
-{
-    background-color: rgb(73, 197, 182);
-    border-color: rgb(73, 197, 182);
-    cursor: pointer;
+   background-color: rgb(73, 197, 182);
+   border-color: rgb(73, 197, 182);
+   cursor: pointer;
 }
 
 .quote
 {
-    padding-top: 200px;
-    background-color: rgb(245, 245, 245);
-    padding-bottom: 200px;
-
-    font-family: "Franklin Gothic Medium";
-    color: rgb(58, 58, 58);
-    text-align: center;
-}
-
-.quote h1
-{
-    font-size: 70px;
-}
-
-.first-image
-{
-    background: url('http://viinapuu.com/wp-content/uploads/2017/12/kremlin2-1.jpg') no-repeat center;
-    /*background: url('../../../assets/Header00.jpg') no-repeat center;*/
-    background-size: cover;
-    background-attachment: fixed;
-    height: 200px;
-}
-
-.second-image
-{
-    background: url('https://eu-central-1.tchyn.io/unitedbloggers-production/uploads/sites/174/2017/10/Omregningstabell-for-baking.jpg?quality=90') no-repeat center;
-    /*background: url('https://i.ytimg.com/vi/M-8NB7PgFk4/maxresdefault.jpg') no-repeat center;*/
-    background-size: cover;
-    background-attachment: fixed;
-    height: 200px;
-}
-
-.third-image
-{
-    background: url('https://i0.wp.com/blog.hellofresh.co.uk/wp-content/uploads/2016/03/HF160211_Global_Blog_2_Asia-Ingredient_01_low-1.jpg') no-repeat center;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 200px;
-}
-
-.fourth-image
-{
-    background: url('https://vista.today/wp-content/uploads/2016/03/fruits.jpg') no-repeat center;
-    background-size: cover;
-    background-attachment: fixed;
-    height: 200px;
-}
-
-.top-recipes
-{
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: -20px;
-}
-
-.top-recipes h3
-{
-    opacity: .7;
+   font-size: 2.8em;
+   text-align: center;
+   padding-bottom: 10vh;
+   padding-top: 3vh;
+   background-color: rgb(245, 245, 245);
+   font-family: "Franklin Gothic Medium";
+   color: rgb(58, 58, 58);
 }
 
 .extra-text
 {
-    background-color: rgb(245, 245, 245);
-    /*font-family: "Franklin Gothic Medium";*/
-    color: rgb(58, 58, 58);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.extra-text-box
-{
-    padding: 70px;
+   background-color: rgb(245, 245, 245);
+   color: rgb(58, 58, 58);
+   padding-top: 10px;
+   padding-bottom: 10px;
+   text-align: center;
 }
 
 .extra-text h1
 {
-    font-size: 50px;
+   font-size: 3.1em;
+}
+
+.text-box
+{
+   padding: 20px;
+}
+
+.text-box ul
+{
+   text-align: left;
+   margin-left: calc(100% - 87vw);
 }
 
 .project-info
 {
-    background-color: rgb(0, 33, 122);
-    color:white;
-    padding-top: 40px;
-    padding-bottom: 5px;
+   background-color: rgb(0, 33, 122);
+   color:white;
+   padding-top: 30px;
+   padding-bottom: 20px;
 }
 
 
 .project-info li
 {
-    display: inline-block;
-    margin-right: 10%;
-    opacity: .8;
+   display: inline-block;
+   margin-right: 10%;
+   margin-bottom: 3vh;
+   opacity: 0.8;
 }
 
 .project-info hr
 {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1.4px solid #ccc;
-    padding: 0; 
-    opacity: .5;
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 1.4px solid #ccc;
+   padding: 0; 
+   opacity: 0.5;
 }
 
 .footer
 {
-    padding-top: 40px;
-    padding-bottom: 20px;
-
-    background-color: rgb(0, 13, 49);
-    color:white;
+   padding-top: 40px;
+   padding-bottom: 30px;
+   background-color: rgb(0, 13, 49);
+   color:white;
 }
 
 .footer p
 {
-    display: inline-block;
-    margin-right: 40px;
-    font-weight: bold;
-    opacity: .8;
-    font-size: 18px;
+   display: inline-block;
+   margin-right: 40px;
+   margin-left: 30px;
+   font-weight: bold;
+   opacity: .8;
+   font-size: 18px;
 }
 
+.second-image
+{
+   background: url('https://i.imgur.com/YiXIbSg.jpg') no-repeat center;
+   /*background: url('https://i.ytimg.com/vi/M-8NB7PgFk4/maxresdefault.jpg') no-repeat center;*/
+   background-size: cover;
+   background-attachment: fixed;
+   height: 200px;
+}
+
+.third-image
+{
+   background: url('https://i.imgur.com/6mH08Z7.jpg') no-repeat center;
+   background-size: cover;
+   background-attachment: fixed;
+   height: 200px;
+}
+
+.fourth-image
+{
+   background: url('https://i.imgur.com/MdMVlKv.jpg') no-repeat center;
+   background-size: cover;
+   background-attachment: fixed;
+   height: 200px;
+}

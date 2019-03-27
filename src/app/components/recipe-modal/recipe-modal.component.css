@@ -10,7 +10,7 @@ body.modal-open /* Prevent the right padding when open */
 }
 
 
-.modal /* Center that shit */
+.modal
 {
   padding-top: 90px;
 }

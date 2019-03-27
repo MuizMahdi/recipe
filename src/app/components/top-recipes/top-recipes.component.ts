@@ -9,28 +9,29 @@ import { Component, OnInit } from '@angular/core';
 export class TopRecipesComponent implements OnInit 
 {
   
-  //sortedRecipes: ARecipe[];
-  //topRecipes: ARecipe[];
+   //sortedRecipes: ARecipe[];
+   //topRecipes: ARecipe[];
 
 
-constructor(/*private dataService: DataService*/) 
-  { 
-    //this.topRecipes = [];
-    //this.sortedRecipes = dataService.sortedRecipes;
-    //this.getTopRecipesData();
-  }
+   constructor(/*private dataService: DataService*/) 
+   { 
+      //this.topRecipes = [];
+      //this.sortedRecipes = dataService.sortedRecipes;
+      //this.getTopRecipesData();
+   }
+
+   
+   ngOnInit(){}
 
   
-  /*
-  getTopRecipesData()
-  {
-    for(var i=0; i<6; i++)
-    {
-      this.topRecipes[i] = this.sortedRecipes[i];
-    }
-  }
-  */
-
-  ngOnInit(){}
+   /*
+   getTopRecipesData()
+   {
+      for(var i=0; i<6; i++)
+      {
+         this.topRecipes[i] = this.sortedRecipes[i];
+      }
+   }
+   */
 
 }

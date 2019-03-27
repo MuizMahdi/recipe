@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "users": {
+      ".indexOn": [
+        "userName"
+      ]
+    },
+    "recipes": {
+      ".indexOn": [
+        "name",
+        "RID"
+      ]
+    }
+  }
+}
