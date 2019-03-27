@@ -6,13 +6,13 @@
 <div class="all-recipes-list">
   <ul>
     <div class="row">
-      <li *ngFor="let recipe of recipes | paginate: { itemsPerPage: 9, currentPage: pageNum }" class="col-sm-4" >
-        <app-a-recipe [recipeVal2]="recipe" (theRecipeSelected2)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
+      <li *ngFor="let r of recipes | paginate: { itemsPerPage: 9, currentPage: pageNum }" class="col-sm-4" >
+        <app-a-recipe [recipe]="r" (selectedRecipe)="setSelected($event)" class="col-12 col-md-4"></app-a-recipe>
       </li>
     </div>
   </ul>
 </div>
 
 <hr>
-<pagination-controls (pageChange)="pageNum = $event"></pagination-controls>
+<pagination-controls (pageChange)="pageNum=$event"></pagination-controls>
 <hr>
