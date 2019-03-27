@@ -5,62 +5,67 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css']
 })
 
+
 export class RecipesComponent implements OnInit 
 {
+  theSelectedRecipe:Recipe;
+  recipes:Recipe[];
 
-//-----------------------------------------------------------------------------------------------------------// 
+  showRecipeModal:boolean = false;
+  selectedRecipeImg:string = "";
+  pageNum:number = 1;
   
-  theSelectedRecipe: Recipe;
-  recipesDB: Recipe[];
 
-  showRecipeModal: boolean = false;
-  selectedRecipeImg: string = "";
-  p: number = 1;
+   constructor(private recipesDataService:RecipesDataService, public afAuth:AngularFireAuth) 
+   { }
+
+
+   ngOnInit() 
+   {
+      // Get recipies on initialization
+      this.getRecipes();
+   } 
+
   
-//-----------------------------------------------------------------------------------------------------------// 
+   getRecipes()
+   {
+      // Receive real-time updates of recipes
+      this.recipesDataService.getRecipesChanges().subscribe(recipesResponse => {
+         // Get recipes by addition order (first added to last added)
+         this.recipes = recipesResponse.reverse();
+      });
+   }
 
-//-----------------------------------------------------------------------------------------------------------// 
-  
-  constructor(private recipesDataService: RecipesDataService, public afAuth: AngularFireAuth) { }
 
-  ngOnInit() 
-  { 
-    this.reverseDbRecipes();
-  } 
+   getModalState(event: boolean)
+   {
+      if(event) {
+         this.showRecipeModal = false;
+      } 
+      else {
+         this.showRecipeModal = true;
+      }
+   }
 
-//-----------------------------------------------------------------------------------------------------------// 
 
-//-----------------------------------------------------------------------------------------------------------// 
-
-  reverseDbRecipes()
-  {
-    this.recipesDataService.getRecipesChanges().subscribe( recipes => {
-      this.recipesDB = recipes.reverse();
-    });
-  }
-
-  getModalState(event: boolean)
-  {
-    if(event) {
-      this.showRecipeModal = false;
-    } 
-    else {
+   // On recipe selection
+   setSelected(selectedRecipe: Recipe)
+   {
+      // Show recipe details modal
       this.showRecipeModal = true;
-    }
-  }
 
-  setSelected(selectedRecipe: Recipe)
-  {
-    this.showRecipeModal = true;
-    this.theSelectedRecipe = selectedRecipe;
-    this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
-  }
+      // Set the selected recipe
+      this.theSelectedRecipe = selectedRecipe;
 
-//-----------------------------------------------------------------------------------------------------------// 
+      // Get the selected recipe image
+      this.selectedRecipeImg = this.theSelectedRecipe.imagesrc;
+   }
+
 }

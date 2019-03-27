@@ -144,7 +144,6 @@
 .second-image
 {
    background: url('https://i.imgur.com/YiXIbSg.jpg') no-repeat center;
-   /*background: url('https://i.ytimg.com/vi/M-8NB7PgFk4/maxresdefault.jpg') no-repeat center;*/
    background-size: cover;
    background-attachment: fixed;
    height: 200px;
